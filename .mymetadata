@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="yuexinvr"
+  id="myeclipse.1481210631429"
+  context-root="/yuexinvr"
+  j2ee-spec="6.0"
+  archive="yuexinvr.war">
+  <attributes>
+    <attribute name="webrootdir" value="src/main/webapp" />
+  </attributes>
+</project-module>
+
