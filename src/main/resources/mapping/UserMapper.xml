@@ -16,6 +16,8 @@
     <result column="religious_belief" jdbcType="INTEGER" property="religiousBelief" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="sys_flag" jdbcType="TINYINT" property="sysFlag" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="job" jdbcType="VARCHAR" property="job" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -92,7 +94,7 @@
       This element was generated on Fri Dec 09 15:36:35 CST 2016.
     -->
     id, user_name, real_name, password, phone, face_img_url, religious_belief, add_time, 
-    sys_flag
+    sys_flag, age, job
   </sql>
   <select id="selectByExample" parameterType="org.yuexin.model.UserExample" resultMap="BaseResultMap">
     <!--
@@ -155,10 +157,11 @@
     </selectKey>
     insert into user (user_name, real_name, password, 
       phone, face_img_url, religious_belief, 
-      add_time, sys_flag)
+      add_time, sys_flag, age, job)
     values (#{userName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{faceImgUrl,jdbcType=VARCHAR}, #{religiousBelief,jdbcType=INTEGER}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{sysFlag,jdbcType=TINYINT})
+      #{addTime,jdbcType=TIMESTAMP}, #{sysFlag,jdbcType=TINYINT}), #{age,jdbcType=INTEGER},
+      #{job,jdbcType=VARCHAR}
   </insert>
   <insert id="insertSelective" parameterType="org.yuexin.model.User">
     <!--
@@ -195,6 +198,12 @@
       <if test="sysFlag != null">
         sys_flag,
       </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="job != null">
+        job,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userName != null">
@@ -220,6 +229,12 @@
       </if>
       <if test="sysFlag != null">
         #{sysFlag,jdbcType=TINYINT},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="job != null">
+        #{job,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -269,6 +284,12 @@
       <if test="record.sysFlag != null">
         sys_flag = #{record.sysFlag,jdbcType=TINYINT},
       </if>
+      <if test="record.age != null">
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.job != null">
+        job = #{record.job,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -289,7 +310,9 @@
       face_img_url = #{record.faceImgUrl,jdbcType=VARCHAR},
       religious_belief = #{record.religiousBelief,jdbcType=INTEGER},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      sys_flag = #{record.sysFlag,jdbcType=TINYINT}
+      sys_flag = #{record.sysFlag,jdbcType=TINYINT},
+      age = #{record.age,jdbcType=INTEGER},
+      job = #{record.job,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -326,6 +349,12 @@
       <if test="sysFlag != null">
         sys_flag = #{sysFlag,jdbcType=TINYINT},
       </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="job != null">
+        job = #{job,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -343,7 +372,9 @@
       face_img_url = #{faceImgUrl,jdbcType=VARCHAR},
       religious_belief = #{religiousBelief,jdbcType=INTEGER},
       add_time = #{addTime,jdbcType=TIMESTAMP},
-      sys_flag = #{sysFlag,jdbcType=TINYINT}
+      sys_flag = #{sysFlag,jdbcType=TINYINT},
+      age = #{age,jdbcType=INTEGER},
+      job = #{job,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
