@@ -15,3 +15,8 @@ target
 .project
 .mymetadata
 .settings
+
+#idea
+.idea/
+.yuexinvr.iml
+target/
