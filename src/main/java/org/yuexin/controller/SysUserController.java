@@ -3,11 +3,13 @@ package org.yuexin.controller;
 
 import org.yuexin.model.User;
 import org.yuexin.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
 
@@ -31,12 +33,23 @@ public class SysUserController {
 	 * @return
 	 */
 	@RequestMapping("/showLogin")
-	public String showLogin(ModelMap modelMap){
-		return "/showLogin";
+	public ModelAndView showLogin(){
+		ModelAndView ModelAndView=new ModelAndView("/showLogin");
+		return ModelAndView;
 	}
 	
+	/**
+	 * 登录
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
 	@RequestMapping("/login")
-	public @ResponseBody Object login(){
+	@ResponseBody
+	public Object login(String userName,String password){
+		if(StringUtils.isBlank(userName) || StringUtils.isBlank(password)){
+			
+		}
 		User userInfos = userService.getUsers();
 		return userInfos;
 	}

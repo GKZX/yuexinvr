@@ -3,7 +3,7 @@
   type="WEB"
   name="yuexinvr"
   id="myeclipse.1481210631429"
-  context-root="/yuexinvr"
+  context-root="/springmvc_mybatis_demo"
   j2ee-spec="6.0"
   archive="yuexinvr.war">
   <attributes>
