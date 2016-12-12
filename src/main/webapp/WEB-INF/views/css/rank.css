@@ -1,0 +1,53 @@
+.rank-box {
+	height: 100%;
+}
+.rank-side-box {
+	min-height: 100%;
+}
+.rank-side-box:first-child {
+	border-right: 1px solid #ccc;
+}
+.rank-tit {
+	font-size: 20px;
+	line-height: 32px;
+}
+.rank-date-choise {
+	margin: 0 20px;
+}
+.rank-list {
+	margin: 30px 0;
+}
+.rank-list-order {
+	background-color: #bbb;
+	color: #fff;
+	text-align: center;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	font-size: 16px;
+	border-radius: 3px;
+}
+.rank-list-order.hot {
+	background-color: #ffc900; 
+}
+.rank-list-cover {
+	width: 80px;
+	height: 58px;
+	overflow: hidden;
+	border-radius: 5px;
+	margin:0 12px;
+}
+.rank-list-cover img {
+	width: 100%;
+	height: 100%;
+}
+.rank-list-name {
+	font-size: 14px;
+	margin-bottom: 20px;
+}
+.rank-list-desc {
+	color: #999;
+}
+.data-select {
+	
+}
