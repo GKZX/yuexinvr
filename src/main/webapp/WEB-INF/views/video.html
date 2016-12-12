@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title>视频管理</title>
 		<link href="css/bootstrap.css" rel="stylesheet" />
+		<link href="css/iconfont.css" rel="stylesheet" />
 		<link href="css/common.css" rel="stylesheet" />
 		<link href="css/main.css" rel="stylesheet" />
 	</head>
@@ -16,7 +17,7 @@
 					  <form class="bs-example bs-example-form" role="form">
 				        <div class="input-group video-input-group">
 				            <input type="text" class="form-control video-search" placeholder="twitterhandle">
-				            <span class="input-group-addon video-search pointer"><i class='glyphicon glyphicon-search'></i> 搜索</span>
+				            <span class="input-group-addon video-search pointer"><i class='iconfont icon-search'></i>搜索</span>
 				        </div>
 				      </form>
 			      </div>
@@ -57,7 +58,8 @@
 				<div class="list-info clearfix">
 					<div class="list-box-item" v-for="list in message.lists"  v-on:click="checkVideo($index)">
 					 <a href="javascript:;">
-					 	<div class="check-box" v-show="isEdit" v-bind:class="{'check': list.checked}">
+					 	<div class="check-box" v-show="isEdit">
+					 		<i class="iconfont icon-gou" v-show="list.checked"></i>
 					 	</div>
 					 	<div class="video-mask" v-show="isEdit">
 					 	</div>

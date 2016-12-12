@@ -21,5 +21,13 @@ public class UserService {
 		return userMapper.selectByPrimaryKey(1);
 		
 	}
-	
+
+	/**
+	 * 获取app用户信息
+	 * @param user app帐号密码
+	 * @return app用户恓
+	 */
+	public User getUser(User user) {
+		return userMapper.getUser(user);
+	}
 }
