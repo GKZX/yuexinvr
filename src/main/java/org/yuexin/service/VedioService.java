@@ -21,7 +21,7 @@ import org.yuexin.model.SysUserExample;
 *
  */
 @Service
-public class SysUserService {
+public class VedioService {
 	@Autowired
 	private SysUserMapper sysuserMapper;
 	
