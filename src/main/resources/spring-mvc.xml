@@ -22,6 +22,13 @@
 			</list>
 		</property>
 	</bean>
+
+	<!-- 返回json、xml处理 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 	
 <!-- 	<bean -->
 <!-- class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/> -->
