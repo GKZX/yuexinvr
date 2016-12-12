@@ -39,7 +39,7 @@ public class SysUserController {
 	 */
 	@RequestMapping("/showLogin")
 	public ModelAndView showLogin(){
-		ModelAndView ModelAndView=new ModelAndView("/showLogin");
+		ModelAndView ModelAndView=new ModelAndView("/login");
 		return ModelAndView;
 	}
 	
