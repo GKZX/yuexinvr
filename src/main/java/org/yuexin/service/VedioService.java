@@ -1,18 +1,21 @@
 package org.yuexin.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.yuexin.dao.SysUserMapper;
+import org.yuexin.dao.VedioMapper;
 import org.yuexin.model.SysUser;
 import org.yuexin.model.SysUserExample;
+import org.yuexin.model.Vedio;
 
 
 /**
 
-* @Description: 管理后台用户操作
+* @Description: 视频操作
 
 * @author liuqin
 
@@ -23,23 +26,28 @@ import org.yuexin.model.SysUserExample;
 @Service
 public class VedioService {
 	@Autowired
-	private SysUserMapper sysuserMapper;
+	private VedioMapper vedioMapper;
 	
 	/**
-	 * 根据用户名、密码查询管理员信息
-	 * @param userName
-	 * @param password
-	 * @return
+	 * 新增视频
+	 * @param vedioCategoryId
+	 * @param isFree
+	 * @param money
+	 * @param vedioName
+	 * @param vedioImgUrl
+	 * @param vedioUrl
 	 */
-	public SysUser selectUserByNameAndPas(String userName,String password){
-		SysUserExample example = new SysUserExample();
-		SysUserExample.Criteria criteria = example.createCriteria();
-		criteria.andSysUserNameEqualTo(userName);
-		criteria.andSysUserPasswordEqualTo(password);
-		List<SysUser> sysUserList = sysuserMapper.selectByExample(example);
-		if(!CollectionUtils.isEmpty(sysUserList)){
-			return sysUserList.get(0);
-		}
-		return null;
+	public void addVedio(Integer vedioCategoryId,Short isFree,Integer money,String vedioName,String vedioImgUrl,String vedioUrl){
+		Vedio vedio = new Vedio();
+		vedio.setVedioCategoryId(vedioCategoryId);
+		vedio.setIsFree(isFree);
+		vedio.setMoney(money);
+		vedio.setVedioName(vedioName);
+		vedio.setVedioImgUrl(vedioImgUrl);
+		vedio.setVedioUrl(vedioUrl);
+		vedio.setVedioStatus(1);// 审核通过
+		vedio.setAddTime(new Date());
+		vedio.setSysFlag((byte) 1);
+		vedioMapper.insertSelective(vedio);
 	}
 }

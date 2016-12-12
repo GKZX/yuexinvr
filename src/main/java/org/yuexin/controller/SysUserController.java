@@ -65,7 +65,6 @@ public class SysUserController {
 		}else{
 			result.put("errorCode", ErrorEnums.SUCCESS.getCode());
 		}
-		respose.setHeader("Access-Control-Allow-Origin", "*");
 		return result;
 	}
 }
