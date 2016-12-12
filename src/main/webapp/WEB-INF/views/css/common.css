@@ -1,0 +1,37 @@
+/*reset*/
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote, table, th, td, embed, object {
+	padding: 0; 
+	margin: 0;
+}
+img,input {
+	border: 0;
+}
+input:focus {
+	outline: none;
+}
+ul {
+	list-style:none;
+}
+a:hover,a:focus {
+	text-decoration:none;
+}
+html {
+	font-size: 100px;
+	
+}
+/*common*/
+body {
+	font-family: "微软雅黑";
+}
+html,body,.wrapper,.video-frame-wrapper,.frame-wrapper {
+	height:100%;
+}
+.pointer {
+	cursor: pointer;
+}
+.frame-wrapper {
+	padding: 20px;
+}
+[v-cloak] {
+	display: none;
+}

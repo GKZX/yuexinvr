@@ -1,0 +1,27 @@
+.data-tit-box {
+	background: #f4f4f4;
+	border: 1px solid #ccc;
+	padding: 15px;
+}
+.data-register {
+	margin-bottom: 15px;
+}
+.data-register .num {
+	color: #aed374;
+	font-size: 18px;
+	font-weight: bold;
+}
+.data-tit {
+	font-size: 14px;
+	line-height: 32px;
+}
+.data-date-choise {
+	margin: 0 50px 0 20px;
+}
+.data-graph-box {
+	padding: 15px;
+}
+.data-graph {
+	width: 100%;
+	height: 430px;
+}

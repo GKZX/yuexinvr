@@ -1,0 +1,72 @@
+body {
+	background: url(../img/login-background.jpg);
+	background-size: cover;
+}
+.login-box {
+	width: 426px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	box-shadow: 1px 1px 20px #ccc;
+}
+.login-tit-box {
+	background: #eca703;
+	color: #fff;
+	text-align: center;
+	padding: 28px 0;
+	color: #ebebeb;
+}
+.login-tit {
+	font-size: 24px;
+	line-height: 40px;
+}
+.login-sub-tit {
+	font-size: 10px;
+}
+.login-info-box {
+	padding: 55px 8% 35px;
+	background-color: #fff;
+	position: relative;
+}
+.login-warn {
+	width: 84%;
+	position: absolute;
+	top: 20px;
+	text-align: center;
+	color: #f60824;	
+}
+.login-input-group {
+	height: 60px;
+	border: 1px solid #ccc;
+	overflow: hidden;
+}
+.login-input-group:first-child {
+	border-bottom: 0;
+}
+.login-input {
+	width: 100%;
+	height: 60px;
+	border: 0;	
+	font-size: 16px;
+}
+.login-input-label {
+	line-height: 60px;
+	text-align: center;
+	color: #999;
+}
+.login-forget {
+	color: #16b4ee;
+	text-decoration: underline;
+	line-height: 40px;
+}
+.login-btn {
+	width: 100%;
+	color: #fff;
+	background: #eca703;
+	text-decoration: none;
+	height: 50px;
+	line-height: 50px;
+	margin-top: 20px;
+	font-size: 16px;
+}
