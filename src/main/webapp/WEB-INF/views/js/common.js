@@ -4,7 +4,7 @@ $.ajaxs=function(url,data,successfn,errorfn){
 		url:url,
 		type:"post",
 		data:data,
-		dataType:"jsonp",
+		dataType:"json",
 		async:true,
 		timeout:2000,
 		success:function(d){
