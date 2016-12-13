@@ -6,7 +6,7 @@ var login=new Vue({
 	methods:{
 		Submit:function(){
 			var self=this;
-			var lurl="http://192.168.0.139:8080/yuexinvr/login";
+			var lurl="http://localhost:8080/yuexinvr/login";
 			var loginData={
 				"userName":$("#userName").val(),
 				"password":$("#password").val()
@@ -17,7 +17,7 @@ var login=new Vue({
 				data:loginData,
 				dataType:"json",
 				async:true,
-				timeout:2000,
+				timeout:5000,
 				success:function(d){
 					alert(0);
 				},

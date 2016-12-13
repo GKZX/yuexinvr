@@ -9,6 +9,14 @@
 		http://www.springframework.org/schema/mvc 
 		http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
 
+	<!-- 对静态资源文件的访问 -->    
+	<mvc:resources mapping="/js/**" location="/static/js/" />
+	<mvc:resources mapping="/css/**" location="/static/css/" />
+	<mvc:resources mapping="/img/**" location="/static/img/" />
+	<mvc:resources mapping="/fonts/**" location="/static/fonts/" />
+	<mvc:resources mapping="/json/**" location="/static/json/" />
+	
+	
 	<!-- 自动扫描controller包下的所有类，如果@Controller注入为bean -->
 	<context:component-scan base-package="org.yuexin.controller" />
 	

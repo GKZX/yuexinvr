@@ -184,8 +184,9 @@
 			<artifactId>commons-collections4</artifactId>
 			<version>4.1</version>
 		</dependency>
-
+		
 </dependencies>
+
 	<build>
 		<finalName>springmvc_mybatis_demo</finalName>
 		<plugins>
