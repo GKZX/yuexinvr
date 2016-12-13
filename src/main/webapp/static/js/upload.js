@@ -1,11 +1,58 @@
 var upload=new Vue({
 	el:"#uploadManage",
 	data:{
-		isfee:false
+		fclass:[],
+		sclass:[],
+		isfee:false,
+		selected:1,
+		sselected:3,
+		info:{
+			vedioName:"",
+			vedioNotes:"",
+			vedioImgUrl:"",
+			vedioUrl:"",
+			isFree:0,
+			money:"",
+			vedioCategoryPId:"",
+			vedioCategoryId:3
+		}
 	},
 	methods:{
 		choise:function(){
 			
+		},
+		upload:function(){
+		    this.info.vedioImgUrl="dd.jpg";
+		    this.info.vedioUrl="movie.mp4";
+		    this.info.vedioCategoryPId=this.selected;
+		    if(this.sclass.length==0){
+		    	this.info.vedioCategoryId="";
+		    }else{
+		    	this.info.vedioCategoryId=this.sselected;
+		    }
+		    var ucurl="/vedio/addVedio";
+		    var ctype="post";
+		    var upData=this.info;
+		    console.log(upData);
+		    $.ajaxs(curl,ctype,upData,function(data){
+		    	alert("ok");
+//		        if(data.errorCode==10000){//成功
+//		        	if(Id==0){
+//		        		upload.fclass=data.vedioCategoryList;
+//		        	}else{
+//		        		upload.sclass=data.vedioCategoryList;
+//		        	}
+//		        	
+//		        }
+			},function(){
+				alert("wrong");
+			})
+			
+		}
+	},
+	watch:{
+		selected:function(val){
+			classLoad(val);
 		}
 	}
 })
@@ -35,22 +82,30 @@ $(function(){
 	$("#upVideoBtn").click(function(){
 		$(".upVideoFile").trigger("click");
 	})
+	classLoad(0);
+	classLoad(1);
 })
-function loadClass(){
-	var curl="getVedioCateGory";
+function classLoad(Id){
+	var curl="vedio/getVedioCateGory";
 	var ctype="get";
 	var classData={
-		"vedioCategoryPId":0
+		"vedioCategoryPId":Id
 	};
 	$.ajaxs(curl,ctype,classData,function(data){
-		console.log(data);
-//		if(data.errorCode==20001){//鐢ㄦ埛鍚嶆垨鑰呭瘑鐮侀敊璇�
-//			self.isWrong=true;
-//		}else if(data.errorCode==10000){//鐧婚檰鎴愬姛
-//			self.isWrong=false;
-//			window.location.href="index";
-//		}
+        if(data.errorCode==10000){//成功
+        	if(Id==0){
+        		upload.fclass=data.vedioCategoryList;
+        	}else{
+        		upload.sclass=data.vedioCategoryList;
+        	}
+        	
+        }
 	},function(){
 		alert("wrong");
 	})
+}
+function check(){
+	//alert(2);
+	//return true;
+	
 }
