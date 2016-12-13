@@ -1,5 +1,7 @@
 package org.yuexin.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
 
@@ -68,7 +70,7 @@ public class VedioController {
 	 */
 	@RequestMapping("/vedio/getVedioCateGory")
 	@ResponseBody
-	public JSONObject getVedioCateGory(@RequestParam(value = "0", required = true) Integer vedioCategoryPId) {
+	public JSONObject getVedioCateGory(Integer vedioCategoryPId) {
 		JSONObject result = new JSONObject();
 		if (vedioCategoryPId == null) {
 			vedioCategoryPId = 0;
@@ -111,7 +113,7 @@ public class VedioController {
 			result.put("errorMsg", ErrorEnums.PARAM_ERROR.getMsg());
 			return result;
 		}
-		vedioService.addVedio(vedioCategoryPId, vedioCategoryId, isFree, money, vedioName, vedioImgUrl, vedioUrl);
+		vedioService.addVedio(vedioCategoryPId, vedioCategoryId, isFree, money, encodeParam(vedioName), encodeParam(vedioNotes), vedioImgUrl, vedioUrl);
 		result.put("errorCode", ErrorEnums.SUCCESS.getCode());
 		return result;
 	}
@@ -144,6 +146,24 @@ public class VedioController {
 		result.put("errorCode", ErrorEnums.SUCCESS.getCode());
 		result.put("vedioList", JSONArray.toJSON(vedioList));
 		return result;
+	}
+
+	@RequestMapping("/vedio/deleteVedios")
+	@ResponseBody
+	public void deleteVedios(String[] vedioIds) {
+		System.out.print(111);
+	}
+
+	public String encodeParam(String param) {
+		if (StringUtils.isNotBlank(param)) {
+			try {
+				return new String(param.getBytes("ISO-8859-1"), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
 
 }
