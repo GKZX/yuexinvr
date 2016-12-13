@@ -37,5 +37,20 @@ $(function(){
 	})
 })
 function loadClass(){
-	
+	var curl="getVedioCateGory";
+	var ctype="get";
+	var classData={
+		"vedioCategoryPId":0
+	};
+	$.ajaxs(curl,ctype,classData,function(data){
+		console.log(data);
+//		if(data.errorCode==20001){//鐢ㄦ埛鍚嶆垨鑰呭瘑鐮侀敊璇�
+//			self.isWrong=true;
+//		}else if(data.errorCode==10000){//鐧婚檰鎴愬姛
+//			self.isWrong=false;
+//			window.location.href="index";
+//		}
+	},function(){
+		alert("wrong");
+	})
 }
