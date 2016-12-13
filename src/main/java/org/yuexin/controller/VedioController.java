@@ -113,7 +113,7 @@ public class VedioController {
 			result.put("errorMsg", ErrorEnums.PARAM_ERROR.getMsg());
 			return result;
 		}
-		vedioService.addVedio(vedioCategoryPId, vedioCategoryId, isFree, money, encodeParam(vedioName), encodeParam(vedioNotes), vedioImgUrl, vedioUrl);
+		vedioService.addVedio(vedioCategoryPId, vedioCategoryId, isFree, money, vedioName, vedioNotes, vedioImgUrl, vedioUrl);
 		result.put("errorCode", ErrorEnums.SUCCESS.getCode());
 		return result;
 	}
@@ -157,6 +157,8 @@ public class VedioController {
 	public String encodeParam(String param) {
 		if (StringUtils.isNotBlank(param)) {
 			try {
+				System.out.println(param);
+				System.out.println(new String(param.getBytes("UTF-8"), "UTF-8"));
 				return new String(param.getBytes("ISO-8859-1"), "UTF-8");
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
