@@ -44,10 +44,22 @@ public class VedioController {
 	 * @return
 	 */
 	@RequestMapping("/video")
-	public ModelAndView index(){
+	public ModelAndView video(){
 		ModelAndView ModelAndView=new ModelAndView("/video");
 		return ModelAndView;
 	}
+	
+	/**
+	 * 视频上传页路由
+	 * @return
+	 */
+	@RequestMapping("/upload")
+	public ModelAndView upload(){
+		ModelAndView ModelAndView=new ModelAndView("/upload");
+		return ModelAndView;
+	}
+	
+	
 	
 	/**
 	 * 视频分类
