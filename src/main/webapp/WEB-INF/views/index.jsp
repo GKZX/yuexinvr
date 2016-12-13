@@ -8,7 +8,6 @@
 		<link href="css/iconfont.css" rel="stylesheet">
 		<link href="css/common.css" rel="stylesheet" />
 		<link href="css/main.css" rel='stylesheet'>
-		<script src="js/vue.js"></script>
 	</head>
 	<body>
 	  <div class="wrapper">
@@ -41,7 +40,7 @@
 		</nav>
         <!--上侧导航结束-->
         <!--下侧内容开始-->
-        <div class='page-wrapper'>
+        <div class='page-wrapper' id="listManage">
 		     <!--左侧导航开始-->
 		     <div class="collapse navbar-collapse" id="navbar-collapse">
 		     <nav class="navbar vr-navbar vr-left-navbar" role="navigation">
@@ -49,15 +48,7 @@
 					<li>
 						<a class='side-menu-item' data-toggle="collapse" href='#videoList'><i class="iconfont icon-shipin"></i>视频管理<b class="iconfont icon-jiantou pull-right list-icon"></b></a>
 						<ul class='drop-menu collapse' id='videoList'>
-							<li><a href="video.html" target="pageMain" class="alink">宗教文化</a></li>
-							<li><a href="video.html" target="pageMain" class="alink">旅游风景</a></li>
-							<li><a href="video.html" target="pageMain" class="alink">恐怖惊悚</a></li>
-							<li><a href="video.html" target="pageMain" class="alink">极限运动</a></li>
-							<li><a href="video.html" target="pageMain" class="alink">明星综艺</a></li>
-							<li><a href="video.html" target="pageMain" class="alink">音乐现场</a></li>
-							<li><a href="video.html" target="pageMain" class="alink">创意脑洞</a></li>
-							<li><a href="video.html" target="pageMain" class="alink">美女萌宠</a></li>
-							<li><a href="video.html" target="pageMain" class="alink">其他</a></li>
+							<li><a href="video.html?id={{item.id}}" target="pageMain" class="alink" v-for="item in lists">{{item.vedioCategoryName}}</a></li>
 						</ul>
 					</li>
 					<li>
@@ -77,12 +68,15 @@
 		    <!--左侧导航结束-->
 		    <!--页面内容部分开始-->
 		    <div class='page-main'>
-		    	<iframe name="pageMain" width="100%" height="100%" src="video.html" frameborder="0" data-id="" seamless></iframe>
+		    	<iframe name="pageMain" width="100%" height="100%" v-bind:src="baseUrl+indexId" frameborder="0" data-id="" seamless></iframe>
 		    </div>
 		    <!--页面内容部分结束-->
         </div>
      </div>
      <script src="js/jquery-3.1.1.min.js"></script>
+     <script src="js/vue.js"></script>
      <script src="js/bootstrap.min.js"></script>
+     <script src="js/common.js"></script>
+     <script src="js/index.js"></script>
 	</body>
 </html>
