@@ -1,4 +1,4 @@
-package org.yuexin.util;
+package org.yuexin.util.yunxin;
 
 import java.security.MessageDigest;
 
