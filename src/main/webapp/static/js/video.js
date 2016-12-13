@@ -34,10 +34,11 @@ function loadData(){
 		type:"get",
 		url:"json/video.json",
 		success:function(data){
-			for(var i=0;i<data.lists.length;i++){
-				data.lists[i].checked="";
-			}
-			video.message=data;	
+			console.log(data);
+//			for(var i=0;i<data.lists.length;i++){
+//				data.lists[i].checked="";
+//			}
+//			video.message=data;	
 		}
 	})
 }

@@ -6,18 +6,19 @@ var login=new Vue({
 	methods:{
 		Submit:function(){
 			var self=this;
-			var lurl="http://localhost:8080/yuexinvr/login";
+			var lurl="login";
+			var type="post";
 			var loginData={
 				"userName":$("#userName").val(),
 				"password":$("#password").val()
 			};
-			$.ajaxs(lurl,loginData,function(data){
-				alert(0);
+			$.ajaxs(lurl,type,loginData,function(data){
 				console.log(data);
-				if(data.errorCode==20001){//用户名或者密码错误
+				if(data.errorCode==20001){//鐢ㄦ埛鍚嶆垨鑰呭瘑鐮侀敊璇�
 					self.isWrong=true;
-				}else if(data.errorCode==10000){//登陆成功
+				}else if(data.errorCode==10000){//鐧婚檰鎴愬姛
 					self.isWrong=false;
+					window.location.href="index";
 				}
 			},function(){
 				alert("wrong");
