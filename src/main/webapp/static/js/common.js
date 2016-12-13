@@ -6,7 +6,7 @@ $.ajaxs=function(url,data,successfn,errorfn){
 		data:data,
 		dataType:"json",
 		async:true,
-		timeout:2000,
+		timeout:5000,
 		success:function(d){
 			successfn(d);
 		},
