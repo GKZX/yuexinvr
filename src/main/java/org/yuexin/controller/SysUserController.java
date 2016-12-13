@@ -33,6 +33,16 @@ public class SysUserController {
 	private SysUserService sysUserService;
 	
 	/**
+	 * 首页路由
+	 * @return
+	 */
+	@RequestMapping("/index")
+	public ModelAndView index(){
+		ModelAndView ModelAndView=new ModelAndView("/index");
+		return ModelAndView;
+	}
+	
+	/**
 	 * 管理员登录页面
 	 * @param modelMap
 	 * @return

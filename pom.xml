@@ -188,7 +188,7 @@
 </dependencies>
 
 	<build>
-		<finalName>springmvc_mybatis_demo</finalName>
+		<finalName>yuexinvr</finalName>
 		<plugins>
 			<!-- Run the JUnit unit tests in an isolated classloader -->
 			<plugin>
