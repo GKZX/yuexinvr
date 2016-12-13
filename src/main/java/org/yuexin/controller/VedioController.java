@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -37,6 +38,16 @@ public class VedioController {
 	private VedioService vedioService;
 	@Autowired
 	private VedioCategoryService vedioCategoryService;
+	
+	/**
+	 * 视频管理页路由
+	 * @return
+	 */
+	@RequestMapping("/video")
+	public ModelAndView index(){
+		ModelAndView ModelAndView=new ModelAndView("/video");
+		return ModelAndView;
+	}
 	
 	/**
 	 * 视频分类
