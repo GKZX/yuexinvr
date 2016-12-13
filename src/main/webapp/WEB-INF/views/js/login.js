@@ -11,33 +11,31 @@ var login=new Vue({
 				"userName":$("#userName").val(),
 				"password":$("#password").val()
 			};
-			$.ajax({
-				url:lurl,
-				type:"post",
-				data:loginData,
-				dataType:"json",
-				async:true,
-				timeout:2000,
-				success:function(d){
-					alert(0);
-				},
-				error:function(e){
-					alert(1);
-				}
-			})
-//			$.ajaxs(lurl,loginData,function(data){
-//				alert(0);
-//				console.log(data);
-//				if(data.errorCode==20001){//用户名或者密码错误
-//					self.isWrong=true;
-//				}else if(data.errorCode==10000){
-//					self.isWrong=false;
+//			$.ajax({
+//				url:lurl,
+//				type:"post",
+//				data:loginData,
+//				dataType:"json",
+//				async:true,
+//				timeout:2000,
+//				success:function(d){
+//					alert(0);
+//				},
+//				error:function(e){
+//					alert(1);
 //				}
-//			},function(){
-//				alert("wrong");
-//				self.isWrong=true;
-//				console.log(self.isWrong);
 //			})
+			$.ajaxs(lurl,loginData,function(data){
+				alert(0);
+				console.log(data);
+				if(data.errorCode==20001){//用户名或者密码错误
+					self.isWrong=true;
+				}else if(data.errorCode==10000){//登陆成功
+					self.isWrong=false;
+				}
+			},function(){
+				alert("wrong");
+			})
 		}
 	}
 })
