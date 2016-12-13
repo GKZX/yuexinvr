@@ -18,6 +18,7 @@
     <result column="sys_flag" jdbcType="TINYINT" property="sysFlag" />
     <result column="age" jdbcType="INTEGER" property="age" />
     <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -94,7 +95,7 @@
       This element was generated on Fri Dec 09 15:36:35 CST 2016.
     -->
     id, user_name, real_name, password, phone, face_img_url, religious_belief, add_time, 
-    sys_flag, age, job
+    sys_flag, age, job, code
   </sql>
   <select id="selectByExample" parameterType="org.yuexin.model.UserExample" resultMap="BaseResultMap">
     <!--
@@ -157,11 +158,11 @@
     </selectKey>
     insert into user (user_name, real_name, password, 
       phone, face_img_url, religious_belief, 
-      add_time, sys_flag, age, job)
+      add_time, sys_flag, age, job, code)
     values (#{userName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{faceImgUrl,jdbcType=VARCHAR}, #{religiousBelief,jdbcType=INTEGER}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{sysFlag,jdbcType=TINYINT}), #{age,jdbcType=INTEGER},
-      #{job,jdbcType=VARCHAR}
+      #{addTime,jdbcType=TIMESTAMP}, #{sysFlag,jdbcType=TINYINT}, #{age,jdbcType=INTEGER},
+      #{job,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.yuexin.model.User">
     <!--
@@ -204,6 +205,9 @@
       <if test="job != null">
         job,
       </if>
+      <if test="code != null">
+        code,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userName != null">
@@ -235,6 +239,9 @@
       </if>
       <if test="job != null">
         #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -290,6 +297,9 @@
       <if test="record.job != null">
         job = #{record.job,jdbcType=VARCHAR},
       </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -312,7 +322,8 @@
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       sys_flag = #{record.sysFlag,jdbcType=TINYINT},
       age = #{record.age,jdbcType=INTEGER},
-      job = #{record.job,jdbcType=VARCHAR}
+      job = #{record.job,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -355,6 +366,9 @@
       <if test="job != null">
         job = #{job,jdbcType=VARCHAR},
       </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -374,7 +388,8 @@
       add_time = #{addTime,jdbcType=TIMESTAMP},
       sys_flag = #{sysFlag,jdbcType=TINYINT},
       age = #{age,jdbcType=INTEGER},
-      job = #{job,jdbcType=VARCHAR}
+      job = #{job,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   
@@ -385,4 +400,56 @@
     where user_name = #{userName,jdbcType=VARCHAR} and
       password = #{password,jdbcType=VARCHAR}
   </select>
+  
+  <select id="getUserByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where user_name = #{userName,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getUserCheck" parameterType="org.yuexin.model.User" resultType="java.lang.Integer">
+    select count(*) from user where user_name = #{userName,jdbcType=VARCHAR} and
+    phone = #{phone,jdbcType=VARCHAR} and sys_flag = #{sysFlag,jdbcType=TINYINT}
+  </select>
+
+  <update id="updateUser" parameterType="org.yuexin.model.User">
+    update user
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="faceImgUrl != null">
+        face_img_url = #{faceImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="religiousBelief != null">
+        religious_belief = #{religiousBelief,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysFlag != null">
+        sys_flag = #{sysFlag,jdbcType=TINYINT},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="job != null">
+        job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_name = #{userName,jdbcType=VARCHAR}
+  </update>
 </mapper>
