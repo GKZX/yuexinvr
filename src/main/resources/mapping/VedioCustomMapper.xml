@@ -39,4 +39,11 @@
     limit #{startIndex,jdbcType=INTEGER}, #{endIndex,jdbcType=INTEGER}
   </select>
   
+  <update id="updateVedios" parameterType="java.util.Map">
+    update vedio set sys_flag = 1 where id 
+    <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+		#{item}
+	</foreach>
+  </update>
+  
 </mapper>

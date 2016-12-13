@@ -54,7 +54,7 @@ public class VedioService {
 	 *            视频地址
 	 */
 	public void addVedio(Integer vedioCategoryPId, Integer vedioCategoryId, Short isFree, Integer money, String vedioName,
-			String vedioImgUrl, String vedioUrl) {
+			String vedioNotes, String vedioImgUrl, String vedioUrl) {
 		if (vedioCategoryPId == null || vedioCategoryPId == 0 || isFree == null || StringUtils.isBlank(vedioName)
 				|| StringUtils.isBlank(vedioImgUrl)) {
 			return;
@@ -65,6 +65,7 @@ public class VedioService {
 		vedio.setIsFree(isFree);
 		vedio.setMoney(money);
 		vedio.setVedioName(vedioName);
+		vedio.setVedioNotes(vedioNotes);
 		vedio.setVedioImgUrl(vedioImgUrl);
 		vedio.setVedioUrl(vedioUrl);
 		vedio.setVedioStatus(1);// 审核通过
@@ -95,5 +96,11 @@ public class VedioService {
 		map.put("startIndex", startIndex);
 		map.put("endIndex", endIndex);
 		return vedioCustomMapper.selectVedios(map);
+	}
+
+	public void deleteVedios(String[] vedioIds) {
+		if (vedioIds == null) {
+			return;
+		}
 	}
 }
