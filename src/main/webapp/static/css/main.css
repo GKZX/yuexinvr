@@ -7,6 +7,16 @@
 .vr-navbar .navbar-nav > li {
     float: left; 
 }
+i.iconfont {
+	padding: 0 6px;
+}
+.navbar-nav > li .icon-hyyonghu {
+	font-size: 24px;
+	vertical-align: middle;
+}
+.navbar-nav > li .icon-arrowDown {
+	font-size: 10px;
+}
 .vr-navbar .icon-bar {
 	background: #fff;
 }
@@ -51,6 +61,13 @@
 #side-menu .alink:focus {
 	color: #ddb00b;
 	background: #0f161e;
+}
+.side-menu .list-icon {
+	font-size: 10px;
+}
+.side-menu .icon-hyyonghu {
+	font-size: 20px;
+	padding: 0 3px;
 }
 .side-menu-item {
 	border-top:1px solid #253444;
@@ -119,6 +136,9 @@
 	color:#fff;
 	padding:6px 18px;
 	font-size: 16px;
+}
+.video-row .icon-search {
+	font-size: 20px;
 }
 .video-box-tit {
 	height: 40px;
@@ -190,8 +210,9 @@
 .video-edit-btn a {
 	color: #fff;
 }
-.list-box-item .check-box.check {
-	background:red;
+.list-info .icon-gou {
+	padding: 0;
+	color: #d00413; 
 }
 @media screen and (max-width: 1100px) {
 	.list-box-item {
