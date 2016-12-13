@@ -28,6 +28,7 @@
     <result column="vedio_notes" jdbcType="LONGVARCHAR" property="vedioNotes" />
   </resultMap>
   
+  <!-- 分页条件查询视频 -->
   <select id="selectVedios" parameterType="java.util.Map" resultMap="ResultMapWithBLOBs">
     select distinct * from vedio where sys_flag = 1
     <if test="vedioCategoryId != null">
@@ -37,6 +38,17 @@
        AND vedio_name = #{vedioName,jdbcType=VARCHAR}
     </if>
     limit #{startIndex,jdbcType=INTEGER}, #{endIndex,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 条件查询视频统计 -->
+  <select id="countVedios" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) from vedio where sys_flag = 1
+    <if test="vedioCategoryId != null">
+       AND vedio_category_id = #{vedioCategoryId,jdbcType=INTEGER}
+    </if>
+    <if test="vedioName != null">
+       AND vedio_name = #{vedioName,jdbcType=VARCHAR}
+    </if>
   </select>
   
   <update id="updateVedios" parameterType="java.util.Map">

@@ -28,7 +28,7 @@
 				<li class="dropdown nav-sub-link">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="iconfont icon-hyyonghu"></i>管理员
-						<i class="iconfont icon-arrowDown"></i>
+						<i class="iconfont icon-arrowDown"> ${sysUser.sysRealName}</i>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="#">修改密码</a></li>

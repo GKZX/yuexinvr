@@ -1,7 +1,12 @@
 package org.yuexin.controller;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.yuexin.model.SysUser;
 import org.yuexin.service.SysUserService;
@@ -27,7 +32,7 @@ import com.alibaba.fastjson.JSONObject;
 *
  */
 @Controller
-public class SysUserController {
+public class SysUserController extends BaseController{
 
 	@Autowired
 	private SysUserService sysUserService;
@@ -37,9 +42,11 @@ public class SysUserController {
 	 * @return
 	 */
 	@RequestMapping("/index")
-	public ModelAndView index(){
-		ModelAndView ModelAndView=new ModelAndView("/index");
-		return ModelAndView;
+	public ModelAndView index(HttpServletRequest request){
+		SysUser sysUser = getSysUser(request);
+		Map<String, Object> map = new HashMap<String, Object>(1);
+		map.put("sysUser",sysUser);
+		return new ModelAndView("/index", map);
 	}
 	
 	/**
@@ -61,7 +68,7 @@ public class SysUserController {
 	 */
 	@RequestMapping("/login")
 	@ResponseBody
-	public JSONObject login(String callbackparam, String userName,String password,HttpServletResponse respose){
+	public JSONObject login(String callbackparam, String userName,String password,HttpServletRequest request, HttpServletResponse respose){
 		JSONObject result = new JSONObject();
 		if(StringUtils.isBlank(userName) || StringUtils.isBlank(password)){
 			result.put("errorCode", ErrorEnums.PARAM_ERROR.getCode());
@@ -74,6 +81,7 @@ public class SysUserController {
 			result.put("errorMsg", ErrorEnums.USERORPASSWORD_ERROR.getMsg());
 		}else{
 			result.put("errorCode", ErrorEnums.SUCCESS.getCode());
+			setSession(request, "sysUser", sysUser);
 		}
 		return result;
 	}

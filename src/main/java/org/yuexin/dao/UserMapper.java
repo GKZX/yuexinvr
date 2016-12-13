@@ -96,8 +96,33 @@ public interface UserMapper {
 
     /**
      * 根据用户名密码获取用户信息（app登录）
+     *
      * @param user app帐号密码
      * @return app用户信息
      */
     User getUser(User user);
+
+    /**
+     * 根据用户名获取用户信息
+     *
+     * @param userName 用户名
+     * @return app用户信息
+     */
+    User getUserByUserName(String userName);
+
+    /**
+     * 根据app用户名手机号帐号状态校验用户信息是否存在
+     *
+     * @param user 用户信息
+     * @return 执行状态
+     */
+    int getUserCheck(User user);
+
+    /**
+     * app用户注册修改信息
+     *
+     * @param user app用户信息
+     * @return 执行状态
+     */
+    int updateUser(User user);
 }
