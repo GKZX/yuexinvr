@@ -50,7 +50,7 @@
 						    </select>
 				        </div>
 				        <div class="col-xs-7">
-					        <input type="text" class="form-control video-price-input" placeholder="请输入视频价格" v-show="info.isFree==1" v-model="info.money"><span v-show="info.isFree==1">元</span>
+					        <input type="text" class="form-control video-price-input" placeholder="请输入视频价格" v-show="info.isFree==1" v-model="info.money" required><span v-show="info.isFree==1">元</span>
 				        </div>
 				    </div>
 				    <div class="form-group">

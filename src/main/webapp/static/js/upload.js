@@ -30,20 +30,15 @@ var upload=new Vue({
 		    }else{
 		    	this.info.vedioCategoryId=this.sselected;
 		    }
-		    var ucurl="/vedio/addVedio";
-		    var ctype="post";
+		    var uurl="/vedio/addVedio";
+		    var utype="post";
 		    var upData=this.info;
 		    console.log(upData);
-		    $.ajaxs(curl,ctype,upData,function(data){
+		    $.ajaxs(uurl,utype,upData,function(data){
 		    	alert("ok");
-//		        if(data.errorCode==10000){//成功
-//		        	if(Id==0){
-//		        		upload.fclass=data.vedioCategoryList;
-//		        	}else{
-//		        		upload.sclass=data.vedioCategoryList;
-//		        	}
-//		        	
-//		        }
+		        if(data.errorCode==10000){//成功
+		        	window.location.href="video";
+		        }
 			},function(){
 				alert("wrong");
 			})
