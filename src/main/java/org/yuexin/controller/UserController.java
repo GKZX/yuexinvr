@@ -21,6 +21,7 @@ import org.yuexin.util.yunxin.YunUtils;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -57,11 +58,16 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/app/login", method = RequestMethod.POST)
 	@ResponseBody
-	public User appLogin(@RequestBody Map<String, Object> loginParam, HttpServletResponse response) {
+	public Map<String, Object> appLogin(@RequestBody Map<String, Object> loginParam, HttpServletResponse response) {
+		Map<String, Object> msg;
 		//参数不能为空
 		if (CollectionUtil.isEmpty(loginParam)) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			return null;
+			msg = new HashMap<String, Object>();
+			msg.put("code", -1);
+			msg.put("msg", "用户名或密码不能为空");
+			msg.put("data", null);
+			return msg;
 		}
 		User user = new User();
 		user.setUserName(String.valueOf(loginParam.get("username")));
@@ -70,9 +76,17 @@ public class UserController {
 		User loginUser = userService.getUser(user);
 		if (null == loginUser) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			return null;
+			msg = new HashMap<String, Object>();
+			msg.put("code", -1);
+			msg.put("msg", "用户名或密码错误");
+			msg.put("data", null);
+			return msg;
 		} else {
-			return loginUser;
+			msg = new HashMap<String, Object>();
+			msg.put("code", 0);
+			msg.put("msg", "登录成功");
+			msg.put("data", loginUser);
+			return msg;
 		}
 	}
 
@@ -84,46 +98,56 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/app/sendCode", method = RequestMethod.POST)
 	@ResponseBody
-	public User appSendCode(@RequestBody Map<String, Object> phoneMap, HttpServletResponse response) throws IOException {
+	public Map<String, Object> appSendCode(@RequestBody Map<String, Object> phoneMap, HttpServletResponse response) throws IOException {
+		Map<String, Object> msg;
 		//手机号不能为空
 		if (CollectionUtil.isEmpty(phoneMap) ||
 				StringUtils.isEmpty(String.valueOf(phoneMap.get("phone")))) {
-			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-			return null;
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			msg = new HashMap<String, Object>();
+			msg.put("code", -1);
+			msg.put("msg", "手机号不能为空");
+			msg.put("data", null);
+			return msg;
 		}
 
 		String phone = phoneMap.get("phone").toString();
 
 		//用户存在则不能注册
 		if (null != userService.getUser(phone)) {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			return null;
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			msg = new HashMap<String, Object>();
+			msg.put("code", -1);
+			msg.put("msg", "该手机号已注册");
+			msg.put("data", null);
+			return msg;
 		}
 
 		String code = RandomNumeric.random();
 
-		User user = new User();
-		user.setUserName(phone);
-		user.setPassword("");
-		user.setPhone(phone);
-		user.setCode(code);
-		user.setSysFlag((byte) 0);
-		user.setAddTime(new Date());
-		if (userService.addSendCode(user)) {
-			String[] phones = {phone};
-			String[] codes = {code};
-			String msg = YunUtils.sendTemplateMessage(phones, codes);
-			Map<String, Object> msgMap = new ObjectMapper().readValue(msg, Map.class);
-			if (!"200".contains(String.valueOf(msgMap.get("code")))) {
-				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-				return null;
-			} else {
-				response.setStatus(HttpServletResponse.SC_OK);
-				return userService.getUser(user.getUserName());
-			}
+		String[] phones = {phone};
+		String[] codes = {code};
+		String data = YunUtils.sendTemplateMessage(phones, codes);
+		Map<String, Object> msgMap = new ObjectMapper().readValue(data, Map.class);
+		if (!"200".contains(String.valueOf(msgMap.get("code")))) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			msg = new HashMap<String, Object>();
+			msg.put("code", -1);
+			msg.put("msg", "短信发送失败");
+			msg.put("data", null);
+			return msg;
 		} else {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			return null;
+			response.setStatus(HttpServletResponse.SC_OK);
+
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("phone", phone);
+			params.put("code", code);
+
+			msg = new HashMap<String, Object>();
+			msg.put("code", 0);
+			msg.put("msg", "短信验证码发送成功");
+			msg.put("data", params);
+			return msg;
 		}
 	}
 
@@ -135,10 +159,15 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/app/register", method = RequestMethod.POST)
 	@ResponseBody
-	public User appRegister(@RequestBody Map<String, Object> userMap, HttpServletResponse response) {
+	public Map<String, Object> appRegister(@RequestBody Map<String, Object> userMap, HttpServletResponse response) {
+		Map<String, Object> msg;
 		if (CollectionUtil.isEmpty(userMap)) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			return null;
+			msg = new HashMap<String, Object>();
+			msg.put("code", -1);
+			msg.put("msg", "用户信息不能为空");
+			msg.put("data", null);
+			return msg;
 		}
 
 		User user = new User();
@@ -146,24 +175,34 @@ public class UserController {
 		user.setPhone(String.valueOf(userMap.get("phone")));
 		user.setPassword(MD5Util.replaceMD5(String.valueOf(userMap.get("password"))));
 		user.setReligiousBelief(Integer.parseInt(String.valueOf(userMap.get("religiousBelief"))));
-		user.setSysFlag((byte) 0);
+		user.setSysFlag((byte) 1);
 		user.setAge(Integer.parseInt(String.valueOf(userMap.get("age"))));
 		user.setJob(String.valueOf(userMap.get("job")));
+		user.setAddTime(new Date());
 
 		//检查app用户是否存在
-		if (!userService.getUserCheck(user)) {
+		if (null != userService.getUser(user.getPhone())) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			return null;
+			msg = new HashMap<String, Object>();
+			msg.put("code", -1);
+			msg.put("msg", "用户已注册");
+			msg.put("data", null);
+			return msg;
 		} else {
-			//启用帐号并将验证码清空
-			user.setSysFlag((byte) 1);
-			user.setCode("");
-			if (userService.updateUser(user)) {
+			if (userService.addUser(user)) {
 				response.setStatus(HttpServletResponse.SC_OK);
-				return userService.getUser(user.getUserName());
+				msg = new HashMap<String, Object>();
+				msg.put("code", 0);
+				msg.put("msg", "用户注册成功");
+				msg.put("data", userService.getUser(user.getUserName()));
+				return msg;
 			} else {
 				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				return null;
+				msg = new HashMap<String, Object>();
+				msg.put("code", 1);
+				msg.put("msg", "服务器内部错误");
+				msg.put("data", null);
+				return msg;
 			}
 		}
 	}

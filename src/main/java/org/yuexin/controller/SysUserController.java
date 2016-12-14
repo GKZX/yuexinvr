@@ -44,6 +44,9 @@ public class SysUserController extends BaseController{
 	@RequestMapping("/index")
 	public ModelAndView index(HttpServletRequest request){
 		SysUser sysUser = getSysUser(request);
+		if(sysUser == null){// 未登录
+			return new ModelAndView("redirect:/showLogin");
+		}
 		Map<String, Object> map = new HashMap<String, Object>(1);
 		map.put("sysUser",sysUser);
 		return new ModelAndView("/index", map);
