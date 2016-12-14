@@ -19,4 +19,11 @@ public interface VedioCustomMapper {
 	 * @return
 	 */
 	int countVedios(Map<String,Object> map);
+	
+	/**
+	 * 删除视频
+	 * @param map
+	 * @return
+	 */
+	int deleteVedios(Map<String,Object> map);
 }

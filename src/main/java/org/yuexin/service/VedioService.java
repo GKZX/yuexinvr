@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.yuexin.dao.VedioCustomMapper;
 import org.yuexin.dao.VedioLogMapper;
 import org.yuexin.dao.VedioMapper;
@@ -173,9 +174,21 @@ public class VedioService {
 		return vedioCustomMapper.countVedios(map);
 	}
 
-	public void deleteVedios(String[] vedioIds) {
+	/**
+	 * 删除视频
+	 * @param vedioIds
+	 */
+	@Transactional
+	public void deleteVedios(Integer[] vedioIds, SysUser sysUser) {
 		if (vedioIds == null) {
 			return;
+		}
+		Map<String, Object> map = new HashMap<String, Object>(1);
+		map.put("vedioIds", vedioIds);
+		vedioCustomMapper.deleteVedios(map);
+		
+		for(Integer vedioId : vedioIds){
+			addVedioLog(vedioId, sysUser.getId(), 2);// 操作日志记录
 		}
 	}
 }

@@ -34,10 +34,10 @@
 	join vedio_category vc on vc.id = v.vedio_category_id
 	where v.sys_flag = 1
     <if test="vedioCategoryId != null">
-       AND vedio_category_id = #{vedioCategoryId,jdbcType=INTEGER}
+       AND (v.vedio_category_id = #{vedioCategoryId,jdbcType=INTEGER} OR vc.p_id = #{vedioCategoryId,jdbcType=INTEGER})
     </if>
-    <if test="vedioName != null">
-       AND vedio_name = #{vedioName,jdbcType=VARCHAR}
+    <if test="searchCriteria != null">
+       AND (v.vedio_name like concat('%',#{searchCriteria,jdbcType=VARCHAR},'%') OR v.vedio_notes like concat('%',#{searchCriteria,jdbcType=VARCHAR},'%'))
     </if>
     <if test="sortType != null and  sortType == 0">
     	order by v.add_time desc
@@ -56,19 +56,22 @@
   
   <!-- 条件查询视频统计 -->
   <select id="countVedios" parameterType="java.util.Map" resultType="java.lang.Integer">
-    select count(*) from vedio where sys_flag = 1
-    <if test="vedioCategoryId != null">
-       AND vedio_category_id = #{vedioCategoryId,jdbcType=INTEGER}
+    select count(*) from vedio v
+	join vedio_category vc on vc.id = v.vedio_category_id
+	where v.sys_flag = 1
+   	<if test="vedioCategoryId != null">
+       AND (v.vedio_category_id = #{vedioCategoryId,jdbcType=INTEGER} OR vc.p_id = #{vedioCategoryId,jdbcType=INTEGER})
     </if>
-    <if test="vedioName != null">
-       AND vedio_name = #{vedioName,jdbcType=VARCHAR}
+    <if test="searchCriteria != null">
+       AND (v.vedio_name like concat('%',#{searchCriteria,jdbcType=VARCHAR},'%') OR v.vedio_notes like concat('%',#{searchCriteria,jdbcType=VARCHAR},'%')) 
     </if>
   </select>
   
-  <update id="updateVedios" parameterType="java.util.Map">
-    update vedio set sys_flag = 1 where id 
-    <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
-		#{item}
+  <!-- 删除视频（将状态置为失效） -->
+  <update id="deleteVedios" parameterType="java.util.Map">
+    update vedio set sys_flag = 0 where id in
+    <foreach collection="vedioIds" item="vedioId" index="index" open="(" separator="," close=")">
+		#{vedioId}
 	</foreach>
   </update>
   

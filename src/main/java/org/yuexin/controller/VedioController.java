@@ -189,9 +189,28 @@ public class VedioController extends BaseController {
 		return result;
 	}
 
+	/**
+	 * 删除视频
+	 * 
+	 * @param vedioIds
+	 */
 	@RequestMapping("/vedio/deleteVedios")
 	@ResponseBody
-	public void deleteVedios(String[] vedioIds) {
-		System.out.print(111);
+	public Object deleteVedios(Integer[] vedioIds, HttpServletRequest request) {
+		JSONObject result = new JSONObject();
+		SysUser sysUser = getSysUser(request);
+		if (sysUser == null) {// 未登录
+			result.put("errorCode", ErrorEnums.NOT_LOGIN.getCode());
+			result.put("errorMsg", ErrorEnums.NOT_LOGIN.getMsg());
+			return result;
+		}
+		if (vedioIds == null) {// 参数错误
+			result.put("errorCode", ErrorEnums.PARAM_ERROR.getCode());
+			result.put("errorMsg", ErrorEnums.PARAM_ERROR.getMsg());
+			return result;
+		}
+		vedioService.deleteVedios(vedioIds, sysUser);
+		result.put("errorCode", ErrorEnums.SUCCESS.getCode());
+		return result;
 	}
 }
