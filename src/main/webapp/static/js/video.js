@@ -1,6 +1,7 @@
 var video=new Vue({
 	el:"#videoManager",
 	data:{
+		fid:"",
 		id:"",
 		sortType:2,
 		message:"",
@@ -19,17 +20,35 @@ var video=new Vue({
 		},
 		delVideo:function(){
 			var lists=this.message.vedioList;
-			var removeList=[];
+			var vedioIds=[];
 			for(var i=0;i<lists.length;i++){
 				if(lists[i].checked==true){
-					lists.splice(i,1);
-					i--;
+					vedioIds.push(parseInt(lists[i].id));
 				}
 			}
+			alert(vedioIds);
+			var durl="/vedio/deleteVedios";
+			var dtype="POST";
+			var ddata={
+					"vedioIds":vedioIds
+			}
+			console.log(ddata);
+			$.ajaxs(durl,dtype,ddata,function(data){
+				console.log(data);
+		        if(data.errorCode==10000){//成功
+		        	for(var i=0;i<lists.length;i++){
+						if(lists[i].checked==true){
+							lists.splice(i,1);
+							i--;
+						}
+					}
+		        }
+			},function(){
+				alert("wrong");
+			})
 		},
 		sort:function(type){
 			this.sortType=type;
-			//alert(this.sortType);
 			loadData(this.id,type);
 		},
 		choiseClass:function(e){
@@ -54,6 +73,7 @@ Vue.filter("formatType",function(value){
 })
 $(function(){
 	var id= getParam("id");
+	video.fid=id;
 	video.id=id;
 	loadData(id,video.sortType);	
 	classLoad(id);
@@ -100,9 +120,6 @@ function classLoad(Id){
 	$.ajaxs(curl,ctype,classData,function(data){
         if(data.errorCode==10000){//成功
         	var classList=data.vedioCategoryList;
-//        	for(var i=0;i<classList.length;i++){
-//        		classList[i].isActive=false;
-//        	}
         	video.sclass=classList;
         	console.log(video.sclass);
         }

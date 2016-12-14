@@ -47,7 +47,7 @@
 				</div>
 				<div class="clearfix video-class">
 				   <div class="video-box-item active class-item" v-show="sclass.length>0">
-				      <a href="javascript:;" v-bind:id="id" v-on:click="choiseClass">全部分类</a>
+				      <a href="javascript:;" v-bind:id="fid" v-on:click="choiseClass($event)">全部分类</a>
 				   </div>
 				   <div class="video-box-item class-item" v-for="item in sclass" track-by="$index">
 					  <a href="javascript:;" v-bind:id="item.id" v-on:click="choiseClass($event)">{{item.vedioCategoryName}}</a>
@@ -74,7 +74,7 @@
 				</div>
 				
 				<div class="list-info clearfix">
-					<div class="list-box-item" v-for="list in message.vedioList"  v-on:click="checkVideo($index)">
+					<div class="list-box-item" v-for="list in message.vedioList" v-bind:id="list.id" v-on:click="checkVideo($index)">
 					 <a href="javascript:;">
 					 	<div class="check-box" v-show="isEdit">
 					 		<i class="iconfont icon-gou" v-show="list.checked"></i>
