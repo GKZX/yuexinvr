@@ -28,13 +28,30 @@
 			<div class="class-box video-box">
 				<div class="row">
 					<div class="col-xs-12 video-box-tit">
-						共{{message.count}}个视频
+						共{{message.vedioSize}}个视频
 					</div>
 				</div>
-				<div class="clearfix" v-for="c in message.classes">
-					<div class="video-box-item" v-for="item in c" track-by="$index">
-						<a href="javascript:;">{{item}}</a>
-					</div>
+				<div class="clearfix video-class">
+				   <div class="video-box-item sort-item">
+				      <a href="javascript:;" v-on:click="sort(0)">全部视频</a>
+				   </div>
+				   <div class="video-box-item sort-item">
+				      <a href="javascript:;" v-on:click="sort(1)">播放量</a>
+				   </div>
+				   <div class="video-box-item active sort-item">
+				      <a href="javascript:;" v-on:click="sort(2)">最近上传</a>
+				   </div>
+				   <div class="video-box-item sort-item">
+				      <a href="javascript:;" v-on:click="sort(3)">销售量</a>
+				   </div>
+				</div>
+				<div class="clearfix video-class">
+				   <div class="video-box-item active class-item" v-show="sclass.length>0">
+				      <a href="javascript:;" v-bind:id="id" v-on:click="choiseClass">全部分类</a>
+				   </div>
+				   <div class="video-box-item class-item" v-for="item in sclass" track-by="$index">
+					  <a href="javascript:;" v-bind:id="item.id" v-on:click="choiseClass($event)">{{item.vedioCategoryName}}</a>
+				   </div>
 				</div>
 			</div>
 			<!--list-box部分-->
@@ -57,7 +74,7 @@
 				</div>
 				
 				<div class="list-info clearfix">
-					<div class="list-box-item" v-for="list in message.lists"  v-on:click="checkVideo($index)">
+					<div class="list-box-item" v-for="list in message.vedioList"  v-on:click="checkVideo($index)">
 					 <a href="javascript:;">
 					 	<div class="check-box" v-show="isEdit">
 					 		<i class="iconfont icon-gou" v-show="list.checked"></i>
@@ -65,26 +82,26 @@
 					 	<div class="video-mask" v-show="isEdit">
 					 	</div>
 						<div class="video-img">
-							<img src="img/video-1.jpg" v-bind:src="list.img">
+							<img src="img/video-1.jpg" v-bind:src="list.vedioImgUrl">
 						</div>
 						<div class="video-desc">
-							<h3 class="video-desc-tit">{{list.tit}}</h3>
+							<h3 class="video-desc-tit">{{list.vedioName}}</h3>
 							<ul class="video-desc-list">
 								<li>
 									<span>视频类型:</span>
-									<span class="data">{{list.type}}</span>
+									<span class="data">{{list.isFree | formatType}}</span>
 								</li>
 								<li>
 									<span>上传时间:</span>
-									<span class="data">{{list.time}}</span>
+									<span class="data">{{list.addTime | formatDate}}</span>
 								</li>
 								<li>
 									<span>播放量:</span>
-									<span class="data">{{list.num}}</span>
+									<span class="data">{{list.playAmount}}</span>
 								</li>
 								<li>
 									<span>销售量:</span>
-									<span class="data">{{list.sale}}</span>
+									<span class="data">0</span>
 								</li>
 								<li>
 									<div class="btn video-edit-btn pull-right"><a href="upload.html">编辑</a></div>
@@ -96,7 +113,6 @@
 				</div>
 			</div>
 		</div>
-		<script src="js/json.js"></script>
 		<script src="js/jquery-3.1.1.min.js"></script>
 		<script src="js/vue.js"></script>
 		<script src="js/common.js"></script>

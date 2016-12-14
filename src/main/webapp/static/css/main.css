@@ -158,9 +158,11 @@ i.iconfont {
 	color: #333;
 }
 .video-box-item.active {
-	color: #fff;
 	background: #53687f;
 	border-radius: 3px;
+}
+.video-box-item.active a {
+	color: #fff;
 }
 .class-box {
 	padding-bottom: 10px;
