@@ -179,7 +179,7 @@ public class VedioService {
 	 * @param vedioIds
 	 */
 	@Transactional
-	public void deleteVedios(String[] vedioIds, SysUser sysUser) {
+	public void deleteVedios(Integer[] vedioIds, SysUser sysUser) {
 		if (vedioIds == null) {
 			return;
 		}
@@ -187,8 +187,8 @@ public class VedioService {
 		map.put("vedioIds", vedioIds);
 		vedioCustomMapper.deleteVedios(map);
 		
-		for(String vedioId : vedioIds){
-			addVedioLog(Integer.parseInt(vedioId), sysUser.getId(), 2);// 操作日志记录
+		for(Integer vedioId : vedioIds){
+			addVedioLog(vedioId, sysUser.getId(), 2);// 操作日志记录
 		}
 	}
 }

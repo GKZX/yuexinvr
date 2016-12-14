@@ -196,7 +196,7 @@ public class VedioController extends BaseController {
 	 */
 	@RequestMapping("/vedio/deleteVedios")
 	@ResponseBody
-	public Object deleteVedios(String[] vedioIds, HttpServletRequest request) {
+	public Object deleteVedios(Integer[] vedioIds, HttpServletRequest request) {
 		JSONObject result = new JSONObject();
 		SysUser sysUser = getSysUser(request);
 		if (sysUser == null) {// 未登录
