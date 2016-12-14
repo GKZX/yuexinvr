@@ -20,10 +20,10 @@ import java.util.Random;
  */
 public final class YunUtils {
 
-    private static final String APP_KEY = "1719bb50b6bb43e08187c9f99a330dec";
-    private static final String APP_SECRET = "3ab4445fe76d";
+    private static final String APP_KEY = "0bc7711b41f0d434ee0183e96eef77ff";
+    private static final String APP_SECRET = "ec188959991d";
     private static final String ERROR_MSG = "{code: 500, msg: '云信服务错误'}";
-    private static final int TEMPLATEID = 3029638; //短信模版
+    private static final int TEMPLATEID = 3040047; //短信模版
 
     private static Logger logger = LoggerFactory.getLogger(YunUtils.class);
 
