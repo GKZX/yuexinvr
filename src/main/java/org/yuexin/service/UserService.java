@@ -38,7 +38,7 @@ public class UserService {
 	 * @param user 手机注册校验信息
 	 * @return true：添加成功，否则失败
 	 */
-	public boolean addSendCode(User user) {
+	public boolean addUser(User user) {
 		return userMapper.insertSelective(user) == 1;
 	}
 
