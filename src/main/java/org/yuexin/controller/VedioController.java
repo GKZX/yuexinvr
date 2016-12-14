@@ -1,11 +1,9 @@
 package org.yuexin.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.yuexin.model.SysUser;
 import org.yuexin.model.Vedio;
@@ -33,7 +31,7 @@ import com.alibaba.fastjson.JSONObject;
  * @date 2016-12-12 下午2:27:05
  */
 @Controller
-public class VedioController {
+public class VedioController extends BaseController {
 	@Autowired
 	private VedioService vedioService;
 	@Autowired
@@ -82,8 +80,12 @@ public class VedioController {
 	}
 
 	/**
-	 * 新增视频
+	 * 新增/编辑视频
 	 * 
+	 * @param type
+	 *            操作类型: 0-上传;1-编辑;2-删除
+	 * @param vedioId
+	 *            视频ID
 	 * @param vedioCategoryPId
 	 *            视频分类第一级ID
 	 * @param vedioCategoryId
@@ -102,18 +104,52 @@ public class VedioController {
 	 *            视频地址
 	 * @return
 	 */
-	@RequestMapping("/vedio/addVedio")
+	@RequestMapping("/vedio/addOrEditVedio")
 	@ResponseBody
-	public JSONObject addVedio(Integer vedioCategoryPId, Integer vedioCategoryId, Short isFree, Integer money, String vedioName,
-			String vedioNotes, String vedioImgUrl, String vedioUrl) {
+	public JSONObject addOrEditVedio(Integer type, Integer vedioId, Integer vedioCategoryPId, Integer vedioCategoryId, Short isFree,
+			Integer money, String vedioName, String vedioNotes, String vedioImgUrl, String vedioUrl, HttpServletRequest request) {
 		JSONObject result = new JSONObject();
+		SysUser sysUser = getSysUser(request);
+		if (sysUser == null) {// 未登录
+			result.put("errorCode", ErrorEnums.NOT_LOGIN.getCode());
+			result.put("errorMsg", ErrorEnums.NOT_LOGIN.getMsg());
+			return result;
+		}
 		if (vedioCategoryPId == null || isFree == null || StringUtils.isBlank(vedioName) || StringUtils.isBlank(vedioImgUrl)
-				|| StringUtils.isBlank(vedioUrl)) {
+				|| StringUtils.isBlank(vedioUrl)) {// 参数错误
 			result.put("errorCode", ErrorEnums.PARAM_ERROR.getCode());
 			result.put("errorMsg", ErrorEnums.PARAM_ERROR.getMsg());
 			return result;
 		}
-		vedioService.addVedio(vedioCategoryPId, vedioCategoryId, isFree, money, vedioName, vedioNotes, vedioImgUrl, vedioUrl);
+		vedioService.addOrUpdateVedio(sysUser, type, vedioId, vedioCategoryPId, vedioCategoryId, isFree, money, vedioName, vedioNotes,
+				vedioImgUrl, vedioUrl);
+		result.put("errorCode", ErrorEnums.SUCCESS.getCode());
+		return result;
+	}
+	
+	/**
+	 * 获取视频详细信息
+	 * @param vedioId 视频ID
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/vedio/getVedio")
+	@ResponseBody
+	public JSONObject getVedio(Integer vedioId, HttpServletRequest request) {
+		JSONObject result = new JSONObject();
+		SysUser sysUser = getSysUser(request);
+		if (sysUser == null) {// 未登录
+			result.put("errorCode", ErrorEnums.NOT_LOGIN.getCode());
+			result.put("errorMsg", ErrorEnums.NOT_LOGIN.getMsg());
+			return result;
+		}
+		if (vedioId == null) {// 参数错误
+			result.put("errorCode", ErrorEnums.PARAM_ERROR.getCode());
+			result.put("errorMsg", ErrorEnums.PARAM_ERROR.getMsg());
+			return result;
+		}
+		Vedio vedio = vedioService.selectVedioById(vedioId);
+		result.put("vedio", vedio);
 		result.put("errorCode", ErrorEnums.SUCCESS.getCode());
 		return result;
 	}
@@ -155,19 +191,4 @@ public class VedioController {
 	public void deleteVedios(String[] vedioIds) {
 		System.out.print(111);
 	}
-
-	public String encodeParam(String param) {
-		if (StringUtils.isNotBlank(param)) {
-			try {
-				System.out.println(param);
-				System.out.println(new String(param.getBytes("UTF-8"), "UTF-8"));
-				return new String(param.getBytes("ISO-8859-1"), "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
-
 }
