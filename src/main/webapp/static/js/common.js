@@ -15,3 +15,13 @@ $.ajaxs=function(url,type,data,successfn,errorfn){
 		}
 	})
 }
+//获取地址栏参数	 
+function getParam(name){  //获取参数
+	var url=window.location.search;  //获取问号之后的字0符
+	var reg=new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	if(url!=null && url.toString().length>1)
+	{ 
+	var r=url.substr(1).match(reg);
+	if(r!=null)return unescape(r[2]); return null;
+	}
+};

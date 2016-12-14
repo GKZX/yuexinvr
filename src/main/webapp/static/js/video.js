@@ -28,7 +28,10 @@ var video=new Vue({
 })
 $(function(){
 	loadData();
+	
 })
+var a= getParam("id");
+alert(a);
 function loadData(){
 	$.ajax({
 		type:"get",

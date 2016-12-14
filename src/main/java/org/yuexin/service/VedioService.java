@@ -97,6 +97,26 @@ public class VedioService {
 		map.put("endIndex", endIndex);
 		return vedioCustomMapper.selectVedios(map);
 	}
+	
+	/**
+	 * 条件查询视频统计
+	 * 
+	 * @param vedioCategoryId
+	 *            分类ID
+	 * @param searchCriteria
+	 *            搜索条件
+	 * @param indexPage
+	 *            第几页
+	 * @param pageSize
+	 *            每页条数
+	 * @return
+	 */
+	public int selectVedioSize(Integer vedioCategoryId, String searchCriteria) {
+		Map<String, Object> map = new HashMap<String, Object>(4);
+		map.put("vedioCategoryId", vedioCategoryId);
+		map.put("searchCriteria", searchCriteria);
+		return vedioCustomMapper.countVedios(map);
+	}
 
 	public void deleteVedios(String[] vedioIds) {
 		if (vedioIds == null) {

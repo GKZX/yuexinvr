@@ -143,8 +143,10 @@ public class VedioController {
 			return result;
 		}
 		List<Vedio> vedioList = vedioService.selectVedioList(vedioCategoryId, searchCriteria, indexPage, pageSize);
+		int vedioSize = vedioService.selectVedioSize(vedioCategoryId, searchCriteria);
 		result.put("errorCode", ErrorEnums.SUCCESS.getCode());
 		result.put("vedioList", JSONArray.toJSON(vedioList));
+		result.put("vedioSize", vedioSize);
 		return result;
 	}
 

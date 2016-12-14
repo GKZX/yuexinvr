@@ -12,4 +12,11 @@ public interface VedioCustomMapper {
 	 * @return
 	 */
 	List<Vedio> selectVedios(Map<String,Object> map);
+	
+	/**
+	 * 条件查询视频统计
+	 * @param map
+	 * @return
+	 */
+	int countVedios(Map<String,Object> map);
 }
