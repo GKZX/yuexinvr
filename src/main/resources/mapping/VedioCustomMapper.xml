@@ -30,12 +30,26 @@
   
   <!-- 分页条件查询视频 -->
   <select id="selectVedios" parameterType="java.util.Map" resultMap="ResultMapWithBLOBs">
-    select distinct * from vedio where sys_flag = 1
+  	select distinct v.* from vedio v
+	join vedio_category vc on vc.id = v.vedio_category_id
+	where v.sys_flag = 1
     <if test="vedioCategoryId != null">
        AND vedio_category_id = #{vedioCategoryId,jdbcType=INTEGER}
     </if>
     <if test="vedioName != null">
        AND vedio_name = #{vedioName,jdbcType=VARCHAR}
+    </if>
+    <if test="sortType != null and  sortType == 0">
+    	order by v.add_time desc
+    </if>
+    <if test="sortType != null and  sortType == 1">
+    	order by v.play_amount desc
+    </if>
+    <if test="sortType != null and  sortType == 2">
+    	order by v.add_time desc
+    </if>
+    <if test="sortType != null and  sortType == 3">
+    	order by v.add_time desc
     </if>
     limit #{startIndex,jdbcType=INTEGER}, #{endIndex,jdbcType=INTEGER}
   </select>

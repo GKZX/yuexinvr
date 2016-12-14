@@ -9,13 +9,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-import org.yuexin.dao.SysUserMapper;
 import org.yuexin.dao.VedioCustomMapper;
 import org.yuexin.dao.VedioLogMapper;
 import org.yuexin.dao.VedioMapper;
 import org.yuexin.model.SysUser;
-import org.yuexin.model.SysUserExample;
 import org.yuexin.model.Vedio;
 import org.yuexin.model.VedioLog;
 
@@ -65,19 +62,19 @@ public class VedioService {
 	 *            视频地址
 	 */
 	@Transactional
-	public void addOrUpdateVedio(SysUser sysUser, Integer type, Integer vedioId, Integer vedioCategoryPId, Integer vedioCategoryId, Short isFree, Integer money,
-			String vedioName, String vedioNotes, String vedioImgUrl, String vedioUrl) {
+	public void addOrUpdateVedio(SysUser sysUser, Integer type, Integer vedioId, Integer vedioCategoryPId, Integer vedioCategoryId,
+			Short isFree, Integer money, String vedioName, String vedioNotes, String vedioImgUrl, String vedioUrl) {
 		if (sysUser == null || vedioCategoryPId == null || vedioCategoryPId == 0 || isFree == null || StringUtils.isBlank(vedioName)
 				|| StringUtils.isBlank(vedioImgUrl)) {
 			return;
 		}
 		Integer categoryId = (vedioCategoryId != null && vedioCategoryId != 0) ? vedioCategoryId : vedioCategoryPId;// 分类存当前类别的ID
-		
+
 		Vedio vedio = new Vedio();
-		if(type == 1 && vedioId != null){// 编辑
+		if (type == 1 && vedioId != null) {// 编辑
 			vedio = selectVedioById(vedioId);
 			vedio.setUpdateTime(new Date());
-		}else {
+		} else {
 			vedio.setAddTime(new Date());
 		}
 		vedio.setVedioCategoryId(categoryId);
@@ -89,26 +86,27 @@ public class VedioService {
 		vedio.setVedioUrl(vedioUrl);
 		vedio.setVedioStatus(1);// 暂时默认审核通过
 		vedio.setSysFlag((byte) 1);
-		if(type == 1 && vedioId != null){// 编辑
+		if (type == 1 && vedioId != null) {// 编辑
 			vedioMapper.updateByPrimaryKeySelective(vedio);
-		}else {
+		} else {
 			vedioMapper.insertSelective(vedio);
 		}
-		
+
 		addVedioLog(vedio.getId(), sysUser.getId(), type);
 	}
-	
+
 	/**
 	 * 根据ID获取视频
+	 * 
 	 * @param vedioId
 	 * @return
 	 */
-     public Vedio selectVedioById(Integer vedioId){
-    	 if(vedioId == null){
-    		 return null;
-    	 }
-    	 return vedioMapper.selectByPrimaryKey(vedioId);
-     }
+	public Vedio selectVedioById(Integer vedioId) {
+		if (vedioId == null) {
+			return null;
+		}
+		return vedioMapper.selectByPrimaryKey(vedioId);
+	}
 
 	/**
 	 * 视频上传记录
@@ -143,7 +141,7 @@ public class VedioService {
 	 *            每页条数
 	 * @return
 	 */
-	public List<Vedio> selectVedioList(Integer vedioCategoryId, String searchCriteria, Integer indexPage, Integer pageSize) {
+	public List<Vedio> selectVedioList(Integer vedioCategoryId, String searchCriteria, Integer indexPage, Integer pageSize, Integer sortType) {
 		Integer startIndex = (indexPage - 1) * pageSize;
 		Integer endIndex = indexPage * pageSize;
 		Map<String, Object> map = new HashMap<String, Object>(4);
@@ -151,6 +149,7 @@ public class VedioService {
 		map.put("searchCriteria", searchCriteria);
 		map.put("startIndex", startIndex);
 		map.put("endIndex", endIndex);
+		map.put("sortType", sortType);
 		return vedioCustomMapper.selectVedios(map);
 	}
 

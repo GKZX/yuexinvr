@@ -1,6 +1,5 @@
 package org.yuexin.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -126,10 +125,12 @@ public class VedioController extends BaseController {
 		result.put("errorCode", ErrorEnums.SUCCESS.getCode());
 		return result;
 	}
-	
+
 	/**
 	 * 获取视频详细信息
-	 * @param vedioId 视频ID
+	 * 
+	 * @param vedioId
+	 *            视频ID
 	 * @param request
 	 * @return
 	 */
@@ -161,6 +162,8 @@ public class VedioController extends BaseController {
 	 *            分类ID
 	 * @param searchCriteria
 	 *            搜索条件
+	 * @param sortType
+	 *            排序类型：0-全部;1-播放量;2-最新上传;3-销售量;
 	 * @param indexPage
 	 *            第几页
 	 * @param pageSize
@@ -169,7 +172,7 @@ public class VedioController extends BaseController {
 	 */
 	@RequestMapping("/vedio/getVedios")
 	@ResponseBody
-	public JSONObject getVedios(Integer vedioCategoryId, String searchCriteria,
+	public JSONObject getVedios(Integer vedioCategoryId, String searchCriteria, Integer sortType,
 			@RequestParam(required = false, defaultValue = "1") Integer indexPage,
 			@RequestParam(required = false, defaultValue = "10") Integer pageSize) {
 		JSONObject result = new JSONObject();
@@ -178,7 +181,7 @@ public class VedioController extends BaseController {
 			result.put("errorMsg", ErrorEnums.PARAM_ERROR.getMsg());
 			return result;
 		}
-		List<Vedio> vedioList = vedioService.selectVedioList(vedioCategoryId, searchCriteria, indexPage, pageSize);
+		List<Vedio> vedioList = vedioService.selectVedioList(vedioCategoryId, searchCriteria, indexPage, pageSize, sortType);
 		int vedioSize = vedioService.selectVedioSize(vedioCategoryId, searchCriteria);
 		result.put("errorCode", ErrorEnums.SUCCESS.getCode());
 		result.put("vedioList", JSONArray.toJSON(vedioList));
