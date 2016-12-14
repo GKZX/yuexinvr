@@ -7,6 +7,8 @@ var upload=new Vue({
 		selected:1,
 		sselected:3,
 		info:{
+			type:0,
+			vedioId:"",
 			vedioName:"",
 			vedioNotes:"",
 			vedioImgUrl:"",
@@ -30,14 +32,13 @@ var upload=new Vue({
 		    }else{
 		    	this.info.vedioCategoryId=this.sselected;
 		    }
-		    var uurl="/vedio/addVedio";
+		    var uurl="/vedio/addOrEditVedio";
 		    var utype="post";
 		    var upData=this.info;
 		    console.log(upData);
 		    $.ajaxs(uurl,utype,upData,function(data){
-		    	alert("ok");
 		        if(data.errorCode==10000){//成功
-		        	window.location.href="video";
+		        	window.location.href="video";//有问题
 		        }
 			},function(){
 				alert("wrong");
@@ -51,6 +52,7 @@ var upload=new Vue({
 		}
 	}
 })
+
 $(function(){
 	$(".uploadFile").eq(0).change(function(){
 	   var path=$(".uploadFile").val();
@@ -79,7 +81,15 @@ $(function(){
 	})
 	classLoad(0);
 	classLoad(1);
+	//编辑页获得传过来的id
+	var id=getParam("id");
+	var type=getParam("type");
+	upload.info.vedioId=id;
+	upload.info.type=type
+	alert(upload.info.vedioId);
+	alert(upload.info.type);
 })
+
 function classLoad(Id){
 	var curl="vedio/getVedioCateGory";
 	var ctype="get";
@@ -99,6 +109,7 @@ function classLoad(Id){
 		alert("wrong");
 	})
 }
+
 function check(){
 	//alert(2);
 	//return true;

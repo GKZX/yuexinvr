@@ -20,32 +20,37 @@ var video=new Vue({
 		},
 		delVideo:function(){
 			var lists=this.message.vedioList;
-			var vedioIds=[];
+			var vedioArr=[];
 			for(var i=0;i<lists.length;i++){
 				if(lists[i].checked==true){
-					vedioIds.push(parseInt(lists[i].id));
+					vedioArr.push(lists[i].id);
 				}
 			}
-			alert(vedioIds);
-			var durl="/vedio/deleteVedios";
-			var dtype="POST";
-			var ddata={
-					"vedioIds":vedioIds
-			}
-			console.log(ddata);
-			$.ajaxs(durl,dtype,ddata,function(data){
-				console.log(data);
-		        if(data.errorCode==10000){//成功
-		        	for(var i=0;i<lists.length;i++){
-						if(lists[i].checked==true){
-							lists.splice(i,1);
-							i--;
+			var vedioIds=vedioArr.join();
+			if(vedioIds==null||""||" "){
+				alert("请选择要删除的视频");
+			}else{
+				var durl="/vedio/deleteVedios";
+				var dtype="POST";
+				var ddata={
+						"vedioIds":vedioIds
+				}
+				$.ajaxs(durl,dtype,ddata,function(data){
+					console.log(data);
+			        if(data.errorCode==10000){//成功
+			        	for(var i=0;i<lists.length;i++){
+							if(lists[i].checked==true){
+								lists.splice(i,1);
+								i--;
+							}
 						}
-					}
-		        }
-			},function(){
-				alert("wrong");
-			})
+			        	video.isEdit=true;
+			        }
+				},function(){
+					alert("wrong");
+				})
+			}
+			
 		},
 		sort:function(type){
 			this.sortType=type;

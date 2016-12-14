@@ -69,12 +69,12 @@
 						<a href="###" v-on:click="editVideo">批量删除</span>
 					</div>
 					<div class="list-box-tab">
-						<a href="upload.html">上传模式</a>
+						<a href="upload.html?&type=0">上传模式</a>
 					</div>
 				</div>
 				
 				<div class="list-info clearfix">
-					<div class="list-box-item" v-for="list in message.vedioList" v-bind:id="list.id" v-on:click="checkVideo($index)">
+					<div class="list-box-item" v-for="list in message.vedioList"  v-on:click="checkVideo($index)" v-bind:id="list.id">
 					 <a href="javascript:;">
 					 	<div class="check-box" v-show="isEdit">
 					 		<i class="iconfont icon-gou" v-show="list.checked"></i>
@@ -104,7 +104,7 @@
 									<span class="data">0</span>
 								</li>
 								<li>
-									<div class="btn video-edit-btn pull-right"><a href="upload.html">编辑</a></div>
+									<div class="btn video-edit-btn pull-right"><a href="upload.html?id={{list.id}}&type=1">编辑</a></div>
 								</li>
 							</ul>
 						</div>
