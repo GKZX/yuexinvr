@@ -96,6 +96,6 @@ public class SysUserController extends BaseController{
 	@RequestMapping("/logout")
 	public ModelAndView logout(HttpServletRequest request){
 		removeSession(request, "sysUser");// 清除session
-		return new ModelAndView("/login");
+		return new ModelAndView("redirect:/index");
 	}
 }
