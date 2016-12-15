@@ -34,7 +34,7 @@
 						<li><a href="#">修改密码</a></li>
 					</ul>
 				</li>
-				<li class="nav-sub-link"><a href="login.html"><i class="iconfont icon-zhuxiao"></i>注销</a></li>
+				<li class="nav-sub-link"><a href="logout"><i class="iconfont icon-zhuxiao"></i>注销</a></li>
 			</ul>
 		    </div>
 		</nav>
