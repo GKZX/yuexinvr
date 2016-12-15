@@ -41,7 +41,6 @@ var upload=new Vue({
 			},function(){
 				alert("wrong");
 			})
-			
 		}
 	}
 })
@@ -72,13 +71,15 @@ $(function(){
 	$("#upVideoBtn").click(function(){
 		$(".upVideoFile").trigger("click");
 	})
-	classLoad(0);
-	classLoad(1);	
+	//classLoad(0);//写在这里会导致随机父元素选择第一个还是已经选择的那个
 	//编辑页获得传过来的id
 	var id=getParam("id");
 	var type=getParam("type");
 	if(type==1){//为编辑状态
-		EditData(id);
+		EditData(id);	
+	}else{//为上传状态
+		classLoad(0);
+		classLoad(1);	
 	}
 	upload.info.vedioId=id;
 	upload.info.type=type;
@@ -86,7 +87,8 @@ $(function(){
 })
 
 //加载视频分类
-function classLoad(Id){
+function classLoad(Id,sId){
+	console.log(typeof(sId)=="undefined");
 	var curl="vedio/getVedioCateGory";
 	var ctype="get";
 	var classData={
@@ -94,18 +96,32 @@ function classLoad(Id){
 	};
 	$.ajaxs(curl,ctype,classData,function(data){
         if(data.errorCode==10000){//成功
-        	if(Id==0){
+        	if(Id==0){//父分类元素的渲染
         		upload.fclass=data.vedioCategoryList;
-        		console.log(upload.fclass[0].id);
-        		upload.info.vedioCategoryPId=upload.fclass[0].id;
+        		if(typeof(sId)=="undefined"){//上传时选择默认的第一个值
+        			console.log("上传");
+        			upload.info.vedioCategoryPId=upload.fclass[0].id;
+        		}else{
+        			console.log("编辑");
+       			   // upload.info.vedioCategoryPId=Id;
+        		}
+        		
         	}else{
         		upload.sclass=data.vedioCategoryList;
         		console.log(upload.sclass);
-        		if(upload.sclass.length>0){
-        			upload.info.vedioCategoryId=upload.sclass[0].id;
+        		if(typeof(sId)=="undefined"){//上传时选择默认的第一个值
+        			console.log("上传");
+        			if(upload.sclass.length>0){
+            			upload.info.vedioCategoryId=upload.sclass[0].id;
+            		}else{
+            			upload.info.vedioCategoryId="";
+            		}
         		}else{
-        			upload.info.vedioCategoryId="";
-        		}
+        			console.log("编辑");
+        			upload.info.vedioCategoryId=sId;
+        			upload.info.vedioCategoryPId=Id;	
+        			console.log(upload.info.vedioCategoryId);
+        		}	
         	}
         	
         }
@@ -124,19 +140,43 @@ function EditData(Id){
 	$.ajaxs(vurl,vtype,vedioData,function(data){
 		console.log(data);
         if(data.errorCode==10000){//成功
+        	console.log(2);
         	var vedio=data.vedio;
         	var info=upload.info;
         	info.vedioName=vedio.vedioName;
             info.vedioNotes=vedio.vedioNotes;
             info.isFree=vedio.isFree;
             info.money=vedio.money;
-            info.vedioCategoryId=vedio.vedioCategoryId;
             info.vedioCategoryPId=vedio.vedioCategoryPId;
+           classLoad(0,vedio.vedioCategoryId);//加载父类
+           classLoad(vedio.vedioCategoryPId,vedio.vedioCategoryId);//加载子类
         }
 	},function(){
 		alert("wrong");
 	})
 } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function check(){
 	//alert(2);
