@@ -88,4 +88,14 @@ public class SysUserController extends BaseController{
 		}
 		return result;
 	}
+	
+	/**
+	 * 登出/注销
+	 * @return
+	 */
+	@RequestMapping("/logout")
+	public ModelAndView logout(HttpServletRequest request){
+		removeSession(request, "sysUser");// 清除session
+		return new ModelAndView("/login");
+	}
 }

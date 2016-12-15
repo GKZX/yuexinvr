@@ -26,4 +26,9 @@ public class BaseController {
 		HttpSession session = request.getSession();
 		return session.getAttribute(key);
 	}
+	
+	public void removeSession(HttpServletRequest request, String key) {
+		HttpSession session = request.getSession();
+		session.removeAttribute(key);
+	}
 }
