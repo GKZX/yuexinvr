@@ -9,15 +9,19 @@ var video=new Vue({
 		isEdit:false
 	},
 	methods:{
+		//删除模式
 		editVideo:function(){
 		    this.isEdit=true;
 		},
+		//视频列表模式
 		backVideo:function(){
 			this.isEdit=false;
 		},
+		//勾选视频
 		checkVideo:function(index){
 			this.message.vedioList[index].checked=!this.message.vedioList[index].checked;
 		},
+		//删除勾选视频
 		delVideo:function(){
 			var lists=this.message.vedioList;
 			var vedioArr=[];
@@ -52,10 +56,12 @@ var video=new Vue({
 			}
 			
 		},
+		//排序方式
 		sort:function(type){
 			this.sortType=type;
 			loadData(this.id,type);
 		},
+		//分类显示
 		choiseClass:function(e){
 			var id=e.currentTarget.id;
 		    this.id=e.currentTarget.id;
@@ -92,7 +98,7 @@ $(function(){
 		$(this).addClass("active");
 	})
 })
-//加载数据
+//加载视频数据
 function loadData(id,type){
 	var lurl="/vedio/getVedios";
 	var ltype="get";

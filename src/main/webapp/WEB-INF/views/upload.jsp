@@ -56,12 +56,12 @@
 				    <div class="form-group">
 				        <label for="lastname" class="col-xs-2 control-label">视频分类</label>
 				        <div class="col-xs-3">
-				            <select class="form-control upload-select" v-model="selected">
+				            <select class="form-control upload-select" v-model="info.vedioCategoryPId" v-on:change="choise">
 						      <option v-for="c in fclass" :value="c.id">{{c.vedioCategoryName}}</option>
 						    </select>
 				        </div>
 				        <div class="col-xs-7">
-				            <select class="form-control upload-select" v-show="sclass.length>0" v-model="sselected">
+				            <select class="form-control upload-select" v-show="sclass.length>0" v-model="info.vedioCategoryId">
 						      <option v-for="s in sclass" :value="s.id">{{s.vedioCategoryName}}</option>
 						    </select>
 				        </div>
