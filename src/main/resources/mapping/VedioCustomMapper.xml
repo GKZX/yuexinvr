@@ -75,4 +75,14 @@
 	</foreach>
   </update>
   
+  <select id="selectVedioById" parameterType="java.lang.Integer" resultType="org.yuexin.model.dto.VedioDTO">
+   	select distinct v.id,v.vedio_name as vedioName,v.is_free as isFree, v.money,
+	v.vedio_notes as vedioNotes,v.vedio_img_url as vedioImgUrl,v.vedio_url as vedioUrl,v.play_amount as playAmount, 
+	if(vc.p_id=0,vc.id,vc.p_id) as vedioCategoryPId,
+	if(vc.p_id=0,0,vc.id) as vedioCategoryId
+	from vedio v
+	join vedio_category vc on vc.id = v.vedio_category_id
+	where v.id = #{vedioId}
+  </select>
+  
 </mapper>
