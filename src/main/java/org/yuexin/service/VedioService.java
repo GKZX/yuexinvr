@@ -16,6 +16,7 @@ import org.yuexin.dao.VedioMapper;
 import org.yuexin.model.SysUser;
 import org.yuexin.model.Vedio;
 import org.yuexin.model.VedioLog;
+import org.yuexin.model.dto.VedioDTO;
 
 /**
  * 
@@ -107,6 +108,19 @@ public class VedioService {
 			return null;
 		}
 		return vedioMapper.selectByPrimaryKey(vedioId);
+	}
+	
+	/**
+	 * 根据ID获取视频
+	 * 
+	 * @param vedioId
+	 * @return
+	 */
+	public VedioDTO selectVedioDTOById(Integer vedioId) {
+		if (vedioId == null) {
+			return null;
+		}
+		return vedioCustomMapper.selectVedioById(vedioId);
 	}
 
 	/**

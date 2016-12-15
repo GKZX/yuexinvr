@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.yuexin.model.SysUser;
 import org.yuexin.model.Vedio;
 import org.yuexin.model.VedioCategory;
+import org.yuexin.model.dto.VedioDTO;
 import org.yuexin.service.VedioCategoryService;
 import org.yuexin.service.VedioService;
 import org.yuexin.util.ErrorEnums;
@@ -149,8 +150,8 @@ public class VedioController extends BaseController {
 			result.put("errorMsg", ErrorEnums.PARAM_ERROR.getMsg());
 			return result;
 		}
-		Vedio vedio = vedioService.selectVedioById(vedioId);
-		result.put("vedio", vedio);
+		VedioDTO vedioDto = vedioService.selectVedioDTOById(vedioId);
+		result.put("vedio", vedioDto);
 		result.put("errorCode", ErrorEnums.SUCCESS.getCode());
 		return result;
 	}
