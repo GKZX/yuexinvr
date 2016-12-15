@@ -4,6 +4,7 @@ var video=new Vue({
 		fid:"",
 		id:"",
 		sortType:2,
+		searchCriteria:"",
 		message:"",
 		sclass:[],
 		isEdit:false
@@ -31,7 +32,7 @@ var video=new Vue({
 				}
 			}
 			var vedioIds=vedioArr.join();
-			if(vedioIds==null||""||" "){
+			if(vedioIds==null||vedioIds==""||vedioIds==" "){
 				alert("请选择要删除的视频");
 			}else{
 				var durl="/vedio/deleteVedios";
@@ -67,20 +68,16 @@ var video=new Vue({
 		    this.id=e.currentTarget.id;
 			var type=this.sortType;
 			loadData(id,type);
+		},
+		//搜索视频
+		search:function(){
+			var search=this.searchCriteria;
+			var id=this.id;
+			var type=this.sortType;
+			//alert(id);
+			loadData(id,type,search)
 		}
 	}
-})
-//时间戳转日期格式过滤器
-Vue.filter("formatDate",function(value){
-	var now=new Date(value);
-	var year=now.getFullYear();     
-    var month=now.getMonth()+1;     
-    var date=now.getDate();        
-    return year+"-"+month+"-"+date;  
-})
-//类型过滤器
-Vue.filter("formatType",function(value){
-	return type=value==0?"免费":"收费";
 })
 $(function(){
 	var id= getParam("id");
@@ -99,12 +96,13 @@ $(function(){
 	})
 })
 //加载视频数据
-function loadData(id,type){
+function loadData(id,type,search){
+	search=search?search:"";
 	var lurl="/vedio/getVedios";
 	var ltype="get";
 	var videoData={
 		"vedioCategoryId":id,
-		"searchCriteria":"",
+		"searchCriteria":search,
 		"indexPage":1,
 		"pageSize":20,
 		"sortType":type

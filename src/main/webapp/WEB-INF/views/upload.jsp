@@ -11,7 +11,7 @@
 	<body>
 		<div class="frame-wrapper" id="uploadManage" v-cloak>
 			<div class="upload-content">
-				<form action="" method="post" enctype="multipart/form-data" class="form-horizontal" role="form" onsubmit="return false;">
+				<form name="myForm" action="" method="post" enctype="multipart/form-data" class="form-horizontal" role="form" onsubmit="return false;">
 				    <div class="form-group">
 				  	    <div class="col-xs-4">
 						    <div class="upload upload-cover-box">
@@ -75,8 +75,8 @@
 			</div>
 		</div>
 		<script src="js/jquery-3.1.1.min.js"></script>
-		<script src="js/common.js"></script>
 		<script src="js/vue.js"></script>
+		<script src="js/common.js"></script>
 		<script src="js/upload.js"></script>
 	</body>
 </html>

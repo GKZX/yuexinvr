@@ -33,6 +33,7 @@
 		<script src="js/jquery-3.1.1.min.js"></script>
 		<script src="js/vue.js"></script>
 		<script src="js/echarts.common.min.js"></script>
+		<script src="js/common.js"></script>
 		<script src="js/income.js"></script>
 	</body>
 </html>
