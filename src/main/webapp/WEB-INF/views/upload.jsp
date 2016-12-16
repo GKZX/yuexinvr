@@ -27,7 +27,7 @@
 				        <div class="col-xs-10">
 				            <div class="upload-video-btn upload-btn pointer" id="upVideoBtn">选择视频</div>
 				        </div>
-				        <input type="file" class="upVideoFile" style="display: none;">
+				        <input type="file" id="files" class="upVideoFile" style="display: none;">
 				    </div>
 				    <div class="form-group">
 				        <label for="lastname" class="col-xs-2 control-label">视频名称</label>
@@ -75,6 +75,8 @@
 			</div>
 		</div>
 		<script src="js/jquery-3.1.1.min.js"></script>
+		<script src="js/aliyun-sdk.min.js"></script>
+    	<script src="js/vod-sdk-upload.min.js"></script>
 		<script src="js/vue.js"></script>
 		<script src="js/common.js"></script>
 		<script src="js/upload.js"></script>
