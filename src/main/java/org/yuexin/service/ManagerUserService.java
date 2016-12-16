@@ -35,10 +35,18 @@ public class ManagerUserService {
 	public List<User> selectUsersBy(Integer indexPage, Integer pageSize) {
 		Integer startIndex = (indexPage - 1) * pageSize;
 		Integer endIndex = indexPage * pageSize;
-		Map<String, Object> map = new HashMap<String, Object>(4);
+		Map<String, Object> map = new HashMap<String, Object>(2);
 		map.put("startIndex", startIndex);
 		map.put("endIndex", endIndex);
 		return userCustomMapper.selectUsers(map);
+	}
+	
+	/**
+	 * 统计总用户数
+	 * @return
+	 */
+	public int selectUserCount(){
+		return userCustomMapper.countUsers(null);
 	}
 
 }

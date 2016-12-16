@@ -12,4 +12,6 @@ public interface UserCustomMapper {
 	 * @return
 	 */
 	List<User> selectUsers(Map<String,Object> map);
+	
+	int countUsers(Map<String,Object> map);
 }

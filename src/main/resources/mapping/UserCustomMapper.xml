@@ -26,4 +26,12 @@
     limit #{startIndex,jdbcType=INTEGER}, #{endIndex,jdbcType=INTEGER}
   </select>
   
+  <select id="countUsers" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	select count(*) from user
+	where sys_flag = 1
+	<if test="phone != null">
+       AND phone = #{phone,jdbcType=INTEGER}
+    </if>
+  </select>
+  
 </mapper>
