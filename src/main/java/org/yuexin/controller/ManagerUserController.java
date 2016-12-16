@@ -65,8 +65,10 @@ public class ManagerUserController extends BaseController {
 			return result;
 		}
 		List<User> userList = managerUserService.selectUsersBy(indexPage, pageSize);
+		int userSize = managerUserService.selectUserCount();
 		result.put("errorCode", ErrorEnums.SUCCESS.getCode());
 		result.put("userList", JSONArray.toJSON(userList));
+		result.put("userSize", userSize);
 		return result;
 	}
 }
