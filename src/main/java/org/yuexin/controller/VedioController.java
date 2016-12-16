@@ -177,11 +177,6 @@ public class VedioController extends BaseController {
 			@RequestParam(required = false, defaultValue = "1") Integer indexPage,
 			@RequestParam(required = false, defaultValue = "10") Integer pageSize) {
 		JSONObject result = new JSONObject();
-		if (vedioCategoryId == null) {
-			result.put("errorCode", ErrorEnums.PARAM_ERROR.getCode());
-			result.put("errorMsg", ErrorEnums.PARAM_ERROR.getMsg());
-			return result;
-		}
 		List<Vedio> vedioList = vedioService.selectVedioList(vedioCategoryId, searchCriteria, indexPage, pageSize, sortType);
 		int vedioSize = vedioService.selectVedioSize(vedioCategoryId, searchCriteria);
 		result.put("errorCode", ErrorEnums.SUCCESS.getCode());

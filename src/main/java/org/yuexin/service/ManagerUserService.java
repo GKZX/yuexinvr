@@ -34,10 +34,9 @@ public class ManagerUserService {
 	 */
 	public List<User> selectUsersBy(Integer indexPage, Integer pageSize) {
 		Integer startIndex = (indexPage - 1) * pageSize;
-		Integer endIndex = indexPage * pageSize;
 		Map<String, Object> map = new HashMap<String, Object>(2);
 		map.put("startIndex", startIndex);
-		map.put("endIndex", endIndex);
+		map.put("pageSize", pageSize);
 		return userCustomMapper.selectUsers(map);
 	}
 	

@@ -23,7 +23,7 @@
     <if test="phone != null">
        AND phone = #{phone,jdbcType=INTEGER}
     </if>
-    limit #{startIndex,jdbcType=INTEGER}, #{endIndex,jdbcType=INTEGER}
+    limit #{startIndex,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
   
   <select id="countUsers" parameterType="java.util.Map" resultType="java.lang.Integer">

@@ -158,12 +158,11 @@ public class VedioService {
 	 */
 	public List<Vedio> selectVedioList(Integer vedioCategoryId, String searchCriteria, Integer indexPage, Integer pageSize, Integer sortType) {
 		Integer startIndex = (indexPage - 1) * pageSize;
-		Integer endIndex = indexPage * pageSize;
 		Map<String, Object> map = new HashMap<String, Object>(4);
 		map.put("vedioCategoryId", vedioCategoryId);
 		map.put("searchCriteria", searchCriteria);
 		map.put("startIndex", startIndex);
-		map.put("endIndex", endIndex);
+		map.put("pageSize", pageSize);
 		map.put("sortType", sortType);
 		return vedioCustomMapper.selectVedios(map);
 	}
