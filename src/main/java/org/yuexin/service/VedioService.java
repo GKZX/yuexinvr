@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,7 @@ import org.yuexin.model.dto.VedioDTO;
  */
 @Service
 public class VedioService {
+	@Autowired
 	private VedioMapper vedioMapper;
 	@Autowired
 	private VedioCustomMapper vedioCustomMapper;
