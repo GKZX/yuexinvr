@@ -18,16 +18,19 @@
 						    	<div class="upload-cover-preview"><img src="img/album.png" class="imgpreview-image"></div>
 							    <div class="upload-cover-btn upload-btn pointer" id="updataBtn">上传封面</div>
 							</div>
-							<input type="file" class="uploadFile" style="display: none;">
+							<input type="file" class="uploadFile" id="upImgFile" style="display:none;">
 						</div>
 				        <label for="firstname" class="col-xs-8 upload-cover-info">560像素  x 360像素以上，不超过4M</label>
 				    </div>
 				    <div class="form-group">
 				        <label for="lastname" class="col-xs-2 control-label">视频地址</label>
-				        <div class="col-xs-10">
+				        <div class="col-xs-4">
 				            <div class="upload-video-btn upload-btn pointer" id="upVideoBtn">选择视频</div>
 				        </div>
-				        <input type="file" id="files" class="upVideoFile" style="display: none;">
+				        <div class="col-xs-6">
+				            <span class="videoChoise">{{vedioInfo}}</span>
+				        	<input type="file" id="upVideoFile" class="upVideoFile" style="display:none;">
+				        </div>
 				    </div>
 				    <div class="form-group">
 				        <label for="lastname" class="col-xs-2 control-label">视频名称</label>
@@ -72,8 +75,11 @@
 				        </div>
 				    </div>
 				</form>
-				<div class="upInfo">
-				   <span></span>
+				<div class="upInfo" style="display:none;">
+				   <span class="accessKeyId">${accessKeyId}</span>
+				   <span class="secretAccessKey">${secretAccessKey}</span>
+				   <span class="endpoint">${endpoint}</span>
+				   <span class="bucket">${bucket}</span>
 				</div>
 			</div>
 		</div>
