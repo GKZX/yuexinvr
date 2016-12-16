@@ -4,6 +4,7 @@ var video=new Vue({
 		fid:"",
 		id:"",
 		sortType:2,
+		pageSize:5,
 		searchCriteria:"",
 		message:"",
 		sclass:[],
@@ -60,14 +61,14 @@ var video=new Vue({
 		//排序方式
 		sort:function(type){
 			this.sortType=type;
-			loadData(this.id,type);
+			loadData(this.id,type,1,this.pageSize);
 		},
 		//分类显示
 		choiseClass:function(e){
 			var id=e.currentTarget.id;
 		    this.id=e.currentTarget.id;
 			var type=this.sortType;
-			loadData(id,type);
+			loadData(id,type,1,this.pageSize);
 		},
 		//搜索视频
 		search:function(){
@@ -75,7 +76,7 @@ var video=new Vue({
 			var id=this.id;
 			var type=this.sortType;
 			//alert(id);
-			loadData(id,type,search)
+			loadData(id,type,1,this.pageSize,search)
 		}
 	}
 })
@@ -83,7 +84,7 @@ $(function(){
 	var id= getParam("id");
 	video.fid=id;
 	video.id=id;
-	loadData(id,video.sortType);	
+	loadData(id,video.sortType,1,video.pageSize);	
 	classLoad(id);
 	//点击类型活跃状态切换
 	$(document).on("click",".class-item",function(){
@@ -96,15 +97,15 @@ $(function(){
 	})
 })
 //加载视频数据
-function loadData(id,type,search){
+function loadData(id,type,page,len,search){
 	search=search?search:"";
 	var lurl="/vedio/getVedios";
 	var ltype="get";
 	var videoData={
 		"vedioCategoryId":id,
 		"searchCriteria":search,
-		"indexPage":1,
-		"pageSize":20,
+		"indexPage":page,
+		"pageSize":len,
 		"sortType":type
 	};
 	$.ajaxs(lurl,ltype,videoData,function(data){
@@ -114,7 +115,23 @@ function loadData(id,type,search){
         		data.vedioList[i].checked="";
 		    }
            video.message=data;
-           
+           //加载分页
+           var size=data.vedioSize;
+           $(".M-box2").html(" ");
+	       if(size>len){  
+	           $('.M-box2').pagination({
+	               coping:true,
+                   homePage:'首页',
+                   endPage:'末页',
+                   totalData:size,
+                   showData:len,
+                   current:page,
+                   callback:function(api){
+                       var now=api.getCurrent();
+                       loadData(video.id,video.sortType,now,video.pageSize);
+                   }
+	           });
+	       }
         }
 	},function(){
 		alert("wrong");

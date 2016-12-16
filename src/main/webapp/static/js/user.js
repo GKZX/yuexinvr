@@ -27,11 +27,11 @@ function userLoad(page,len){
                      endPage:'末页',
                      totalData:size,
                      showData:len,
+                     current:page,
                      callback:function(api){
-                         alert(api.getCurrent());
-                         var now=api.getCurrent();
-                         //userLoad(now,len);
-                     }
+                           var now=api.getCurrent();
+                           userLoad(now,len);
+                       }
                  });
         	}
         	
@@ -41,5 +41,5 @@ function userLoad(page,len){
 	})
 }
 $(function(){	
-	userLoad(2,1);
+	userLoad(1,20);
 })

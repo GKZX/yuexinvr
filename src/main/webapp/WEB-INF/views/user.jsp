@@ -11,30 +11,32 @@
 	</head>
 	<body>
 	  <div class="frame-wrapper" id="userManager" v-cloak>
-		<table class="table table-bordered user-table">
-		  <thead>
-		    <tr>
-		      <th>用户名</th>
-		      <th>注册日期</th>
-		      <th>联系方式</th>
-		      <th>宗教信仰</th>
-		      <th>历史心理评估结果</th>
-		      <th>建议推送类型</th>
-		      <th>用户购买记录</th>
-		    </tr>
-		  </thead>
-		  <tbody v-for="item in userList">
-		    <tr>
-		      <td>{{item.userName}}</td>
-		      <td>{{item.addTime | formatDate}}</td>
-		      <td>{{item.phone}}</td>
-		      <td>无</td>
-		      <td>无</td>
-		      <td>无</td>
-		      <td>无</td>
-		    </tr>  
-		  </tbody>
-		</table>
+	    <div class="frame-content">
+			<table class="table table-bordered user-table">
+			  <thead>
+			    <tr>
+			      <th>用户名</th>
+			      <th>注册日期</th>
+			      <th>联系方式</th>
+			      <th>宗教信仰</th>
+			      <th>历史心理评估结果</th>
+			      <th>建议推送类型</th>
+			      <th>用户购买记录</th>
+			    </tr>
+			  </thead>
+			  <tbody v-for="item in userList">
+			    <tr>
+			      <td>{{item.userName}}</td>
+			      <td>{{item.addTime | formatDate}}</td>
+			      <td>{{item.phone}}</td>
+			      <td>无</td>
+			      <td>无</td>
+			      <td>无</td>
+			      <td>无</td>
+			    </tr>  
+			  </tbody>
+			</table>
+		</div>
 		<div class="M-box2 page-box"></div>
 	  </div>
 		<script src="js/jquery-3.1.1.min.js"></script>

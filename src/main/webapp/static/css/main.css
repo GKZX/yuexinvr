@@ -114,7 +114,6 @@ i.iconfont {
 [v-cloak] { display: none }
 .video-frame-wrapper {
 	padding: 0 35px;
-	position: relative;
 }
 
 .video-box {
@@ -128,6 +127,7 @@ i.iconfont {
 }
 .search-box .video-search {
 	border-radius: 4px!important;
+	text-align: left;
 }
 .video-row .form-control {
 	height:38px;

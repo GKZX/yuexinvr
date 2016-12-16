@@ -31,20 +31,23 @@ html,body,.wrapper,.video-frame-wrapper,.frame-wrapper {
 }
 .frame-wrapper {
 	padding: 20px;
-	position: relative;
+}
+.frame-content {
+	min-height: 90%;
 }
 [v-cloak] {
 	display: none;
 }
 .page-box {
-	position: absolute;
-	bottom: 20px;
-	left: 50%;
-	transform: translate(-50%,0);
+	display: table;
+	margin: 20px auto;
+}
+.page-box a,.page-box span {
+	display:table-cell;
 }
 .page-box .active {
 	background: #53687f;
-	border: 1px solid #53687f;
+	border: 1px solid #53687f;	
 }
 .page-box a:hover {
 	background: #53687f;
