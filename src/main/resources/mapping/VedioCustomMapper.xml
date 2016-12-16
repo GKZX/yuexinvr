@@ -51,7 +51,7 @@
     <if test="sortType != null and  sortType == 3">
     	order by v.add_time desc
     </if>
-    limit #{startIndex,jdbcType=INTEGER}, #{endIndex,jdbcType=INTEGER}
+    limit #{startIndex,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
   </select>
   
   <!-- 条件查询视频统计 -->
