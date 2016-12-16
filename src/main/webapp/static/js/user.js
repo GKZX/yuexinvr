@@ -8,30 +8,38 @@ var userManager=new Vue({
 	}
 })
 //加载用户列表
-function userLoad(){
-	var showData=20;
+function userLoad(page,len){
 	var uurl="/user/getUsers";
 	var utype="get";
 	var userData={
-		"indexPage":1,
-		"pageSize":showData
+		"indexPage":page,
+		"pageSize":len
 	};
 	$.ajaxs(uurl,utype,userData,function(data){
         if(data.errorCode==10000){//成功
         	console.log(data);
         	userManager.userList=data.userList;
-        	 $('.M-box2').pagination({
-                 coping:true,
-                 homePage:'首页',
-                 endPage:'末页',
-                 totalData:0,
-                 showData:showData,
-             });
+        	var size=data.userSize;
+        	if(size>len){
+        		 $('.M-box2').pagination({
+                     coping:true,
+                     homePage:'首页',
+                     endPage:'末页',
+                     totalData:size,
+                     showData:len,
+                     callback:function(api){
+                         alert(api.getCurrent());
+                         var now=api.getCurrent();
+                         //userLoad(now,len);
+                     }
+                 });
+        	}
+        	
         }
 	},function(){
 		alert("wrong");
 	})
 }
 $(function(){	
-	userLoad();
+	userLoad(2,1);
 })

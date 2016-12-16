@@ -114,6 +114,7 @@ function loadData(id,type,search){
         		data.vedioList[i].checked="";
 		    }
            video.message=data;
+           
         }
 	},function(){
 		alert("wrong");

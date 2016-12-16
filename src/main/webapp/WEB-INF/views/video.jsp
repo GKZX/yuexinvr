@@ -6,6 +6,7 @@
 		<title>视频管理</title>
 		<link href="css/bootstrap.css" rel="stylesheet" />
 		<link href="css/iconfont.css" rel="stylesheet" />
+		<link href="css/pagination.css" rel="stylesheet"/>
 		<link href="css/common.css" rel="stylesheet" />
 		<link href="css/main.css" rel="stylesheet" />
 	</head>
@@ -112,8 +113,10 @@
 					</div>
 				</div>
 			</div>
+			<div class="M-box2 page-box"></div>
 		</div>
 		<script src="js/jquery-3.1.1.min.js"></script>
+		<script src="js/jquery.pagination.min.js"></script>
 		<script src="js/vue.js"></script>
 		<script src="js/common.js"></script>
 		<script src="js/video.js"></script>
