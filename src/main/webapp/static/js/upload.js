@@ -183,9 +183,17 @@ uploader.init("LTAIhQ82j3AQ3vvD", "A9zM4DYLO5SsAF6gcNa9xA5A3U68Hu");
 
 document.getElementById("files").addEventListener('change', function (event) {
     for(var i=0; i<event.target.files.length; i++) {
-        uploader.addFile(event.target.files[i], 'http://oss-cn-hangzhou.aliyuncs.com', 'anneprivate1', event.target.files[i].name);
+    	var fileName=event.target.files[i].name;
+    	var type=fileName.substr(fileName.lastIndexOf(".")).toLowerCase();
+    	if(type!=".rm"&&type!=".rmvb"&&type!=".wmv"&&type!=".avi"&&type!=".mpg"&&type!=".mpeg"&&type!=".mp4"){
+    		alert("文件格式不正确");
+    	}else{
+    		var timestamp=new Date().getTime();
+    		var string =generateMixed(8);   
+    		var newName=timestamp+string+type;
+            uploader.addFile(event.target.files[i], 'http://oss-cn-hangzhou.aliyuncs.com', 'anneprivate1',newName);
+    	}	
     }
-
     uploader.startUpload();
 });
 

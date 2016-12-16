@@ -72,6 +72,9 @@
 				        </div>
 				    </div>
 				</form>
+				<div class="upInfo">
+				   <span></span>
+				</div>
 			</div>
 		</div>
 		<script src="js/jquery-3.1.1.min.js"></script>
