@@ -5,6 +5,7 @@
 		<meta charset="UTF-8">
 		<title>用户管理</title>
 		<link href="css/bootstrap.css" rel="stylesheet" />
+		<link href="css/pagination.css" rel="stylesheet"/>
 		<link href="css/common.css" rel="stylesheet" />
 		<link href="css/main.css" rel="stylesheet" />
 	</head>
@@ -27,15 +28,17 @@
 		      <td>{{item.userName}}</td>
 		      <td>{{item.addTime | formatDate}}</td>
 		      <td>{{item.phone}}</td>
-		      <td>{{item.belief}}</td>
-		      <td>{{item.result}}</td>
-		      <td>{{item.type}}</td>
-		      <td>{{item.record}}</td>
+		      <td>无</td>
+		      <td>无</td>
+		      <td>无</td>
+		      <td>无</td>
 		    </tr>  
 		  </tbody>
 		</table>
+		<div class="M-box2 page-box"></div>
 	  </div>
 		<script src="js/jquery-3.1.1.min.js"></script>
+		<script src="js/jquery.pagination.min.js"></script>
 		<script src="js/vue.js"></script>
 		<script src="js/common.js"></script>
 		<script src="js/user.js"></script>
