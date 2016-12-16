@@ -1,6 +1,11 @@
 package org.yuexin.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,6 +37,11 @@ import com.alibaba.fastjson.JSONObject;
  */
 @Controller
 public class VedioController extends BaseController {
+	private final String ACCESSKEYID = "accessKeyId";
+	private final String SECRETACCESSKEY = "secretAccessKey";
+	private final String ENDPOINT = "endpoint";
+	private final String BUCKET = "bucket";
+
 	@Autowired
 	private VedioService vedioService;
 	@Autowired
@@ -55,8 +65,20 @@ public class VedioController extends BaseController {
 	 */
 	@RequestMapping("/upload")
 	public ModelAndView upload() {
-		ModelAndView ModelAndView = new ModelAndView("/upload");
-		return ModelAndView;
+		Map<String, Object> map = new HashMap<String, Object>(4);
+		InputStream inStream = this.getClass().getResourceAsStream("/properties/aliyun.properties");
+		Properties prop = new Properties();    
+		try {
+			prop.load(inStream);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		map.put(ACCESSKEYID, prop.getProperty(ACCESSKEYID));
+		map.put(SECRETACCESSKEY, prop.getProperty(SECRETACCESSKEY));
+		map.put(ENDPOINT,prop.getProperty(ENDPOINT));
+		map.put(BUCKET, prop.getProperty(BUCKET));
+		return new ModelAndView("/upload", map);
 	}
 
 	/**

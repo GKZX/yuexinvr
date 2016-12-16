@@ -1,15 +1,17 @@
 package org.yuexin.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 import org.yuexin.dao.VedioCustomMapper;
 import org.yuexin.dao.VedioLogMapper;
 import org.yuexin.dao.VedioMapper;
@@ -30,7 +32,6 @@ import org.yuexin.model.dto.VedioDTO;
  */
 @Service
 public class VedioService {
-	@Autowired
 	private VedioMapper vedioMapper;
 	@Autowired
 	private VedioCustomMapper vedioCustomMapper;
@@ -109,7 +110,7 @@ public class VedioService {
 		}
 		return vedioMapper.selectByPrimaryKey(vedioId);
 	}
-	
+
 	/**
 	 * 根据ID获取视频
 	 * 
@@ -189,6 +190,7 @@ public class VedioService {
 
 	/**
 	 * 删除视频
+	 * 
 	 * @param vedioIds
 	 */
 	@Transactional
@@ -199,8 +201,8 @@ public class VedioService {
 		Map<String, Object> map = new HashMap<String, Object>(1);
 		map.put("vedioIds", vedioIds);
 		vedioCustomMapper.deleteVedios(map);
-		
-		for(Integer vedioId : vedioIds){
+
+		for (Integer vedioId : vedioIds) {
 			addVedioLog(vedioId, sysUser.getId(), 2);// 操作日志记录
 		}
 	}
