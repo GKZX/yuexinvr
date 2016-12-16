@@ -25,6 +25,7 @@ var upload=new Vue({
 		},
 		//点击提交
 		upload:function(){
+			var self=this;
 		    this.info.vedioImgUrl="dd.jpg";
 		    this.info.vedioUrl="movie.mp4";
 		    if(this.sclass.length==0){
@@ -33,10 +34,10 @@ var upload=new Vue({
 		    var uurl="/vedio/addOrEditVedio";
 		    var utype="post";
 		    var upData=this.info;
-		   // console.log(upData);
+		    upData.money=100*this.info.money;
 		    $.ajaxs(uurl,utype,upData,function(data){
 		        if(data.errorCode==10000){//成功
-		        	window.location.href="video";//有问题
+		        	window.location.href="video.html?id="+self.info.vedioCategoryPId;
 		        }
 			},function(){
 				alert("wrong");
@@ -71,7 +72,6 @@ $(function(){
 	$("#upVideoBtn").click(function(){
 		$(".upVideoFile").trigger("click");
 	})
-	//classLoad(0);//写在这里会导致随机父元素选择第一个还是已经选择的那个
 	//编辑页获得传过来的id
 	var id=getParam("id");
 	var type=getParam("type");
@@ -103,7 +103,6 @@ function classLoad(Id,sId){
         			upload.info.vedioCategoryPId=upload.fclass[0].id;
         		}else{
         			console.log("编辑");
-       			   // upload.info.vedioCategoryPId=Id;
         		}
         		
         	}else{
@@ -140,13 +139,12 @@ function EditData(Id){
 	$.ajaxs(vurl,vtype,vedioData,function(data){
 		console.log(data);
         if(data.errorCode==10000){//成功
-        	console.log(2);
         	var vedio=data.vedio;
         	var info=upload.info;
         	info.vedioName=vedio.vedioName;
             info.vedioNotes=vedio.vedioNotes;
             info.isFree=vedio.isFree;
-            info.money=vedio.money;
+            info.money=vedio.money/100;
             info.vedioCategoryPId=vedio.vedioCategoryPId;
            classLoad(0,vedio.vedioCategoryId);//加载父类
            classLoad(vedio.vedioCategoryPId,vedio.vedioCategoryId);//加载子类
@@ -156,30 +154,29 @@ function EditData(Id){
 	})
 } 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function check(){
 	//alert(2);
 	//return true;
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

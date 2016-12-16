@@ -25,3 +25,15 @@ function getParam(name){  //获取参数
 	if(r!=null)return unescape(r[2]); return null;
 	}
 };
+//时间戳转日期格式过滤器
+Vue.filter("formatDate",function(value){
+	var now=new Date(value);
+	var year=now.getFullYear();     
+    var month=now.getMonth()+1;     
+    var date=now.getDate();        
+    return year+"-"+month+"-"+date;  
+})
+//类型过滤器
+Vue.filter("formatType",function(value){
+	return type=value==0?"免费":"收费";
+})

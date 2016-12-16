@@ -17,8 +17,8 @@
 				  <div class='col-sm-6 col-sm-offset-3'>
 					  <form class="bs-example bs-example-form" role="form">
 				        <div class="input-group video-input-group">
-				            <input type="text" class="form-control video-search" placeholder="twitterhandle">
-				            <span class="input-group-addon video-search pointer"><i class='iconfont icon-search'></i>搜索</span>
+				            <input type="text" class="form-control video-search" placeholder="输入搜索的视频" v-model="searchCriteria">
+				            <span class="input-group-addon video-search pointer" v-on:click="search"><i class='iconfont icon-search'></i>搜索</span>
 				        </div>
 				      </form>
 			      </div>
@@ -104,7 +104,7 @@
 									<span class="data">0</span>
 								</li>
 								<li>
-									<div class="btn video-edit-btn pull-right"><a href="upload.html?id={{list.id}}&type=1">编辑</a></div>
+									<div class="btn video-edit-btn pull-right"><a href="upload.html?id={{list.id}}&type=1" class="video-edit-link">编辑</a></div>
 								</li>
 							</ul>
 						</div>

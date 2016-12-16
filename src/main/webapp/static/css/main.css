@@ -211,6 +211,7 @@ i.iconfont {
 }
 .video-edit-btn a {
 	color: #fff;
+	display: block;
 }
 .list-info .icon-gou {
 	padding: 0;
