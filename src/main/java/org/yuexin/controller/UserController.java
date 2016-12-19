@@ -64,7 +64,7 @@ public class UserController {
 		if (CollectionUtil.isEmpty(loginParam)) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			msg = new HashMap<String, Object>();
-			msg.put("code", -1);
+			msg.put("code", 1);
 			msg.put("msg", "用户名或密码不能为空");
 			msg.put("data", null);
 			return msg;
@@ -77,7 +77,7 @@ public class UserController {
 		if (null == loginUser) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			msg = new HashMap<String, Object>();
-			msg.put("code", -1);
+			msg.put("code", 1);
 			msg.put("msg", "用户名或密码错误");
 			msg.put("data", null);
 			return msg;
@@ -105,7 +105,7 @@ public class UserController {
 				StringUtils.isEmpty(String.valueOf(phoneMap.get("phone")))) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			msg = new HashMap<String, Object>();
-			msg.put("code", -1);
+			msg.put("code", 1);
 			msg.put("msg", "手机号不能为空");
 			msg.put("data", null);
 			return msg;
@@ -117,7 +117,7 @@ public class UserController {
 		if (null != userService.getUser(phone)) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			msg = new HashMap<String, Object>();
-			msg.put("code", -1);
+			msg.put("code", 1);
 			msg.put("msg", "该手机号已注册");
 			msg.put("data", null);
 			return msg;
@@ -164,7 +164,7 @@ public class UserController {
 		if (CollectionUtil.isEmpty(userMap)) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			msg = new HashMap<String, Object>();
-			msg.put("code", -1);
+			msg.put("code", 1);
 			msg.put("msg", "用户信息不能为空");
 			msg.put("data", null);
 			return msg;
@@ -184,7 +184,7 @@ public class UserController {
 		if (null != userService.getUser(user.getPhone())) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			msg = new HashMap<String, Object>();
-			msg.put("code", -1);
+			msg.put("code", 1);
 			msg.put("msg", "用户已注册");
 			msg.put("data", null);
 			return msg;
@@ -199,7 +199,7 @@ public class UserController {
 			} else {
 				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				msg = new HashMap<String, Object>();
-				msg.put("code", 1);
+				msg.put("code", -1);
 				msg.put("msg", "服务器内部错误");
 				msg.put("data", null);
 				return msg;
