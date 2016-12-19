@@ -39,12 +39,12 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@RequestMapping("/showInfo/{userId}")
 	public String showUserInfo(ModelMap modelMap, @PathVariable int userId){
 		return "/user/showInfo";
 	}
-	
+
 	@RequestMapping("/showInfos")
 	public @ResponseBody Object showUserInfos(){
 		User userInfos = userService.getUsers();

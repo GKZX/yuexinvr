@@ -4,6 +4,9 @@ var upload=new Vue({
 		fclass:[],
 		sclass:[],
 		isfee:false,
+		videoStr:"",
+		imgStr:"",
+		vedioInfo:"",
 		info:{
 			type:0,
 			vedioId:"",
@@ -26,8 +29,8 @@ var upload=new Vue({
 		//点击提交
 		upload:function(){
 			var self=this;
-		    this.info.vedioImgUrl="dd.jpg";
-		    this.info.vedioUrl="movie.mp4";
+		   // this.info.vedioImgUrl="dd.jpg";
+		  //  this.info.vedioUrl="movie.mp4";
 		    if(this.sclass.length==0){
 		    	this.info.vedioCategoryId="";
 		    }
@@ -35,6 +38,7 @@ var upload=new Vue({
 		    var utype="post";
 		    var upData=this.info;
 		    upData.money=100*this.info.money;
+		    console.log(upData);
 		    $.ajaxs(uurl,utype,upData,function(data){
 		        if(data.errorCode==10000){//成功
 		        	window.location.href="video.html?id="+self.info.vedioCategoryPId;
@@ -48,23 +52,20 @@ var upload=new Vue({
 
 $(function(){
 	$(".uploadFile").eq(0).change(function(){
-	   var path=$(".uploadFile").val();
-	   var extStart=path.lastIndexOf('.');
-	   var ext=path.substring(extStart,path.length).toUpperCase();
-	   if(ext!='.BMP'&&ext!='.PNG'&&ext!='.GIF'&&ext!='.JPG'&&ext!='.JPEG'){
-		  alert('图片限于png,gif,jpeg,jpg格式');
-	   }else{
-	   	    var file=this.files[0];
-			var reader=new FileReader();
-			reader.onload=function(e){
-				var url=e.target.result;	
-				$(".upload-cover-preview").html('<img src="'+url+'" class="imgpreview-image">');
-			}
-			reader.readAsDataURL(file);	
-		}
-	})
-	$(".upVideoFile").eq(0).change(function(){
-		
+//	   var path=$(".uploadFile").val();
+//	   var extStart=path.lastIndexOf('.');
+//	   var ext=path.substring(extStart,path.length).toUpperCase();
+//	   if(ext!='.BMP'&&ext!='.PNG'&&ext!='.GIF'&&ext!='.JPG'&&ext!='.JPEG'){
+//		  alert('图片限于png,gif,jpeg,jpg格式');
+//	   }else{
+//	   	    var file=this.files[0];
+//			var reader=new FileReader();
+//			reader.onload=function(e){
+//				var url=e.target.result;	
+//				$(".upload-cover-preview").html('<img src="'+url+'" class="imgpreview-image">');
+//			}
+//			reader.readAsDataURL(file);	
+//		}
 	})
 	$("#updataBtn").click(function(){
 	   $(".uploadFile").trigger("click");
@@ -164,31 +165,77 @@ var uploader = new VODUpload({
     // 文件上传失败
     'onUploadFailed': function (fileName, code, message) {
         console.log("onUploadFailed: " + fileName + code + "," + message);
+        $(".videoChoise").text("上传失败请重新上传");
     },
     // 文件上传完成
     'onUploadSucceed': function (fileName,callback) {
         console.log("onUploadSucceed: " + fileName);
+        if(upload.videoStr!=""&&upload.videoStr!=null&&upload.videoStr!=" "){
+        	upload.info.vedioUrl=$(".bucket").text()+"."+$(".endpoint").text().substr(7)+"/"+upload.videoStr;
+        	$(".videoChoise").text($(".upVideoFile").val());
+        }
+        if(upload.imgStr!=""&&upload.imgStr!=null&&upload.imgStr!=" "){
+           upload.info.vedioImgUrl=$(".bucket").text()+"."+$(".endpoint").text().substr(7)+"/"+upload.imgStr;
+        }
+        console.log(upload.info.vedioUrl);
+        console.log(upload.info.vedioImgUrl);
     },
     // 文件上传进度
     'onUploadProgress': function (fileName, totalSize, uploadedSize) {
         console.log("file:" + fileName + ", " + totalSize, uploadedSize, "percent:", Math.ceil(uploadedSize * 100 / totalSize));
+        $(".videoChoise").text("上传中，请稍后....");
     },
     // token超时
     'onUploadTokenExpired': function (callback) {
         console.log("onUploadTokenExpired");
+        $(".videoChoise").text("上传失败请重新上传");
     }
 });
 
-uploader.init("LTAIhQ82j3AQ3vvD", "A9zM4DYLO5SsAF6gcNa9xA5A3U68Hu");
-
-document.getElementById("files").addEventListener('change', function (event) {
+uploader.init($(".accessKeyId").text(),$(".secretAccessKey").text());
+//视频上传
+document.getElementById("upVideoFile").addEventListener('change', function (event) {
     for(var i=0; i<event.target.files.length; i++) {
-        uploader.addFile(event.target.files[i], 'http://oss-cn-hangzhou.aliyuncs.com', 'anneprivate1', event.target.files[i].name);
+    	var fileName=event.target.files[i].name;
+    	var type=fileName.substr(fileName.lastIndexOf(".")).toLowerCase();
+    	if(type!=".rm"&&type!=".rmvb"&&type!=".wmv"&&type!=".avi"&&type!=".mpg"&&type!=".mpeg"&&type!=".mp4"){
+    		alert("文件格式不正确");
+    	}else{
+    		var timestamp=new Date().getTime();
+    		var string =generateMixed(8);   
+    		var newName=timestamp+string+type;
+    		console.log(newName);
+    		upload.videoStr=newName;
+            uploader.addFile(event.target.files[i], $(".endpoint").text(), $(".bucket").text(),newName);
+    	}	
     }
-
     uploader.startUpload();
 });
-
+//封面上传
+document.getElementById("upImgFile").addEventListener('change', function (event) {
+	for(var i=0; i<event.target.files.length; i++) {
+		var fileName=event.target.files[i].name;
+    	var type=fileName.substr(fileName.lastIndexOf(".")).toLowerCase();
+	   if(type!='.bmp'&&type!='.png'&&type!='.gif'&&type!='.jpg'&&type!='.jpeg'){
+		  alert('图片限于png,gif,jpeg,jpg格式');
+	   }else{
+		    var timestamp=new Date().getTime();
+	   		var string =generateMixed(8);   
+	   		var newName=timestamp+string+type;
+	   		upload.imgStr=newName;	
+	        uploader.addFile(event.target.files[i], $(".endpoint").text(), $(".bucket").text(),newName);
+	   	    var file=this.files[0];
+			var reader=new FileReader();
+			reader.onload=function(e){
+				var url=e.target.result;	
+				$(".upload-cover-preview").html('<img src="'+url+'" class="imgpreview-image">');
+				
+			}
+			reader.readAsDataURL(file);		
+		} 
+	}
+	uploader.startUpload();
+});
 
 
 
