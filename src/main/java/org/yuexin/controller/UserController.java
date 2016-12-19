@@ -172,12 +172,9 @@ public class UserController {
 
 		User user = new User();
 		user.setUserName(String.valueOf(userMap.get("username")));
-		user.setPhone(String.valueOf(userMap.get("phone")));
+		user.setPhone(String.valueOf(userMap.get("username")));
 		user.setPassword(MD5Util.replaceMD5(String.valueOf(userMap.get("password"))));
-		user.setReligiousBelief(Integer.parseInt(String.valueOf(userMap.get("religiousBelief"))));
 		user.setSysFlag((byte) 1);
-		user.setAge(Integer.parseInt(String.valueOf(userMap.get("age"))));
-		user.setJob(String.valueOf(userMap.get("job")));
 		user.setAddTime(new Date());
 
 		//检查app用户是否存在
