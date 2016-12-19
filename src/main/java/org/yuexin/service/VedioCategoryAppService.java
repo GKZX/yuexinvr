@@ -24,6 +24,8 @@ import org.yuexin.model.dto.VedioCategoryAppDTO;
 @Service
 public class VedioCategoryAppService {
 	@Autowired
+	private VedioCategoryMapper vedioCategoryMapper;
+	@Autowired
 	private VedioCategoryAppCustomMapper vedioCategoryAppCustomMapper;
 
 	/**
@@ -37,5 +39,17 @@ public class VedioCategoryAppService {
 		map.put("type", type);
 		map.put("pId", pId);
 		return vedioCategoryAppCustomMapper.selectVedioCategorys(map);
+	}
+	
+	/**
+	 * 根据ID查询分类信息
+	 * @param id
+	 * @return
+	 */
+	public VedioCategory getVedioCategoryById(Integer id){
+		if(id == null){
+			return null;
+		}
+		return vedioCategoryMapper.selectByPrimaryKey(id);
 	}
 }
