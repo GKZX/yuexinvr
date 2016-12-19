@@ -2,6 +2,7 @@ package org.yuexin.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -199,6 +200,12 @@ public class VedioController extends BaseController {
 			@RequestParam(required = false, defaultValue = "1") Integer indexPage,
 			@RequestParam(required = false, defaultValue = "10") Integer pageSize) {
 		JSONObject result = new JSONObject();
+			try {
+				searchCriteria = new String(searchCriteria.getBytes("iso-8859-1"), "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		List<Vedio> vedioList = vedioService.selectVedioList(vedioCategoryId, searchCriteria, indexPage, pageSize, sortType);
 		int vedioSize = vedioService.selectVedioSize(vedioCategoryId, searchCriteria);
 		result.put("errorCode", ErrorEnums.SUCCESS.getCode());
