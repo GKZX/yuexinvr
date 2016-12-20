@@ -38,7 +38,7 @@
   	FROM vedio
 	WHERE sys_flag = 1
     <if test="vedioCategoryId != null">
-       AND v.vedio_category_id = #{vedioCategoryId,jdbcType=INTEGER}
+       AND vedio_category_id = #{vedioCategoryId,jdbcType=INTEGER}
     </if>
   </select>
   

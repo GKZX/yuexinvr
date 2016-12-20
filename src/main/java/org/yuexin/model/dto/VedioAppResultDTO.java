@@ -4,7 +4,7 @@ import java.util.List;
 
 public class VedioAppResultDTO {
 	private Integer id;
-	private Integer name;// 视频分类名称
+	private String name;// 视频分类名称
 	private List<VedioAppDTO> list;// 视频列表
 
 	public Integer getId() {
@@ -15,11 +15,11 @@ public class VedioAppResultDTO {
 		this.id = id;
 	}
 
-	public Integer getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(Integer name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

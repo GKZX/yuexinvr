@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.yuexin.controller.BaseController;
 import org.yuexin.model.VedioCategory;
+import org.yuexin.model.dto.VedioAppResultDTO;
 import org.yuexin.model.dto.VedioCategoryAppDTO;
 import org.yuexin.service.VedioAppService;
 import org.yuexin.service.VedioCategoryAppService;
@@ -72,9 +73,9 @@ public class VedioAPPController extends BaseController {
 	public JSONObject getCategoryVedios(Integer vedioCategoryId) {
 		JSONObject data = new JSONObject();
 		VedioCategory vedioCategory = vedioCategoryAppService.getVedioCategoryById(vedioCategoryId);// 视频大类信息
-		Map<Integer, Object> vedioMap = vedioAppService.getVedioMap(vedioCategoryId);
+		List<VedioAppResultDTO> vedioList = vedioAppService.getVedioAppResultDTOList(vedioCategoryId);
 		data.put("vedioCategory", vedioCategory);
-		data.put("vedioMap", vedioMap);
+		data.put("vedioList", vedioList);
 		return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, data);
 	}
 	
@@ -88,9 +89,9 @@ public class VedioAPPController extends BaseController {
 	public JSONObject getVedios(Integer vedioCategoryId) {
 		JSONObject data = new JSONObject();
 		VedioCategory vedioCategory = vedioCategoryAppService.getVedioCategoryById(vedioCategoryId);// 视频分类信息
-//		Map<Integer, Object> vedioMap = vedioAppService.getVedioMap(vedioCategoryId);
+		List<VedioAppResultDTO> vedioList = vedioAppService.getVedioAppResultDTOList(vedioCategoryId);
 		data.put("vedioCategory", vedioCategory);
-//		data.put("vedioMap", vedioMap);
+		data.put("vedioList", vedioList);
 		return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, data);
 	}
 }

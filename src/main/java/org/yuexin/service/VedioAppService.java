@@ -37,27 +37,39 @@ public class VedioAppService {
 	 * @param vedioCategoryId
 	 * @return
 	 */
-	public List<VedioAppResultDTO> getVedioMap(Integer vedioCategoryId) {
+	public List<VedioAppResultDTO> getVedioAppResultDTOList(Integer vedioCategoryId) {
 		List<VedioAppDTO> vedioAppDTOs = selectVedioList(vedioCategoryId);
 		if (!CollectionUtils.isEmpty(vedioAppDTOs)) {
-			List<VedioAppResultDTO> vedioMap = new ArrayList<VedioAppResultDTO>();
+			Map<Integer, Object> vedioMap = new HashMap<Integer, Object>();
 			for (VedioAppDTO vedioAppDTO : vedioAppDTOs) {
 				// 没有子类
 				Integer key = vedioAppDTO.getVedioCategoryPId() == null ? 0 : vedioAppDTO.getVedioCategoryId();
-				
-//				List<VedioAppDTO> vedioList = new ArrayList<VedioAppDTO>();
-//				if (vedioMap.containsKey(key)) {
-//					vedioList = (List<VedioAppDTO>) vedioMap.get(key);
-//					// 子类目前默认放2个视频、没有子类目前默认放10个视频
-//					if (!CollectionUtils.isEmpty(vedioList)
-//							&& ((key != 0 && vedioList.size() >= 2) || (key == 0 && vedioList.size() >= 10))) {
-//						continue;
-//					}
-//				}
-//				vedioList.add(vedioAppDTO);
-//				vedioMap.put(key, vedioList);
+
+				List<VedioAppDTO> vedioList = new ArrayList<VedioAppDTO>();
+				if (vedioMap.containsKey(key)) {
+					vedioList = (List<VedioAppDTO>) vedioMap.get(key);
+					// 子类目前默认放2个视频、没有子类目前默认放10个视频
+					if (!CollectionUtils.isEmpty(vedioList)
+							&& ((key != 0 && vedioList.size() >= 2) || (key == 0 && vedioList.size() >= 10))) {
+						continue;
+					}
+				}
+				vedioList.add(vedioAppDTO);
+				vedioMap.put(key, vedioList);
 			}
-			return vedioMap;
+
+			//组装分类视频数据list
+			List<VedioAppResultDTO> vedioAppResultDTOs = new ArrayList<VedioAppResultDTO>();
+			for (Map.Entry entry : vedioMap.entrySet()) {
+				Integer key = (Integer) entry.getKey();
+				List<VedioAppDTO> value = (List<VedioAppDTO>) entry.getValue();
+				VedioAppResultDTO vedioAppResultDTO = new VedioAppResultDTO();
+				vedioAppResultDTO.setId(key);// 子类ID
+				vedioAppResultDTO.setName(value.get(0).getVedioCategoryName());// 子类名称
+				vedioAppResultDTO.setList(value);// 对应的视频列表
+				vedioAppResultDTOs.add(vedioAppResultDTO);
+			}
+			return vedioAppResultDTOs;
 		}
 		return null;
 	}
@@ -71,9 +83,9 @@ public class VedioAppService {
 	public List<VedioAppDTO> selectVedioList(Integer vedioCategoryId) {
 		Map<String, Object> map = new HashMap<String, Object>(1);
 		map.put("vedioCategoryId", vedioCategoryId);
-		return vedioAppCustomMapper.selectVedios(map);
+		return vedioAppCustomMapper.selectCategoryVedios(map);
 	}
-	
+
 	/**
 	 * 
 	 * @param vedioCategoryId
