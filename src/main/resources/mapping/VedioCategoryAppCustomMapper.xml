@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.yuexin.dao.VedioCategoryAppCustomMapper">
+  <resultMap id="BaseResultMap" type="org.yuexin.model.VedioCategory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="p_id" jdbcType="INTEGER" property="pId" />
+    <result column="vedio_category_name" jdbcType="VARCHAR" property="vedioCategoryName" />
+    <result column="logo_img_url" jdbcType="VARCHAR" property="logoImgUrl" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="sys_flag" jdbcType="TINYINT" property="sysFlag" />
+  </resultMap>
+  
+  <!-- 视频分类查询 -->
+  <select id="selectVedioCategorys" parameterType="java.util.Map" resultType="org.yuexin.model.dto.VedioCategoryAppDTO">
+  	SELECT distinct id, vedio_category_name AS vedioCategoryName, logo_img_url AS logoImgUrl, small_logo_img_url AS smallLogoImgUrl 
+  	FROM vedio_category 
+  	WHERE sys_flag = 1 
+  	<if test="type != null">
+  		AND type = #{type,jdbcType=INTEGER}
+  	</if>
+  	<if test="pId != null">
+  		AND p_id = #{pId,jdbcType=INTEGER}
+  	</if>
+  </select>
+  
+</mapper>

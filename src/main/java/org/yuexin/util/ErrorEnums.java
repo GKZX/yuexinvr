@@ -1,4 +1,12 @@
 package org.yuexin.util;
+/**
+
+* @Description: 管理后台错误代码枚举
+
+* @author liuqin
+
+* @date 2016-12-19 下午1:40:00
+ */
 public enum ErrorEnums{
 	SUCCESS(10000, "成功"),
 	SERVER_ERROR(9999, "服务器异常"),

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.yuexin.dao.VedioAppCustomMapper">
+  <resultMap id="BaseResultMap" type="org.yuexin.model.Vedio">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="vedio_category_id" jdbcType="INTEGER" property="vedioCategoryId" />
+    <result column="is_free" jdbcType="SMALLINT" property="isFree" />
+    <result column="money" jdbcType="INTEGER" property="money" />
+    <result column="vedio_name" jdbcType="VARCHAR" property="vedioName" />
+    <result column="vedio_img_url" jdbcType="VARCHAR" property="vedioImgUrl" />
+    <result column="vedio_url" jdbcType="VARCHAR" property="vedioUrl" />
+    <result column="vedio_status" jdbcType="INTEGER" property="vedioStatus" />
+    <result column="play_amount" jdbcType="INTEGER" property="playAmount" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="sys_flag" jdbcType="TINYINT" property="sysFlag" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.yuexin.model.Vedio">
+    <result column="vedio_notes" jdbcType="LONGVARCHAR" property="vedioNotes" />
+  </resultMap>
+  
+  <!-- 查询大类下所有视频 -->
+  <select id="selectCategoryVedios" parameterType="java.util.Map" resultType="org.yuexin.model.dto.VedioAppDTO">
+  	SELECT distinct v.id, v.vedio_name AS vedioName, v.vedio_img_url AS vedioImgUrl, v.vedio_url AS vedioUrl, v.vedio_notes AS vedioNotes, v.play_amount AS playAmount,
+		vc1.id AS vedioCategoryPId, vc1.vedio_category_name AS vedioCategoryPName,
+		vc.id AS vedioCategoryId, vc.vedio_category_name AS vedioCategoryName
+  	FROM vedio v
+	JOIN vedio_category vc ON vc.id = v.vedio_category_id
+	LEFT JOIN vedio_category vc1 ON vc1.id = vc.p_id
+	WHERE v.sys_flag = 1
+    <if test="vedioCategoryId != null">
+       AND (v.vedio_category_id = #{vedioCategoryId,jdbcType=INTEGER} OR vc.p_id = #{vedioCategoryId,jdbcType=INTEGER})
+    </if>
+  </select>
+  
+  <!-- 查询大类下所有视频 -->
+  <select id="selectVedios" parameterType="java.util.Map" resultType="org.yuexin.model.dto.VedioAppDTO">
+  	SELECT distinct id, vedio_name AS vedioName, vedio_img_url AS vedioImgUrl, vedio_url AS vedioUrl, vedio_notes AS vedioNotes, play_amount AS playAmount
+  	FROM vedio
+	WHERE sys_flag = 1
+    <if test="vedioCategoryId != null">
+       AND vedio_category_id = #{vedioCategoryId,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  <!-- 更新视频播放量 -->
+  <update id="updatePlayAmount" parameterType="java.lang.Integer">
+    UPDATE vedio SET play_amount = play_amount+1 WHERE id = #{vedioId,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

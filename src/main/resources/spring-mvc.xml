@@ -19,6 +19,7 @@
 	
 	<!-- 自动扫描controller包下的所有类，如果@Controller注入为bean -->
 	<context:component-scan base-package="org.yuexin.controller" />
+	<context:component-scan base-package="org.yuexin.app.controller" />
 	
 
 	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
