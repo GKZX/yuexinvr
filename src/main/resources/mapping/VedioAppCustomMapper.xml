@@ -42,4 +42,9 @@
     </if>
   </select>
   
+  <!-- 更新视频播放量 -->
+  <update id="updatePlayAmount" parameterType="java.lang.Integer">
+    UPDATE vedio SET play_amount = play_amount+1 WHERE id = #{vedioId,jdbcType=INTEGER}
+  </update>
+  
 </mapper>

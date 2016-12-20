@@ -4,6 +4,7 @@ public class VedioCategoryAppDTO {
 	private Integer id;// 分类ID
 	private String vedioCategoryName;// 分类名称
 	private String logoImgUrl;// 分类LOGO地址
+	private String smallLogoImgUrl;// 分类LOGO地址小图
 
 	public Integer getId() {
 		return id;
@@ -27,6 +28,14 @@ public class VedioCategoryAppDTO {
 
 	public void setLogoImgUrl(String logoImgUrl) {
 		this.logoImgUrl = logoImgUrl;
+	}
+
+	public String getSmallLogoImgUrl() {
+		return smallLogoImgUrl;
+	}
+
+	public void setSmallLogoImgUrl(String smallLogoImgUrl) {
+		this.smallLogoImgUrl = smallLogoImgUrl;
 	}
 
 }

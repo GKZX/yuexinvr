@@ -52,19 +52,24 @@ public class VedioAPPController extends BaseController {
 	 *            类型:1-置顶到首页;0-更多;
 	 * @return
 	 */
-	@RequestMapping("/vedioApp/getVedioCateGory")
+	@RequestMapping("/vedioApp/getVedioCategory")
 	@ResponseBody
-	public JSONObject getVedioCateGory(Integer type) {
+	public JSONObject getVedioCategory(Integer type) {
 		if (type == null) {
 			return ErrorAppEnums.getResult(ErrorAppEnums.PARAM_ERROR, null, null);
 		}
-		JSONObject data = new JSONObject();
-		LOG.info("查询视频分类type:" + type);
-		// 后台的视频分类
-		List<VedioCategoryAppDTO> vedioCategoryList = vedioCategoryAppService.getVedioCategorysByType(type, 0);
-		data.put("vedioCategoryList", JSONArray.toJSON(vedioCategoryList));
-		LOG.info("查询视频分类成功!");
-		return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, data);
+		try {
+			JSONObject data = new JSONObject();
+			LOG.info("查询视频分类type:" + type);
+			// 后台的视频分类
+			List<VedioCategoryAppDTO> vedioCategoryList = vedioCategoryAppService.getVedioCategorysByType(type, 0);
+			data.put("vedioCategoryList", JSONArray.toJSON(vedioCategoryList));
+			LOG.info("查询视频分类成功!");
+			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, data);
+		} catch (Exception e) {
+			LOG.error("getVedioCateGory异常:" + e);
+			return ErrorAppEnums.getResult(ErrorAppEnums.SERVER_ERROR, null, null);
+		}
 	}
 
 	/**
@@ -80,12 +85,17 @@ public class VedioAPPController extends BaseController {
 			return ErrorAppEnums.getResult(ErrorAppEnums.PARAM_ERROR, null, null);
 		}
 		LOG.info("分类视频列表vedioCategoryId:" + vedioCategoryId);
-		JSONObject data = new JSONObject();
-		VedioCategory vedioCategory = vedioCategoryAppService.getVedioCategoryById(vedioCategoryId);// 视频大类信息
-		List<VedioAppResultDTO> vedioList = vedioAppService.getVedioAppResultDTOList(vedioCategoryId);
-		data.put("vedioCategory", vedioCategory);
-		data.put("vedioList", vedioList);
-		return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, data);
+		try {
+			JSONObject data = new JSONObject();
+			VedioCategory vedioCategory = vedioCategoryAppService.getVedioCategoryById(vedioCategoryId);// 视频大类信息
+			List<VedioAppResultDTO> vedioList = vedioAppService.getVedioAppResultDTOList(vedioCategoryId);
+			data.put("vedioCategory", vedioCategory);
+			data.put("vedioList", vedioList);
+			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, data);
+		} catch (Exception e) {
+			LOG.error("getCategoryVedios异常:" + e);
+			return ErrorAppEnums.getResult(ErrorAppEnums.SERVER_ERROR, null, null);
+		}
 	}
 
 	/**
@@ -104,11 +114,39 @@ public class VedioAPPController extends BaseController {
 			return ErrorAppEnums.getResult(ErrorAppEnums.PARAM_ERROR, null, null);
 		}
 		LOG.info("查询单个类别所有视频vedioCategoryId:" + vedioCategoryId + ";sortType:" + sortType);
-		JSONObject data = new JSONObject();
-		VedioCategory vedioCategory = vedioCategoryAppService.getVedioCategoryById(vedioCategoryId);// 视频分类信息
-		List<Vedio> vedioList = vedioAppService.selectVediosById(vedioCategoryId, sortType);
-		data.put("vedioCategoryName", vedioCategory.getVedioCategoryName());
-		data.put("vedioList", vedioList);
-		return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, data);
+		try {
+			JSONObject data = new JSONObject();
+			VedioCategory vedioCategory = vedioCategoryAppService.getVedioCategoryById(vedioCategoryId);// 视频分类信息
+			List<Vedio> vedioList = vedioAppService.selectVediosById(vedioCategoryId, sortType);
+			data.put("vedioCategoryName", vedioCategory.getVedioCategoryName());
+			data.put("vedioList", vedioList);
+			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, data);
+		} catch (Exception e) {
+			LOG.error("getVedios异常:" + e);
+			return ErrorAppEnums.getResult(ErrorAppEnums.SERVER_ERROR, null, null);
+		}
+	}
+
+	/**
+	 * 播放视频
+	 * 
+	 * @param userId
+	 * @param vedioId
+	 * @return
+	 */
+	@RequestMapping("/vedioApp/playAmont")
+	@ResponseBody
+	public JSONObject playAmount(Integer userId, Integer vedioId) {
+		if (vedioId == null) {
+			return ErrorAppEnums.getResult(ErrorAppEnums.PARAM_ERROR, null, null);
+		}
+		LOG.info("查询单个类别所有视频vedioId:" + vedioId + ";userId:" + userId);
+		try {
+			vedioAppService.updatePlayAmont(userId, vedioId);
+			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, null);
+		} catch (Exception e) {
+			LOG.error("playAmount异常:" + e);
+			return ErrorAppEnums.getResult(ErrorAppEnums.SERVER_ERROR, null, null);
+		}
 	}
 }

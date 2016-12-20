@@ -1,15 +1,20 @@
 package org.yuexin.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.yuexin.dao.PlayRecordMapper;
 import org.yuexin.dao.VedioAppCustomMapper;
 import org.yuexin.dao.VedioMapper;
+import org.yuexin.model.PlayRecord;
+import org.yuexin.model.PlayRecordExample;
 import org.yuexin.model.Vedio;
 import org.yuexin.model.VedioExample;
 import org.yuexin.model.dto.VedioAppDTO;
@@ -30,7 +35,9 @@ public class VedioAppService {
 	private VedioMapper vedioMapper;
 	@Autowired
 	private VedioAppCustomMapper vedioAppCustomMapper;
-
+    @Autowired
+    private PlayRecordMapper playRecordMapper;
+    
 	/**
 	 * 视频分类显示
 	 * 
@@ -107,5 +114,22 @@ public class VedioAppService {
 		criteria.andVedioCategoryIdEqualTo(vedioCategoryId);
 		criteria.andSysFlagEqualTo((byte) 1);
 		return vedioMapper.selectByExample(example);
+	}
+
+	/**
+	 * 更新视频播放量以及记录播放记录
+	 * @param userId
+	 * @param vedioId
+	 */
+	@Transactional
+	public void updatePlayAmont(Integer userId, Integer vedioId) {
+		vedioAppCustomMapper.updatePlayAmount(vedioId);// 增加播放量
+		if (userId == null || userId == 0) {
+			PlayRecord playRecord = new PlayRecord();
+			playRecord.setUserId(userId);
+			playRecord.setVedioId(vedioId);
+			playRecord.setAddTime(new Date());
+			playRecordMapper.insertSelective(playRecord);// 登录用户记录播放视频记录
+		}
 	}
 }

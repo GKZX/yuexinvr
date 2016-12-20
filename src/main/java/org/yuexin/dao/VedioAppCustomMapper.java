@@ -21,5 +21,12 @@ public interface VedioAppCustomMapper {
 	 * @return
 	 */
 	List<VedioAppDTO> selectVedios(Map<String, Object> map);
+	
+	/**
+	 * 更新视频播放量
+	 * @param vedioId
+	 * @return
+	 */
+	int updatePlayAmount(Integer vedioId);
 
 }

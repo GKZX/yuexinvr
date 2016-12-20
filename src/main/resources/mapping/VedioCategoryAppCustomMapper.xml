@@ -14,7 +14,7 @@
   
   <!-- 视频分类查询 -->
   <select id="selectVedioCategorys" parameterType="java.util.Map" resultType="org.yuexin.model.dto.VedioCategoryAppDTO">
-  	SELECT distinct id, vedio_category_name AS vedioCategoryName, logo_img_url AS logoImgUrl 
+  	SELECT distinct id, vedio_category_name AS vedioCategoryName, logo_img_url AS logoImgUrl, small_logo_img_url AS smallLogoImgUrl 
   	FROM vedio_category 
   	WHERE sys_flag = 1 
   	<if test="type != null">
