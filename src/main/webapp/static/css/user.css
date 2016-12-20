@@ -1,0 +1,13 @@
+/*user-table*/
+.user-table {
+	color: #999;
+	background: #fafafa;
+	font-size: 12px;
+}
+.user-table thead {
+	background: #f0f0f0;
+	color: #333;
+}
+.user-table th {
+	text-align: center;
+}

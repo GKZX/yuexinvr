@@ -1,0 +1,166 @@
+/*video*/
+[v-cloak] { display: none }
+.video-frame-wrapper {
+	padding: 0 35px;
+}
+
+.video-box {
+	border-bottom:1px solid #ccc;
+}
+.search-box {
+	padding:20px 0;
+}
+.video-input-group {
+	border-spacing: 15px;
+}
+.search-box .video-search {
+	border-radius: 4px!important;
+	text-align: left;
+}
+.video-row .form-control {
+	height: 38px;
+}
+.video-row .input-group-addon {
+	background: #53687f;
+	color:#fff;
+	padding:6px 18px;
+	font-size: 16px;
+}
+.video-row .icon-search {
+	font-size: 20px;
+}
+.video-box-tit {
+	height: 40px;
+	color: #999;
+	line-height: 40px;
+}
+.video-box-item {
+	height: 27px;
+	line-height: 27px;
+	margin: 5px;
+	margin-left: 0;
+	width: 80px;
+	text-align: center;
+	float: left;
+}
+.video-box-item a {
+	color: #333;
+}
+.video-box-item.active {
+	background: #53687f;
+	border-radius: 3px;
+}
+.video-box-item.active a {
+	color: #fff;
+}
+.class-box {
+	padding-bottom: 10px;
+}
+.list-box {
+	padding: 10px 0;
+}
+.list-box-tab {
+	float: left;
+	width: 88px;
+	height: 28px;
+	border: 1px solid #ccc;
+	line-height: 28px;
+	text-align: center;
+	border-radius: 3px;
+	margin-right: 25px;
+}
+.list-box-tab a{
+	color: #666;
+}
+.list-delete-tab {
+	background-color: #d00413;
+	border:1px solid #d00413;
+}
+.list-delete-tab a{
+    color:#fff;
+}
+.list-info {
+	width: 100%;
+}
+.list-box-item {
+	border: 1px solid #ccc;
+	margin: 20px 2% 30px 0;
+	border-radius: 5px;
+	overflow: hidden;
+	position: relative;
+	padding: 0;
+	box-sizing: border-box;
+	width: 18%;
+	float: left;
+}
+.video-edit-btn {
+	width: 100%;
+	margin: 15px 0;
+	background: #53687f;
+}
+.video-edit-btn a {
+	color: #fff;
+	display: block;
+}
+.list-info .icon-gou {
+	padding: 0;
+	color: #d00413; 
+}
+.check-box {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background: #fff;
+	border: 1px solid #ccc;
+	width: 20px;
+	height: 20px;
+	z-index: 10;
+}
+.video-mask {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.3);
+	z-index: 1;
+}
+.video-img {
+	width: 100%;
+	height: 1rem;
+	overflow: hidden;
+}
+.video-img img { 
+	width: 100%;
+}
+.video-desc {
+	padding: 5px 10px;
+}
+.video-desc-tit {
+	font-size: 14px;
+	color: #333;
+	line-height: 30px;
+}
+.video-desc-list li {
+	color: #666;
+	line-height: 25px;
+	font-size: 12px;
+}
+.video-desc-list .data {
+	float: right;
+	color: #999;
+}
+@media screen and (max-width: 1100px) {
+	.list-box-item {
+		width: 23%;
+	}
+	.video-img {
+	   height: 1.2rem;
+	}
+}
+@media screen and (max-width: 767px) {
+	.list-box-item {
+		width: 48%;
+	}
+	.video-img {
+	   height: 1.8rem;
+	}
+}

@@ -8,7 +8,7 @@
 		<link href="css/iconfont.css" rel="stylesheet" />
 		<link href="css/pagination.css" rel="stylesheet"/>
 		<link href="css/common.css" rel="stylesheet" />
-		<link href="css/main.css" rel="stylesheet" />
+		<link href="css/video.css" rel="stylesheet" />
 	</head>
 	<body>
 		<div class='video-frame-wrapper' id="videoManager" v-cloak>
@@ -68,10 +68,10 @@
 					</div>
 					<div class="clearfix list-choise-box" v-else>
 						<div class="list-box-tab">
-							<a href="###" v-on:click="editVideo">批量删除</span>
+							<a href="###" v-on:click="editVideo">批量删除</a>
 						</div>
 						<div class="list-box-tab">
-							<a href="upload.html?&type=0">上传模式</a>
+							<a href="upload.html?bigId={{id}}&type=0">上传模式</a>
 						</div>
 					</div>
 					
@@ -116,11 +116,58 @@
 				</div>
 			</div>	
 			<div class="M-box2 page-box"></div>
-			
+			<!-- 模态框（Modal） -->
+			<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title" id="myModalLabel">
+								确认框
+							</h4>
+						</div>
+						<div class="modal-body">
+							确认删除以下勾选的视频？
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">取消
+							</button>
+							<button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="confirmDel">
+								确定
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			<!-- 模态框（Modal） -->
+			<div class="modal fade" id="choiseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title" id="myModalLabel">
+								警告框
+							</h4>
+						</div>
+						<div class="modal-body">
+							  请先选择要删除的视频！
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+							</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
 		</div>
 		<script src="js/jquery-3.1.1.min.js"></script>
 		<script src="js/jquery.pagination.min.js"></script>
 		<script src="js/vue.js"></script>
+		<script src="js/bootstrap.min.js"></script>
 		<script src="js/common.js"></script>
 		<script src="js/video.js"></script>
 	</body>
