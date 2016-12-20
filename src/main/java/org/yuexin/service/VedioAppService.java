@@ -58,7 +58,7 @@ public class VedioAppService {
 				vedioMap.put(key, vedioList);
 			}
 
-			//组装分类视频数据list
+			// 组装分类视频数据list
 			List<VedioAppResultDTO> vedioAppResultDTOs = new ArrayList<VedioAppResultDTO>();
 			for (Map.Entry entry : vedioMap.entrySet()) {
 				Integer key = (Integer) entry.getKey();
@@ -87,15 +87,25 @@ public class VedioAppService {
 	}
 
 	/**
+	 * 单个分类下所有视频
 	 * 
 	 * @param vedioCategoryId
+	 *            分类ID
+	 * @param sortType
+	 *            排序类型:1-时间倒叙;2-播放量倒叙
 	 * @return
 	 */
-	public List<Vedio> selectVediosById(Integer vedioCategoryId) {
+	public List<Vedio> selectVediosById(Integer vedioCategoryId, Integer sortType) {
 		VedioExample example = new VedioExample();
-		example.setOrderByClause("addTime");
+		example.setDistinct(true);
+		if (sortType == 1) {// 时间倒叙
+			example.setOrderByClause("add_time desc");
+		} else if (sortType == 2) {// 播放量倒叙
+			example.setOrderByClause("play_amount desc");
+		}
 		VedioExample.Criteria criteria = example.createCriteria();
 		criteria.andVedioCategoryIdEqualTo(vedioCategoryId);
+		criteria.andSysFlagEqualTo((byte) 1);
 		return vedioMapper.selectByExample(example);
 	}
 }
