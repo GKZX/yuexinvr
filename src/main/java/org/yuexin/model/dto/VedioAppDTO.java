@@ -1,5 +1,7 @@
 package org.yuexin.model.dto;
 
+import java.util.Date;
+
 public class VedioAppDTO {
 	private Integer id;
 	private Integer vedioCategoryPId;// 视频分类第一级ID
@@ -13,6 +15,7 @@ public class VedioAppDTO {
 	private String vedioImgUrl;// 视频封面图片地址
 	private String vedioUrl;// 视频地址
 	private Integer playAmount;// 播放量
+	private Date addTime;// 新增时间
 
 	public Integer getId() {
 		return id;
@@ -108,6 +111,14 @@ public class VedioAppDTO {
 
 	public void setPlayAmount(Integer playAmount) {
 		this.playAmount = playAmount;
+	}
+
+	public Date getAddTime() {
+		return addTime;
+	}
+
+	public void setAddTime(Date addTime) {
+		this.addTime = addTime;
 	}
 
 }

@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.yuexin.app.controller.VedioAPPController;
 import org.yuexin.model.SysUser;
 import org.yuexin.service.SysUserService;
 import org.yuexin.util.ErrorEnums;

@@ -28,5 +28,12 @@ public interface VedioAppCustomMapper {
 	 * @return
 	 */
 	int updatePlayAmount(Integer vedioId);
+	
+	/**
+	 * 根据ID查询单个视频详情
+	 * @param map
+	 * @return
+	 */
+	VedioAppDTO selectVedioById(Map<String, Object> map);
 
 }

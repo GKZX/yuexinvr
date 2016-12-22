@@ -1,7 +1,7 @@
 $.ajaxs=function(url,type,data,successfn,errorfn){
 	data=(data==null||data==""||typeof(data)=="undefined")?{"data":new Date().getTime()}:data;
 	$.ajax({
-		url:"http://localhost:8080/yuexinvr/"+url,
+		url:"http://192.168.0.104:8080/yuexinvr/"+url,
 		type:type,
 		data:data,
 		dataType:"json",
