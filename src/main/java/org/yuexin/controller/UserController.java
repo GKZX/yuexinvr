@@ -3,26 +3,31 @@ package org.yuexin.controller;
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.yuexin.model.AppVersion;
 import org.yuexin.model.User;
+import org.yuexin.model.dto.BannerAppDTO;
+import org.yuexin.service.AppVersionAppService;
 import org.yuexin.service.UserService;
-import org.yuexin.util.CollectionUtil;
 import org.yuexin.util.ErrorAppEnums;
 import org.yuexin.util.MD5Util;
 import org.yuexin.util.RandomNumeric;
 import org.yuexin.util.yunxin.YunUtils;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,8 +41,11 @@ import java.util.Map;
  * 
  */
 @Controller
-public class UserController {
+public class UserController extends BaseController {
+	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
+	@Autowired
+	private AppVersionAppService appVersionAppService;
 	@Autowired
 	private UserService userService;
 
@@ -149,5 +157,53 @@ public class UserController {
 			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, "注册", userService.getUser(user.getUserName()));
 		}
 		return ErrorAppEnums.getResult(ErrorAppEnums.SERVER_ERROR, null, null);
+	}
+
+	/**
+	 * 查询最新版本信息
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/app/getVersion", method = RequestMethod.GET)
+	@ResponseBody
+	public JSONObject getVersion() {
+		try {
+			LOG.info("查询版本");
+			AppVersion appVersion = appVersionAppService.selectAppVersionById();
+			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, appVersion);
+		} catch (Exception e) {
+			LOG.error("getVersion异常:" + e);
+			return ErrorAppEnums.getResult(ErrorAppEnums.SERVER_ERROR, null, null);
+		}
+	}
+
+	/**
+	 * 首页banner
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/app/getBanners", method = RequestMethod.GET)
+	@ResponseBody
+	public JSONObject getBanners() {
+		try {
+			LOG.info("查询首页banner");
+			List<BannerAppDTO> bannerAppDTOList = new ArrayList<BannerAppDTO>();
+			bannerAppDTOList.add(getBannerAppDTO(1, "http://anneprivate1.oss-cn-hangzhou.aliyuncs.com/1481881974685GGB4BCYX.png", "http://anneprivate1.oss-cn-hangzhou.aliyuncs.com/14821087330612XU52W1G.mp4"));
+			bannerAppDTOList.add(getBannerAppDTO(2, "http://anneprivate1.oss-cn-hangzhou.aliyuncs.com/1482114094505LR84XPH8.jpg", "http://anneprivate1.oss-cn-hangzhou.aliyuncs.com/14821140076829BRKTA8G.mp4"));
+			bannerAppDTOList.add(getBannerAppDTO(3, "http://anneprivate1.oss-cn-hangzhou.aliyuncs.com/1482136105489RQTRN5FW.jpg", "http://anneprivate1.oss-cn-hangzhou.aliyuncs.com/14821157757082SQK2KZP.mp4"));
+
+			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, bannerAppDTOList);
+		} catch (Exception e) {
+			LOG.error("getVersion异常:" + e);
+			return ErrorAppEnums.getResult(ErrorAppEnums.SERVER_ERROR, null, null);
+		}
+	}
+
+	private BannerAppDTO getBannerAppDTO(Integer id, String imgUrl, String url) {
+		BannerAppDTO bannerAppDTO = new BannerAppDTO();
+		bannerAppDTO.setId(1);
+		bannerAppDTO.setImgUrl(imgUrl);
+		bannerAppDTO.setUrl(url);
+		return bannerAppDTO;
 	}
 }

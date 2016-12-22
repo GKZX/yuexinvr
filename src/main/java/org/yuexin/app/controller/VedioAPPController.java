@@ -1,29 +1,19 @@
 package org.yuexin.app.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.yuexin.controller.BaseController;
-import org.yuexin.model.Vedio;
 import org.yuexin.model.VedioCategory;
 import org.yuexin.model.dto.VedioAppDTO;
-import org.yuexin.model.dto.VedioAppResultDTO;
 import org.yuexin.model.dto.VedioAppsResultDTO;
 import org.yuexin.model.dto.VedioCategoryAppDTO;
 import org.yuexin.service.VedioAppService;
 import org.yuexin.service.VedioCategoryAppService;
-import org.yuexin.service.VedioCategoryService;
-import org.yuexin.service.VedioService;
 import org.yuexin.util.ErrorAppEnums;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -120,9 +110,9 @@ public class VedioAPPController extends BaseController {
 		try {
 			JSONObject data = new JSONObject();
 			VedioCategory vedioCategory = vedioCategoryAppService.getVedioCategoryById(vedioCategoryId);// 视频分类信息
-			List<Vedio> vedioList = vedioAppService.selectVediosById(vedioCategoryId, sortType);
+			List<VedioAppDTO> vedioList = vedioAppService.selectVedioAppDTOsByVedioCategoryId(vedioCategoryId, sortType);
 			data.put("vedioCategoryName", vedioCategory.getVedioCategoryName());
-			data.put("vedioList", vedioToVedioAppResultDTOs(vedioList));
+			data.put("vedioList", vedioList);
 			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, data);
 		} catch (Exception e) {
 			LOG.error("getVedios异常:" + e);
@@ -152,27 +142,26 @@ public class VedioAPPController extends BaseController {
 			return ErrorAppEnums.getResult(ErrorAppEnums.SERVER_ERROR, null, null);
 		}
 	}
-	
+
 	/**
-	 * vedio对象类型转换
-	 * @param vedios
+	 * 单个视频详情
+	 * 
+	 * @param vedioId
 	 * @return
 	 */
-	private List<VedioAppResultDTO> vedioToVedioAppResultDTOs(List<Vedio> vedios){
-		if(!CollectionUtils.isEmpty(vedios)){
-			List<VedioAppResultDTO> vedioAppResultDTOs = new ArrayList<VedioAppResultDTO>();
-			for(Vedio vedio :vedios){
-				VedioAppResultDTO vedioAppResultDTO = new VedioAppResultDTO();
-				vedioAppResultDTO.setId(vedio.getId());
-				vedioAppResultDTO.setVedioName(vedio.getVedioName());
-				vedioAppResultDTO.setVedioNotes(vedio.getVedioNotes());
-				vedioAppResultDTO.setVedioImgUrl(vedio.getVedioImgUrl());
-				vedioAppResultDTO.setVedioUrl(vedio.getVedioUrl());
-				vedioAppResultDTO.setPlayAmount(vedio.getPlayAmount());
-				vedioAppResultDTOs.add(vedioAppResultDTO);
-			}
-			return vedioAppResultDTOs;
+	@RequestMapping("/vedioApp/getVedioDetail")
+	@ResponseBody
+	public JSONObject getVedioDetail(Integer vedioId) {
+		if (vedioId == null) {
+			return ErrorAppEnums.getResult(ErrorAppEnums.PARAM_ERROR, null, null);
 		}
-		return null;
+		LOG.info("查询单个类别所有视频vedioId:" + vedioId);
+		try {
+			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, vedioAppService.selectVedioAppDTOById(vedioId));
+		} catch (Exception e) {
+			LOG.error("getVedios异常:" + e);
+			return ErrorAppEnums.getResult(ErrorAppEnums.SERVER_ERROR, null, null);
+		}
 	}
+
 }

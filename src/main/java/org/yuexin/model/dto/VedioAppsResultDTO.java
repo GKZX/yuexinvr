@@ -5,7 +5,7 @@ import java.util.List;
 public class VedioAppsResultDTO {
 	private Integer id;
 	private String name;// 视频分类名称
-	private List<VedioAppResultDTO> list;// 视频列表
+	private List<VedioAppDTO> list;// 视频列表
 
 	public Integer getId() {
 		return id;
@@ -23,11 +23,11 @@ public class VedioAppsResultDTO {
 		this.name = name;
 	}
 
-	public List<VedioAppResultDTO> getList() {
+	public List<VedioAppDTO> getList() {
 		return list;
 	}
 
-	public void setList(List<VedioAppResultDTO> list) {
+	public void setList(List<VedioAppDTO> list) {
 		this.list = list;
 	}
 

@@ -18,7 +18,6 @@ import org.yuexin.model.PlayRecordExample;
 import org.yuexin.model.Vedio;
 import org.yuexin.model.VedioExample;
 import org.yuexin.model.dto.VedioAppDTO;
-import org.yuexin.model.dto.VedioAppResultDTO;
 import org.yuexin.model.dto.VedioAppsResultDTO;
 
 /**
@@ -74,7 +73,7 @@ public class VedioAppService {
 				VedioAppsResultDTO VedioAppsResultDTO = new VedioAppsResultDTO();
 				VedioAppsResultDTO.setId(key);// 子类ID
 				VedioAppsResultDTO.setName(value.get(0).getVedioCategoryName());// 子类名称
-				VedioAppsResultDTO.setList(vedioAppDTOToVedioAppResultDTOs(value));// 对应的视频列表
+				VedioAppsResultDTO.setList(value);// 对应的视频列表
 				VedioAppsResultDTOs.add(VedioAppsResultDTO);
 			}
 			return VedioAppsResultDTOs;
@@ -93,6 +92,20 @@ public class VedioAppService {
 		map.put("vedioCategoryId", vedioCategoryId);
 		return vedioAppCustomMapper.selectCategoryVedios(map);
 	}
+	
+	/**
+	 * 根据ID查询
+	 * @param vedioId
+	 * @return
+	 */
+	public VedioAppDTO selectVedioAppDTOById(Integer vedioId){
+		if(vedioId == null){
+			return null;
+		}
+		Map<String, Object> map = new HashMap<String, Object>(1);
+		map.put("vedioId", vedioId);
+		return vedioAppCustomMapper.selectVedioById(map);
+	}
 
 	/**
 	 * 单个分类下所有视频
@@ -103,18 +116,14 @@ public class VedioAppService {
 	 *            排序类型:1-时间倒叙;2-播放量倒叙
 	 * @return
 	 */
-	public List<Vedio> selectVediosById(Integer vedioCategoryId, Integer sortType) {
-		VedioExample example = new VedioExample();
-		example.setDistinct(true);
-		if (sortType == 1) {// 时间倒叙
-			example.setOrderByClause("add_time desc");
-		} else if (sortType == 2) {// 播放量倒叙
-			example.setOrderByClause("play_amount desc");
+	public List<VedioAppDTO> selectVedioAppDTOsByVedioCategoryId(Integer vedioCategoryId, Integer sortType) {
+		if(vedioCategoryId == null){
+			return null;
 		}
-		VedioExample.Criteria criteria = example.createCriteria();
-		criteria.andVedioCategoryIdEqualTo(vedioCategoryId);
-		criteria.andSysFlagEqualTo((byte) 1);
-		return vedioMapper.selectByExample(example);
+		Map<String, Object> map = new HashMap<String, Object>(2);
+		map.put("vedioCategoryId", vedioCategoryId);
+		map.put("sortType", sortType);
+		return vedioAppCustomMapper.selectVedios(map);
 	}
 
 	/**
@@ -132,28 +141,5 @@ public class VedioAppService {
 			playRecord.setAddTime(new Date());
 			playRecordMapper.insertSelective(playRecord);// 登录用户记录播放视频记录
 		}
-	}
-	
-	/**
-	 * vedio对象类型转换
-	 * @param vedioAPPDTOs
-	 * @return
-	 */
-	private List<VedioAppResultDTO> vedioAppDTOToVedioAppResultDTOs(List<VedioAppDTO> vedioAPPDTOs){
-		if(!CollectionUtils.isEmpty(vedioAPPDTOs)){
-			List<VedioAppResultDTO> vedioAppResultDTOs = new ArrayList<VedioAppResultDTO>();
-			for(VedioAppDTO vedioAPPDTO :vedioAPPDTOs){
-				VedioAppResultDTO vedioAppResultDTO = new VedioAppResultDTO();
-				vedioAppResultDTO.setId(vedioAPPDTO.getId());
-				vedioAppResultDTO.setVedioName(vedioAPPDTO.getVedioName());
-				vedioAppResultDTO.setVedioNotes(vedioAPPDTO.getVedioNotes());
-				vedioAppResultDTO.setVedioImgUrl(vedioAPPDTO.getVedioImgUrl());
-				vedioAppResultDTO.setVedioUrl(vedioAPPDTO.getVedioUrl());
-				vedioAppResultDTO.setPlayAmount(vedioAPPDTO.getPlayAmount());
-				vedioAppResultDTOs.add(vedioAppResultDTO);
-			}
-			return vedioAppResultDTOs;
-		}
-		return null;
 	}
 }
