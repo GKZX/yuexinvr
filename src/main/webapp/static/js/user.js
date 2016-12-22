@@ -2,9 +2,6 @@ var userManager=new Vue({
 	el:"#userManager",
 	data:{
 		userList:""
-	},
-	methods:{
-		
 	}
 })
 //加载用户列表
@@ -37,7 +34,7 @@ function userLoad(page,len){
         	
         }
 	},function(){
-		alert("wrong");
+		alert("服务器错误");
 	})
 }
 $(function(){	

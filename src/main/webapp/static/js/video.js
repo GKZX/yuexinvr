@@ -4,8 +4,9 @@ var video=new Vue({
 		fid:"",
 		id:"",
 		sortType:2,
-		pageSize:5,
+		pageSize:10,
 		searchCriteria:"",
+		vedioIds:"",
 		message:"",
 		sclass:[],
 		isEdit:false
@@ -23,7 +24,7 @@ var video=new Vue({
 		checkVideo:function(index){
 			this.message.vedioList[index].checked=!this.message.vedioList[index].checked;
 		},
-		//删除勾选视频
+		//点击删除视频
 		delVideo:function(){
 			var lists=this.message.vedioList;
 			var vedioArr=[];
@@ -33,30 +34,36 @@ var video=new Vue({
 				}
 			}
 			var vedioIds=vedioArr.join();
+			this.vedioIds=vedioIds;
 			if(vedioIds==null||vedioIds==""||vedioIds==" "){
-				alert("请选择要删除的视频");
+				$('#choiseModal').modal('show');
 			}else{
-				var durl="/vedio/deleteVedios";
-				var dtype="POST";
-				var ddata={
-						"vedioIds":vedioIds
-				}
-				$.ajaxs(durl,dtype,ddata,function(data){
-					console.log(data);
-			        if(data.errorCode==10000){//成功
-			        	for(var i=0;i<lists.length;i++){
-							if(lists[i].checked==true){
-								lists.splice(i,1);
-								i--;
-							}
-						}
-			        	video.isEdit=true;
-			        }
-				},function(){
-					alert("wrong");
-				})
+				$('#delModal').modal('show');
+			}	
+		},
+		//确定删除
+		confirmDel:function(){
+			var lists=this.message.vedioList;
+			var durl="/vedio/deleteVedios";
+			var dtype="POST";
+			var ddata={
+					"vedioIds":this.vedioIds
 			}
-			
+			$.ajaxs(durl,dtype,ddata,function(data){
+				console.log(data);
+		        if(data.errorCode==10000){//成功
+		        	for(var i=0;i<lists.length;i++){
+						if(lists[i].checked==true){
+							lists.splice(i,1);
+							i--;
+						}
+					}
+		        	video.isEdit=false;
+		        	
+		        }
+			},function(){
+				alert("服务器错误");
+			})
 		},
 		//排序方式
 		sort:function(type){
@@ -75,11 +82,11 @@ var video=new Vue({
 			var search=this.searchCriteria;
 			var id=this.id;
 			var type=this.sortType;
-			//alert(id);
 			loadData(id,type,1,this.pageSize,search)
 		}
 	}
 })
+
 $(function(){
 	var id= getParam("id");
 	video.fid=id;
@@ -96,6 +103,7 @@ $(function(){
 		$(this).addClass("active");
 	})
 })
+
 //加载视频数据
 function loadData(id,type,page,len,search){
 	search=search?search:"";
@@ -134,9 +142,10 @@ function loadData(id,type,page,len,search){
 	       }
         }
 	},function(){
-		alert("wrong");
+		alert("服务器错误");
 	})
 }
+
 //加载类
 function classLoad(Id){
 	var curl="vedio/getVedioCateGory";
@@ -151,6 +160,6 @@ function classLoad(Id){
         	console.log(video.sclass);
         }
 	},function(){
-		alert("wrong");
+		alert("服务器错误");
 	})
 }

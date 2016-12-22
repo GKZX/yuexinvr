@@ -13,15 +13,14 @@ var login=new Vue({
 				"password":$("#password").val()
 			};
 			$.ajaxs(lurl,type,loginData,function(data){
-				console.log(data);
-				if(data.errorCode==20001){//鐢ㄦ埛鍚嶆垨鑰呭瘑鐮侀敊璇�
+				if(data.errorCode==20001){//用户名密码错误
 					self.isWrong=true;
-				}else if(data.errorCode==10000){//鐧婚檰鎴愬姛
+				}else if(data.errorCode==10000){//正确
 					self.isWrong=false;
 					window.location.href="index";
 				}
 			},function(){
-				alert("wrong");
+				alert("服务器错误");
 			})
 		}
 	}

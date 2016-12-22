@@ -42,6 +42,25 @@ function generateMixed(n) {
      }
      return res;
 }
+//判断图片大小和宽高
+function checkImgPX(ths, width, height) {  
+    var img = null;  
+    img = document.createElement("img");  
+    document.body.insertAdjacentElement("beforeEnd", img); // firefox不行  
+    img.style.visibility = "hidden";   
+    img.src = ths.value;  
+    var imgwidth = img.offsetWidth;  
+    var imgheight = img.offsetHeight;  
+       
+    alert(imgwidth + "," + imgheight);  
+       
+    if(imgwidth != width || imgheight != height) {  
+        alert("图的尺寸应该是" + width + "x"+ height);  
+        ths.value = "";  
+        return false;  
+    }  
+    return true;  
+} 
 //时间戳转日期格式过滤器
 Vue.filter("formatDate",function(value){
 	var now=new Date(value);

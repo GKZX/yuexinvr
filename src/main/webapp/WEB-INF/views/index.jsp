@@ -4,10 +4,10 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>vr-主界面</title>
-		<link href="css/bootstrap.css" rel="stylesheet">
-		<link href="css/iconfont.css" rel="stylesheet">
+		<link href="css/bootstrap.css" rel="stylesheet" />
+		<link href="css/iconfont.css" rel="stylesheet" />
 		<link href="css/common.css" rel="stylesheet" />
-		<link href="css/main.css" rel='stylesheet'>
+		<link href="css/index.css" rel="stylesheet" />
 	</head>
 	<body>
 	  <div class="wrapper">
@@ -15,8 +15,8 @@
         <nav class="navbar vr-navbar vr-top-navbar" role="navigation">
 		    <div class="container-fluid">
 		    <div class="navbar-header">
-		        <button type="button" class="navbar-toggle" data-toggle="collapse"
-		                data-target="#navbar-collapse">
+		        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+		                data-target="" id="sideControl">
 		            <span class="sr-only">切换导航</span>
 		            <span class="icon-bar"></span>
 		            <span class="icon-bar"></span>
@@ -46,13 +46,13 @@
 		     <nav class="navbar vr-navbar vr-left-navbar" role="navigation">
 			    <ul class="nav side-menu" id="side-menu">
 					<li>
-						<a class='side-menu-item' data-toggle="collapse" href='#videoList'><i class="iconfont icon-shipin"></i>视频管理<b class="iconfont icon-jiantou pull-right list-icon"></b></a>
+						<a class="side-menu-item drop-down-alink collapsed" data-toggle="collapse" href='#videoList'><i class="iconfont icon-shipin"></i>视频管理<b class="iconfont icon-jiantou pull-right list-icon"></b></a>
 						<ul class='drop-menu collapse' id='videoList'>
 							<li><a href="video.html?id={{item.id}}" target="pageMain" class="alink" v-for="item in lists">{{item.vedioCategoryName}}</a></li>
 						</ul>
 					</li>
 					<li>
-						<a class="side-menu-item" data-toggle="collapse" href='#dataList'><i class="iconfont icon-data"></i>数据管理<b class="iconfont icon-arrowDown pull-right list-icon"></b></a>
+						<a class="side-menu-item drop-down-alink collapsed" data-toggle="collapse" href='#dataList'><i class="iconfont icon-data"></i>数据管理<b class="iconfont icon-jiantou pull-right list-icon"></b></a>
 						<ul class="drop-menu collapse" id='dataList'>
 							<li><a href="userCount.html" target="pageMain" class="alink">用户数据统计</a></li>
 							<li><a href="rank.html" target="pageMain" class="alink">视频排行</a></li>
@@ -67,7 +67,7 @@
 			</div>
 		    <!--左侧导航结束-->
 		    <!--页面内容部分开始-->
-		    <div class='page-main'>
+		    <div class='page-main' id="pageMain">
 		    	<iframe name="pageMain" width="100%" height="100%" v-bind:src="baseUrl+indexId" frameborder="0" data-id="" seamless></iframe>
 		    </div>
 		    <!--页面内容部分结束-->

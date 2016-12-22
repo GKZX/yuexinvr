@@ -7,7 +7,7 @@
 		<link href="css/bootstrap.css" rel="stylesheet" />
 		<link href="css/pagination.css" rel="stylesheet"/>
 		<link href="css/common.css" rel="stylesheet" />
-		<link href="css/main.css" rel="stylesheet" />
+		<link href="css/user.css" rel="stylesheet" />
 	</head>
 	<body>
 	  <div class="frame-wrapper" id="userManager" v-cloak>
