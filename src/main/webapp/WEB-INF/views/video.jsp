@@ -35,24 +35,24 @@
 					</div>
 					<div class="clearfix video-class">
 					   <div class="video-box-item sort-item">
-					      <a href="javascript:;" v-on:click="sort(0)">全部视频</a>
+					      <a href="javascript:;" v-on:click="sort(0),active($event)">全部视频</a>
 					   </div>
 					   <div class="video-box-item sort-item">
-					      <a href="javascript:;" v-on:click="sort(1)">播放量</a>
+					      <a href="javascript:;" v-on:click="sort(1),active($event)">播放量</a>
 					   </div>
 					   <div class="video-box-item active sort-item">
-					      <a href="javascript:;" v-on:click="sort(2)">最近上传</a>
+					      <a href="javascript:;" v-on:click="sort(2),active($event)">最近上传</a>
 					   </div>
 					   <div class="video-box-item sort-item">
-					      <a href="javascript:;" v-on:click="sort(3)">销售量</a>
+					      <a href="javascript:;" v-on:click="sort(3),active($event)">销售量</a>
 					   </div>
 					</div>
 					<div class="clearfix video-class">
 					   <div class="video-box-item active class-item" v-show="sclass.length>0">
-					      <a href="javascript:;" v-bind:id="fid" v-on:click="choiseClass($event)">全部分类</a>
+					      <a href="javascript:;" v-bind:id="fid" v-on:click="choiseClass($event),active($event)">全部分类</a>
 					   </div>
 					   <div class="video-box-item class-item" v-for="item in sclass" track-by="$index">
-						  <a href="javascript:;" v-bind:id="item.id" v-on:click="choiseClass($event)">{{item.vedioCategoryName}}</a>
+						  <a href="javascript:;" v-bind:id="item.id" v-on:click="choiseClass($event),active($event)">{{item.vedioCategoryName}}</a>
 					   </div>
 					</div>
 				</div>
