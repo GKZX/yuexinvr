@@ -31,8 +31,8 @@ import com.alibaba.fastjson.JSONObject;
  * 
  */
 @Controller
-public class VedioAPPController extends BaseController {
-	private static final Logger LOG = LoggerFactory.getLogger(VedioAPPController.class);
+public class VedioAppController extends BaseController {
+	private static final Logger LOG = LoggerFactory.getLogger(VedioAppController.class);
 	@Autowired
 	private VedioAppService vedioAppService;
 	@Autowired
