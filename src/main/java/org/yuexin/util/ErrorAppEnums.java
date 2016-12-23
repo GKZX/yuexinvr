@@ -20,7 +20,8 @@ public enum ErrorAppEnums{
 	MESSAGE_SEND_FAIL(10003, "短信发送失败"),
 	USER_EXISTS(10004, "用户已存在"),
 	NAMEORPASW_ISNULL(10005, "用户名或密码不能为空"),
-	NAMEORPASW_ERROR(10006, "用户名或密码错误");
+	NAMEORPASW_ERROR(10006, "用户名或密码错误"),
+	PHONE_FORMAT_ERROR(10007,"手机号码格式不正确");
 
     private int code;
     private String msg;

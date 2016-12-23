@@ -4,6 +4,8 @@ public class BannerAppDTO {
 	private Integer id;
 	private String url;// 链接地址
 	private String imgUrl;// 图片地址
+	private Integer type;// banner类型:1-视频;2-链接
+	private Integer vedioId;// 视频ID
 
 	public Integer getId() {
 		return id;
@@ -29,4 +31,20 @@ public class BannerAppDTO {
 		this.imgUrl = imgUrl;
 	}
 
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public Integer getVedioId() {
+		return vedioId;
+	}
+
+	public void setVedioId(Integer vedioId) {
+		this.vedioId = vedioId;
+	}
+	
 }

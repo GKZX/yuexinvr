@@ -3,11 +3,7 @@ package org.test.yuexin.app.controller;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.yuexin.app.controller.VedioAppController;
-import org.yuexin.service.VedioAppService;
-import org.yuexin.service.VedioCategoryAppService;
 
 import base.BaseTransactionTestCase;
 
@@ -19,7 +15,7 @@ public class VedioAppControllerTest extends BaseTransactionTestCase {
 
 	@Test
 	public void testGetVedioCategory() {
-		JSONObject object = vedioAppController.getVedioCategory(1);
+		JSONObject object = vedioAppController.getVedioCategory(null);
 		System.out.println(object);
 //		assertEquals(expected, actual)
 	}

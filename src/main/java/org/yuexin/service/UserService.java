@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yuexin.dao.UserMapper;
 import org.yuexin.model.User;
+import org.yuexin.model.UserExample;
+import org.yuexin.util.MD5Util;
 
 
 /**  
@@ -69,5 +71,20 @@ public class UserService {
 	 */
 	public boolean updateUser(User user) {
 		return userMapper.updateUser(user) == 1;
+	}
+	
+	/**
+	 * 修改用户密码
+	 * @param user
+	 * @return
+	 */
+	public int updateUserPassword(String userName,String password){
+		UserExample example = new UserExample();
+		UserExample.Criteria criteria = example.createCriteria();
+		criteria.andPhoneEqualTo(userName);
+		
+		User user = new User();
+		user.setPassword(MD5Util.replaceMD5(password));// 密码MD5加密存储
+		return userMapper.updateByExample(user, example);
 	}
 }
