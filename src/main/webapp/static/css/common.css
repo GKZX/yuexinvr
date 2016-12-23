@@ -23,7 +23,13 @@ body {
 	font-family: "微软雅黑";
 }
 html,body,.wrapper,.video-frame-wrapper,.frame-wrapper {
-	height:100%;
+	height: 100%;
+}
+.empty-describe {
+	margin: 20px 0;
+	text-align: center;
+	color: #ddd;
+	font-size:22px;
 }
 .pointer {
 	cursor: pointer;

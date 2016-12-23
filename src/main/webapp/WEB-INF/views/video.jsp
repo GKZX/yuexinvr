@@ -35,24 +35,24 @@
 					</div>
 					<div class="clearfix video-class">
 					   <div class="video-box-item sort-item">
-					      <a href="javascript:;" v-on:click="sort(0)">全部视频</a>
+					      <a href="javascript:;" v-on:click="sort(0),active($event)">全部视频</a>
 					   </div>
 					   <div class="video-box-item sort-item">
-					      <a href="javascript:;" v-on:click="sort(1)">播放量</a>
+					      <a href="javascript:;" v-on:click="sort(1),active($event)">播放量</a>
 					   </div>
 					   <div class="video-box-item active sort-item">
-					      <a href="javascript:;" v-on:click="sort(2)">最近上传</a>
+					      <a href="javascript:;" v-on:click="sort(2),active($event)">最近上传</a>
 					   </div>
 					   <div class="video-box-item sort-item">
-					      <a href="javascript:;" v-on:click="sort(3)">销售量</a>
+					      <a href="javascript:;" v-on:click="sort(3),active($event)">销售量</a>
 					   </div>
 					</div>
 					<div class="clearfix video-class">
 					   <div class="video-box-item active class-item" v-show="sclass.length>0">
-					      <a href="javascript:;" v-bind:id="fid" v-on:click="choiseClass($event)">全部分类</a>
+					      <a href="javascript:;" v-bind:id="fid" v-on:click="choiseClass($event),active($event)">全部分类</a>
 					   </div>
 					   <div class="video-box-item class-item" v-for="item in sclass" track-by="$index">
-						  <a href="javascript:;" v-bind:id="item.id" v-on:click="choiseClass($event)">{{item.vedioCategoryName}}</a>
+						  <a href="javascript:;" v-bind:id="item.id" v-on:click="choiseClass($event),active($event)">{{item.vedioCategoryName}}</a>
 					   </div>
 					</div>
 				</div>
@@ -76,42 +76,47 @@
 					</div>
 					
 					<div class="list-info clearfix">
-						<div class="list-box-item" v-for="list in message.vedioList"  v-on:click="checkVideo($index)" v-bind:id="list.id">
-						 <a href="javascript:;">
-						 	<div class="check-box" v-show="isEdit">
-						 		<i class="iconfont icon-gou" v-show="list.checked"></i>
-						 	</div>
-						 	<div class="video-mask" v-show="isEdit">
-						 	</div>
-							<div class="video-img">
-								<img src="img/video-1.jpg" v-bind:src="list.vedioImgUrl">
+					    <template v-if="message.vedioSize > 0"> 
+							<div class="list-box-item" v-for="list in message.vedioList"  v-on:click="checkVideo($index)" v-bind:id="list.id">
+							 <a href="javascript:;">
+							 	<div class="check-box" v-show="isEdit">
+							 		<i class="iconfont icon-gou" v-show="list.checked"></i>
+							 	</div>
+							 	<div class="video-mask" v-show="isEdit">
+							 	</div>
+								<div class="video-img">
+									<img src="img/video-1.jpg" v-bind:src="list.vedioImgUrl">
+								</div>
+								<div class="video-desc">
+									<h3 class="video-desc-tit">{{list.vedioName}}</h3>
+									<ul class="video-desc-list">
+										<li>
+											<span>视频类型:</span>
+											<span class="data">{{list.isFree | formatType}}</span>
+										</li>
+										<li>
+											<span>上传时间:</span>
+											<span class="data">{{list.addTime | formatDate}}</span>
+										</li>
+										<li>
+											<span>播放量:</span>
+											<span class="data">{{list.playAmount}}</span>
+										</li>
+										<li>
+											<span>销售量:</span>
+											<span class="data">0</span>
+										</li>
+										<li>
+											<div class="btn video-edit-btn pull-right"><a href="upload.html?id={{list.id}}&type=1" class="video-edit-link">编辑</a></div>
+										</li>
+									</ul>
+								</div>
+							 </a>
 							</div>
-							<div class="video-desc">
-								<h3 class="video-desc-tit">{{list.vedioName}}</h3>
-								<ul class="video-desc-list">
-									<li>
-										<span>视频类型:</span>
-										<span class="data">{{list.isFree | formatType}}</span>
-									</li>
-									<li>
-										<span>上传时间:</span>
-										<span class="data">{{list.addTime | formatDate}}</span>
-									</li>
-									<li>
-										<span>播放量:</span>
-										<span class="data">{{list.playAmount}}</span>
-									</li>
-									<li>
-										<span>销售量:</span>
-										<span class="data">0</span>
-									</li>
-									<li>
-										<div class="btn video-edit-btn pull-right"><a href="upload.html?id={{list.id}}&type=1" class="video-edit-link">编辑</a></div>
-									</li>
-								</ul>
-							</div>
-						 </a>
-						</div>
+						</template>
+						<template v-else>
+						     <p class="empty-describe">暂无相关视频</p>
+						</template>
 					</div>
 				</div>
 			</div>	
