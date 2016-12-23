@@ -12,7 +12,7 @@
 	<body>
 	  <div class="frame-wrapper" id="userManager" v-cloak>
 	    <div class="frame-content">
-	        <template v-if="userList.length>0">
+	        <template v-if="userSize>0">
 				<table class="table table-bordered user-table">
 				  <thead>
 				    <tr>
@@ -25,8 +25,8 @@
 				      <th>用户购买记录</th>
 				    </tr>
 				  </thead>
-				  <tbody v-for="item in userList">
-				    <tr>
+				  <tbody>
+				    <tr v-for="item in userList">
 				      <td>{{item.userName}}</td>
 				      <td>{{item.addTime | formatDate}}</td>
 				      <td>{{item.phone}}</td>

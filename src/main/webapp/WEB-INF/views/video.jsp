@@ -76,7 +76,7 @@
 					</div>
 					
 					<div class="list-info clearfix">
-					    <template v-if="message.vedioList.length > 0"> 
+					    <template v-if="message.vedioSize > 0"> 
 							<div class="list-box-item" v-for="list in message.vedioList"  v-on:click="checkVideo($index)" v-bind:id="list.id">
 							 <a href="javascript:;">
 							 	<div class="check-box" v-show="isEdit">
