@@ -116,14 +116,15 @@ function loadData( id, type, page, len, search){
 	$.ajaxs(lurl, ltype, videoData, function(data){
 		console.log(data);
         if(data.errorCode == 10000){//成功
-        	for(var i=0;i<data.vedioList.length;i++){
+        	//向message数据结构中给每一项添加勾选属性
+        	for (var i=0;i<data.vedioList.length;i++){
         		data.vedioList[i].checked = "";
 		    }
            video.message = data;
            //加载分页
            var size = data.vedioSize;
            $(".M-box2").html(" ");
-	       if(size > len){  
+	       if (size > len){  
 	           $('.M-box2').pagination({
 	               coping: true,
                    homePage: '首页',

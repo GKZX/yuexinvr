@@ -1,7 +1,7 @@
 $.ajaxs=function(url,type,data,successfn,errorfn){
 	data=(data==null||data==""||typeof(data)=="undefined")?{"data":new Date().getTime()}:data;
 	$.ajax({
-		url:"http://192.168.0.104:8080/yuexinvr/"+url,
+		url:"http://"+window.location.host+"/yuexinvr/"+url,
 		type:type,
 		data:data,
 		dataType:"json",
@@ -15,23 +15,23 @@ $.ajaxs=function(url,type,data,successfn,errorfn){
 		}
 	})
 }
-$.ajaxss=function(url,type,data,callback){
-	data=(data==null||data==""||typeof(data)=="undefined")?{"data":new Date().getTime()}:data;
-	$.ajax({
-		url:"http://localhost:8080/yuexinvr/"+url,
-		type:type,
-		data:data,
-		dataType:"json",
-		async:true,
-		timeout:5000,
-		success:function(d){
-			callback(null,d);
-		},
-		error:function(e){
-			callback(e);
-		}
-	})
-}
+//$.ajaxss=function(url,type,data,callback){
+//	data=(data==null||data==""||typeof(data)=="undefined")?{"data":new Date().getTime()}:data;
+//	$.ajax({
+//		url:"http://localhost:8080/yuexinvr/"+url,
+//		type:type,
+//		data:data,
+//		dataType:"json",
+//		async:true,
+//		timeout:5000,
+//		success:function(d){
+//			callback(null,d);
+//		},
+//		error:function(e){
+//			callback(e);
+//		}
+//	})
+//}
 //获取地址栏参数	 
 function getParam(name){  //获取参数
 	var url=window.location.search;  //获取问号之后的字符

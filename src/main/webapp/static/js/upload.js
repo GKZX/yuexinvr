@@ -142,6 +142,7 @@ function EditData(Id){
             info.vedioUrl = vedio.vedioUrl;
             classLoad(0, vedio.vedioCategoryId);//加载父类
             classLoad(vedio.vedioCategoryPId, vedio.vedioCategoryId);//加载子类
+            check();
         } else if(data.errorCode == 2002){
         	top.location.href = "showLogin";
         }
@@ -155,15 +156,19 @@ function check(){
 	var vedio = upload.info;
 	var validate = "";
 	var reg = /^[0-9]*$/;
+	console.log(vedio.vedioName);
 	if(vedio.vedioName == ""||vedio.vedioNotes == ""||vedio.vedioUrl == ""||vedio.vedioImgUrl == ""||(vedio.isFree == 1&&vedio.money == "")){
+		console.log(0);
 		validate = false;
 		upload.disabled = true;
 	}else{
+		console.log(1);
 		if(reg.test(vedio.money)){
 			if(vedio.isFree == 1&&vedio.money <= 0){//收费时费用小于等于0不合法
 				validate = false;
 				upload.disabled = true;
 			}else{
+				alert(3);
 				validate = true;
 				upload.disabled = false;
 			}

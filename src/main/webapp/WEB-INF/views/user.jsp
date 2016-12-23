@@ -12,30 +12,35 @@
 	<body>
 	  <div class="frame-wrapper" id="userManager" v-cloak>
 	    <div class="frame-content">
-			<table class="table table-bordered user-table">
-			  <thead>
-			    <tr>
-			      <th>用户名</th>
-			      <th>注册日期</th>
-			      <th>联系方式</th>
-			      <th>宗教信仰</th>
-			      <th>历史心理评估结果</th>
-			      <th>建议推送类型</th>
-			      <th>用户购买记录</th>
-			    </tr>
-			  </thead>
-			  <tbody v-for="item in userList">
-			    <tr>
-			      <td>{{item.userName}}</td>
-			      <td>{{item.addTime | formatDate}}</td>
-			      <td>{{item.phone}}</td>
-			      <td>无</td>
-			      <td>无</td>
-			      <td>无</td>
-			      <td>无</td>
-			    </tr>  
-			  </tbody>
-			</table>
+	        <template v-if="userList.length>0">
+				<table class="table table-bordered user-table">
+				  <thead>
+				    <tr>
+				      <th>用户名</th>
+				      <th>注册日期</th>
+				      <th>联系方式</th>
+				      <th>宗教信仰</th>
+				      <th>历史心理评估结果</th>
+				      <th>建议推送类型</th>
+				      <th>用户购买记录</th>
+				    </tr>
+				  </thead>
+				  <tbody v-for="item in userList">
+				    <tr>
+				      <td>{{item.userName}}</td>
+				      <td>{{item.addTime | formatDate}}</td>
+				      <td>{{item.phone}}</td>
+				      <td>无</td>
+				      <td>无</td>
+				      <td>无</td>
+				      <td>无</td>
+				    </tr>  
+				  </tbody>
+				</table>
+			</template>
+			<template v-else>
+			    <p class="empty-describe">暂无用户</p>
+			</template>
 		</div>
 		<div class="M-box2 page-box"></div>
 	  </div>
