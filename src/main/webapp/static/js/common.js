@@ -1,3 +1,4 @@
+//ajax请求方法
 $.ajaxs=function(url,type,data,successfn,errorfn){
 	data=(data==null||data==""||typeof(data)=="undefined")?{"data":new Date().getTime()}:data;
 	$.ajax({

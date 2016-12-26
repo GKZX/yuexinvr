@@ -13,9 +13,9 @@ var login = new Vue ({
 				"password": $("#password").val()
 			};
 			$.ajaxs(lurl, type, loginData, function (data){
-				if (data.errorCode == 20001){//用户名密码错误
+				if (data.errorCode == 20001){//用户名密码错误显示错误提示信息
 					self.isWrong = true;
-				}else if (data.errorCode == 10000){//正确
+				}else if (data.errorCode == 10000){//正确则直接跳转至主页
 					self.isWrong = false;
 					window.location.href = "index";
 				}

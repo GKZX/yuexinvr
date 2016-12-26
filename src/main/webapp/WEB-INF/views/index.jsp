@@ -51,14 +51,14 @@
 							<li><a href="video.html?id={{item.id}}" target="pageMain" class="alink" v-for="item in lists">{{item.vedioCategoryName}}</a></li>
 						</ul>
 					</li>
-					<li>
+					<!--<li>
 						<a class="side-menu-item drop-down-alink collapsed" data-toggle="collapse" href='#dataList'><i class="iconfont icon-data"></i>数据管理<b class="iconfont icon-jiantou pull-right list-icon"></b></a>
 						<ul class="drop-menu collapse" id='dataList'>
 							<li><a href="userCount.html" target="pageMain" class="alink">用户数据统计</a></li>
 							<li><a href="rank.html" target="pageMain" class="alink">视频排行</a></li>
 							<li><a href="income.html" target="pageMain" class="alink">收入</a></li>
 						</ul>
-					</li>
+					</li>-->
 					<li>
 						<a class="side-menu-item alink" href="user.html" target="pageMain"><i class="iconfont icon-hyyonghu"></i>用户管理</a>
 					</li>
