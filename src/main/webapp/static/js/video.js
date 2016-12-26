@@ -36,8 +36,9 @@ var video=new Vue ({
 			var vedioIds = vedioArr.join();
 			this.vedioIds = vedioIds;
 			if(vedioIds == null||vedioIds == ""||vedioIds == " "){
+				//未选择视频就点击删除提示选择视频
 				$('#choiseModal').modal('show');
-			}else{
+			}else{//选择了视频弹出确认删除的确认框
 				$('#delModal').modal('show');
 			}	
 		},
@@ -51,14 +52,15 @@ var video=new Vue ({
 			}
 			$.ajaxs(durl, dtype, ddata, function (data){
 		        if(data.errorCode == 10000){//成功
+					//删除视频请求执行成功则在页面视图中删除相应视频
 		        	for(var i=0; i<lists.length; i++){
 						if(lists[i].checked == true){
 							lists.splice(i,1);
 							i--;
 						}
 					}
-		        	video.isEdit = false;  	
-		        } else if(data.errorCode == 2002){
+		        	video.isEdit = false;  	//删除成功退出编辑模式
+		        } else if(data.errorCode == 2002){//未登录
 		        	top.location.href = "showLogin";
 		        }
 			},function (){
@@ -68,8 +70,7 @@ var video=new Vue ({
 		//排序方式
 		sort:function (type){
 			this.sortType = type;
-			loadData(this.id, type, 1, this.pageSize);
-			
+			loadData(this.id, type, 1, this.pageSize);	
 		},
 		//分类显示
 		choiseClass:function (e){
@@ -146,7 +147,7 @@ function loadData( id, type, page, len, search){
 	})
 }
 
-//加载类
+//加载分类
 function classLoad(Id){
 	var curl = "vedio/getVedioCateGory";
 	var ctype = "get";
@@ -157,7 +158,7 @@ function classLoad(Id){
         if(data.errorCode == 10000){//成功
         	var classList = data.vedioCategoryList;
         	video.sclass = classList;
-        } else if(data.errorCode == 2002){
+        } else if(data.errorCode == 2002){//未登录
         	top.location.href = "showLogin";
         }
 	},function (){

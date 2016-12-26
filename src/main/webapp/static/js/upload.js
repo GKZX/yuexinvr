@@ -168,7 +168,6 @@ function check(){
 				validate = false;
 				upload.disabled = true;
 			}else{
-				alert(3);
 				validate = true;
 				upload.disabled = false;
 			}
