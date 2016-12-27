@@ -20,7 +20,7 @@
   
   <!-- 查询大类下所有视频 -->
   <select id="selectCategoryVedios" parameterType="java.util.Map" resultType="org.yuexin.model.dto.VedioAppDTO">
-  	SELECT distinct v.id, v.vedio_name AS vedioName, v.vedio_img_url AS vedioImgUrl, v.vedio_url AS vedioUrl, v.vedio_notes AS vedioNotes, v.play_amount AS playAmount,
+  	SELECT distinct v.id, v.vedio_name AS vedioName, v.vedio_img_url AS vedioImgUrl, v.vedio_url AS vedioUrl, v.vedio_notes AS vedioNotes, v.play_amount AS playAmount,v.add_time AS addTime,
 		vc1.id AS vedioCategoryPId, vc1.vedio_category_name AS vedioCategoryPName,
 		vc.id AS vedioCategoryId, vc.vedio_category_name AS vedioCategoryName
   	FROM vedio v
@@ -50,7 +50,7 @@
   
   <!-- 查询单个视频详情 -->
   <select id="selectVedioById" parameterType="java.util.Map" resultType="org.yuexin.model.dto.VedioAppDTO">
-  	SELECT distinct v.id, v.vedio_name AS vedioName, v.vedio_img_url AS vedioImgUrl, v.vedio_url AS vedioUrl, v.vedio_notes AS vedioNotes, v.play_amount AS playAmount,
+  	SELECT distinct v.id, v.vedio_name AS vedioName, v.vedio_img_url AS vedioImgUrl, v.vedio_url AS vedioUrl, v.vedio_notes AS vedioNotes, v.play_amount AS playAmount, v.add_time AS addTime,
   		vc1.id AS vedioCategoryPId, vc1.vedio_category_name AS vedioCategoryPName,
 		vc.id AS vedioCategoryId, vc.vedio_category_name AS vedioCategoryName
   	FROM vedio v

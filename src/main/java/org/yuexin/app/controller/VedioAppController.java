@@ -49,7 +49,7 @@ public class VedioAppController extends BaseController {
 	 */
 	@RequestMapping(value = "/vedioApp/getVedioCategory", method = RequestMethod.GET)
 	@ResponseBody
-	public JSONObject getVdioCategory(Integer type) {
+	public JSONObject getVedioCategory(Integer type) {
 		if (type == null) {
 			return ErrorAppEnums.getResult(ErrorAppEnums.PARAM_ERROR, null, null);
 		}
@@ -82,10 +82,15 @@ public class VedioAppController extends BaseController {
 		LOG.info("分类视频列表vedioCategoryId:" + vedioCategoryId);
 		try {
 			JSONObject data = new JSONObject();
+			int subsize = 0;// 最新视频的默认为无子类
+			if(vedioCategoryId != 0){
+				subsize = vedioCategoryAppService.countVedioCategoryByPId(vedioCategoryId);
+			}
 			VedioCategory vedioCategory = vedioCategoryAppService.getVedioCategoryById(vedioCategoryId);// 视频大类信息
 			List<VedioAppsResultDTO> vedioList = vedioAppService.getVedioAppsResultDTOList(vedioCategoryId);
 			data.put("vedioCategory", vedioCategory);
 			data.put("vedioList", vedioList);
+			data.put("type", subsize > 0 ? 1 : 0);// 是否有子类：0-无；1-有
 			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, data);
 		} catch (Exception e) {
 			LOG.error("getCategoryVedios异常:" + e);
@@ -113,7 +118,7 @@ public class VedioAppController extends BaseController {
 			JSONObject data = new JSONObject();
 			VedioCategory vedioCategory = vedioCategoryAppService.getVedioCategoryById(vedioCategoryId);// 视频分类信息
 			List<VedioAppDTO> vedioList = vedioAppService.selectVedioAppDTOsByVedioCategoryId(vedioCategoryId, sortType);
-			data.put("vedioCategoryName", vedioCategory.getVedioCategoryName());
+			data.put("vedioCategoryName", vedioCategory != null ? vedioCategory.getVedioCategoryName() : "");
 			data.put("vedioList", vedioList);
 			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, data);
 		} catch (Exception e) {
