@@ -195,10 +195,12 @@ var uploader = new VODUpload ({
         	upload.videoProgressShow = false;
         	upload.info.vedioUrl = "http://"+$(".bucket").text() + "." + $(".endpoint").text().substr(7) + "/" + upload.videoStr;
         	$(".videoChoise").text("已上传：" + $(".upVideoFile").val());
+        	check();
         }
         if (fileType(fileName) == "封面"){
         	 upload.info.vedioImgUrl="http://" + $(".bucket").text() + "."+$(".endpoint").text().substr(7) + "/" + upload.imgStr;
-        	 $(".upload-cover-preview").html("<img src='" + upload.info.vedioImgUrl + "' class='imgpreview-image'>")
+        	 $(".upload-cover-preview").html("<img src='" + upload.info.vedioImgUrl + "' class='imgpreview-image'>");
+        	 check();
         }
     },
     // 文件上传进度
