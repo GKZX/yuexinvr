@@ -49,7 +49,7 @@ public class VedioAppController extends BaseController {
 	 */
 	@RequestMapping(value = "/vedioApp/getVedioCategory", method = RequestMethod.GET)
 	@ResponseBody
-	public JSONObject getVedioCategory(Integer type) {
+	public JSONObject getVdioCategory(Integer type) {
 		if (type == null) {
 			return ErrorAppEnums.getResult(ErrorAppEnums.PARAM_ERROR, null, null);
 		}
