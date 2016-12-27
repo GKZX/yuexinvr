@@ -141,6 +141,8 @@ public class UserController extends BaseController {
 		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || type == null) {
 			return ErrorAppEnums.getResult(ErrorAppEnums.NAMEORPASW_ISNULL, null, null);
 		}
+		LOG.info("app用户注册/修改密码username:"+username+";password:"+password+";type:"+type);
+		
 
 		User user = userService.getUser(username);
 		if (user != null && type == 1) {// 用户已存在,不能注册
@@ -149,7 +151,7 @@ public class UserController extends BaseController {
 		
 		if (user != null && type == 2) {// 用户已存在，更新密码
 			userService.updateUserPassword(username,password);
-			return ErrorAppEnums.getResult(ErrorAppEnums.USER_EXISTS, null, null);
+			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, null);
 		}
 
 		// 新增用户

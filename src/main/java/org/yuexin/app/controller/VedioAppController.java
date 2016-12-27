@@ -14,7 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
@@ -45,9 +47,9 @@ public class VedioAppController extends BaseController {
 	 *            类型:1-置顶到首页;0-更多;
 	 * @return
 	 */
-	@RequestMapping("/vedioApp/getVedioCategory")
+	@RequestMapping(value = "/vedioApp/getVedioCategory", method = RequestMethod.GET)
 	@ResponseBody
-	public JSONObject getVedioCategory(Integer type) {
+	public JSONObject getVdioCategory(Integer type) {
 		if (type == null) {
 			return ErrorAppEnums.getResult(ErrorAppEnums.PARAM_ERROR, null, null);
 		}
@@ -56,7 +58,7 @@ public class VedioAppController extends BaseController {
 			LOG.info("查询视频分类type:" + type);
 			// 后台的视频分类
 			List<VedioCategoryAppDTO> vedioCategoryList = vedioCategoryAppService.getVedioCategorysByType(type, 0);
-			data.put("vedioCategoryList", JSONArray.toJSON(vedioCategoryList));
+			data.put("vedioCategoryList", CollectionUtils.isEmpty(vedioCategoryList) ? null : JSONArray.toJSON(vedioCategoryList));
 			LOG.info("查询视频分类成功!");
 			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, data);
 		} catch (Exception e) {

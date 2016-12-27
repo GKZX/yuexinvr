@@ -85,6 +85,6 @@ public class UserService {
 		
 		User user = new User();
 		user.setPassword(MD5Util.replaceMD5(password));// 密码MD5加密存储
-		return userMapper.updateByExample(user, example);
+		return userMapper.updateByExampleSelective(user, example);
 	}
 }
