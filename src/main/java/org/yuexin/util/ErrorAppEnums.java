@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 public enum ErrorAppEnums{
 	SUCCESS(0, "成功"),
 	SERVER_ERROR(-1, "服务器异常"),
+	DATA_ERROR(-2, "未找到对应数据"),
 	PARAM_ERROR(10001, "参数错误"),
 	PHONE_ISNULL(10002, "手机号不能为空"),
 	MESSAGE_SEND_FAIL(10003, "短信发送失败"),

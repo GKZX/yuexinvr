@@ -118,7 +118,7 @@ public class VedioAppController extends BaseController {
 			JSONObject data = new JSONObject();
 			VedioCategory vedioCategory = vedioCategoryAppService.getVedioCategoryById(vedioCategoryId);// 视频分类信息
 			List<VedioAppDTO> vedioList = vedioAppService.selectVedioAppDTOsByVedioCategoryId(vedioCategoryId, sortType);
-			data.put("vedioCategoryName", vedioCategory != null ? vedioCategory.getVedioCategoryName() : "");
+			data.put("vedioCategoryName", vedioCategory != null ? vedioCategory.getVedioCategoryName() : null);
 			data.put("vedioList", vedioList);
 			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, data);
 		} catch (Exception e) {
