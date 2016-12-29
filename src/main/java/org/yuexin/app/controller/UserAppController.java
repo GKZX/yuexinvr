@@ -2,14 +2,14 @@ package org.yuexin.app.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -51,18 +51,6 @@ public class UserAppController extends BaseController {
 	@Autowired
 	private UserAppService userAppService;
 
-	@RequestMapping("/showInfo/{userId}")
-	public String showUserInfo(ModelMap modelMap, @PathVariable int userId) {
-		return "/user/showInfo";
-	}
-
-	@RequestMapping("/showInfos")
-	public @ResponseBody
-	Object showUserInfos() {
-		User userInfos = userAppService.getUsers();
-		return userInfos;
-	}
-
 	/**
 	 * app用户登录
 	 * 
@@ -77,11 +65,7 @@ public class UserAppController extends BaseController {
 		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
 			return ErrorAppEnums.getResult(ErrorAppEnums.NAMEORPASW_ISNULL, null, null);
 		}
-		User user = new User();
-		user.setUserName(username);
-		user.setPassword(MD5Util.replaceMD5(password));
-
-		User loginUser = userAppService.getUser(user);
+		User loginUser = userAppService.getUserByPhoneAndPassword(username,password);
 		if (null == loginUser) {
 			return ErrorAppEnums.getResult(ErrorAppEnums.NAMEORPASW_ERROR, null, null);
 		}
@@ -137,20 +121,25 @@ public class UserAppController extends BaseController {
 	 *            操作类型:1-注册；2-修改
 	 * @return
 	 */
-	@RequestMapping(value = "/app/register", method = RequestMethod.POST)
+	@RequestMapping(value = "/app/register")
 	@ResponseBody
 	public JSONObject appRegister(String username, String password, Integer type) {
-		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || type == null) {
+		if (type == null) {
+			return ErrorAppEnums.getResult(ErrorAppEnums.PARAM_ERROR, null, null);
+		}
+		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
 			return ErrorAppEnums.getResult(ErrorAppEnums.NAMEORPASW_ISNULL, null, null);
 		}
 		LOG.info("app用户注册/修改密码username:" + username + ";password:" + password + ";type:" + type);
 
-		User user = userAppService.getUser(username);
+		User user = userAppService.getUserByPhone(username);
 		if (user != null && type == 1) {// 用户已存在,不能注册
+			LOG.info("用户已存在");
 			return ErrorAppEnums.getResult(ErrorAppEnums.USER_EXISTS, null, null);
 		}
 
 		if (user != null && type == 2) {// 用户已存在，更新密码
+			LOG.info("用户已存在，更新密码");
 			userAppService.updateUserPassword(username, password);
 			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, null);
 		}
@@ -165,7 +154,7 @@ public class UserAppController extends BaseController {
 
 		if (userAppService.addUser(user)) {// 注册成功
 			LOG.info("注册成功username：" + username);
-			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, "注册", userAppService.getUser(user.getUserName()));
+			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, "注册", userAppService.getUserByPhone(user.getUserName()));
 		}
 		return ErrorAppEnums.getResult(ErrorAppEnums.SERVER_ERROR, null, null);
 	}

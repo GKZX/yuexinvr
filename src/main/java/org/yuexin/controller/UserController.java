@@ -3,14 +3,11 @@ package org.yuexin.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.yuexin.model.SysUser;
 import org.yuexin.model.User;
 import org.yuexin.service.UserService;
-import org.yuexin.service.SysUserService;
 import org.yuexin.util.ErrorEnums;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,9 +45,9 @@ public class UserController extends BaseController {
 
 	/**
 	 * 用户信息列表
-	 * 
-	 * @param userName
-	 * @param password
+	 * @param indexPage 第几页
+	 * @param pageSize 每页条数
+	 * @param request
 	 * @return
 	 */
 	@RequestMapping("/user/getUsers")

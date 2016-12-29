@@ -1,12 +1,17 @@
 package org.yuexin.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.yuexin.dao.UserMapper;
 import org.yuexin.model.User;
 import org.yuexin.model.UserExample;
 import org.yuexin.util.MD5Util;
+
+import com.alibaba.druid.util.StringUtils;
 
 
 /**  
@@ -25,16 +30,6 @@ public class UserAppService {
 	}
 
 	/**
-	 * 获取app用户信息
-	 *
-	 * @param user app帐号密码
-	 * @return app用户恓
-	 */
-	public User getUser(User user) {
-		return userMapper.getUser(user);
-	}
-
-	/**
 	 * 添加app手机注册校验信息
 	 *
 	 * @param user 手机注册校验信息
@@ -43,15 +38,44 @@ public class UserAppService {
 	public boolean addUser(User user) {
 		return userMapper.insertSelective(user) == 1;
 	}
+	
+	/**
+	 * 根据用户名密码查询APP用户
+	 * @param phone
+	 * @param password
+	 * @return
+	 */
+	public User getUserByPhoneAndPassword(String phone,String password) {
+		if(!StringUtils.isEmpty(phone)){
+			UserExample example = new UserExample();
+			UserExample.Criteria criteria = example.createCriteria();
+			criteria.andPhoneEqualTo(phone);
+			criteria.andPasswordEqualTo(MD5Util.replaceMD5(password));// 密码MD5加密
+			 List<User> users = userMapper.selectByExample(example);
+			 if(!CollectionUtils.isEmpty(users)){
+				 return users.get(0);
+			 }
+		}
+		 return null;
+	}
 
 	/**
 	 * 根据用户名获取用户信息
 	 *
-	 * @param username 用户名
+	 * @param username 用户名(目前默认手机号码为用户名)
 	 * @return app用户信息
 	 */
-	public User getUser(String username) {
-		return userMapper.getUserByUserName(username);
+	public User getUserByPhone(String phone) {
+		if(!StringUtils.isEmpty(phone)){
+			UserExample example = new UserExample();
+			UserExample.Criteria criteria = example.createCriteria();
+			criteria.andPhoneEqualTo(phone);
+			 List<User> users = userMapper.selectByExample(example);
+			 if(!CollectionUtils.isEmpty(users)){
+				 return users.get(0);
+			 }
+		}
+		 return null;
 	}
 
 	/**
