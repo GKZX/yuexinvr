@@ -29,12 +29,12 @@ function userLoad(page , len){
                      showData: len,
                      current: page,
                      callback: function (api){
-						  //获取点击时的当前页码再重新加载当前页的数据
-                           var now = api.getCurrent();
-                           userLoad(now,len);
-                      }
+					     //获取点击时的当前页码再重新加载当前页的数据
+                         var now = api.getCurrent();
+                         userLoad(now,len);
+                     }
                  });
-        	}	
+        	}
         }
 	},function (){
 		alert("服务器错误");

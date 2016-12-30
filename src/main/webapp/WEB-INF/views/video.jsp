@@ -58,7 +58,7 @@
 				</div>
 				<!--list-box部分-->
 				<div class="list-box">
-					<div class="list-delete-box clearfix" v-show="isEdit">
+					<div class="list-delete-box clearfix" v-show="isDel">
 						<div class="list-delete-tab list-box-tab">
 							<a href="###" v-on:click="delVideo">删除视频</span>
 						</div>
@@ -68,7 +68,7 @@
 					</div>
 					<div class="clearfix list-choise-box" v-else>
 						<div class="list-box-tab">
-							<a href="###" v-on:click="editVideo">批量删除</a>
+							<a href="###" v-on:click="delModel">批量删除</a>
 						</div>
 						<div class="list-box-tab">
 							<a href="upload.html?bigId={{id}}&type=0">上传模式</a>
@@ -79,10 +79,10 @@
 					    <template v-if="message.vedioSize > 0"> 
 							<div class="list-box-item" v-for="list in message.vedioList"  v-on:click="checkVideo($index)" v-bind:id="list.id">
 							 <a href="javascript:;">
-							 	<div class="check-box" v-show="isEdit">
+							 	<div class="check-box" v-show="isDel">
 							 		<i class="iconfont icon-gou" v-show="list.checked"></i>
 							 	</div>
-							 	<div class="video-mask" v-show="isEdit">
+							 	<div class="video-mask" v-show="isDel">
 							 	</div>
 								<div class="video-img">
 									<img src="img/video-1.jpg" v-bind:src="list.vedioImgUrl">

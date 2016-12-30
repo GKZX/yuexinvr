@@ -32,7 +32,7 @@
 					        </div>
 					    </div>
 					    <a href="##" class="login-forget">忘记密码？</a>
-					    <input type="button" class="login-btn" value="立即登陆" id="loginBtn" v-on:click="Submit"/>
+					    <input type="button" class="login-btn" value="立即登录" id="loginBtn" v-on:click="Submit"/>
 					</form>
                 </div>
 			</div>

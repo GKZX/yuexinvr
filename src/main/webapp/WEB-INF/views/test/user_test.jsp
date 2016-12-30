@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <title>user tests</title>
+  <link href="../css/mocha.css" rel="stylesheet" />
 </head>
 <body>
-  <div id="mocha"><p><a href=".">Index</a></p></div>
+  <div id="mocha"><p><a href="../user">User</a></p></div>
   <div id="userManager"></div>
   <div id="messages"></div>
   <div id="fixtures"></div>
