@@ -91,7 +91,7 @@ public class VedioController extends BaseController {
 	 */
 	@RequestMapping("/vedio/getVedioCateGory")
 	@ResponseBody
-	public JSONObject getVedioCateGory(Integer vedioCategoryPId) {
+	public JSONObject getVedioCategory(Integer vedioCategoryPId) {
 		JSONObject result = new JSONObject();
 		if (vedioCategoryPId == null) {
 			vedioCategoryPId = 0;
@@ -106,7 +106,7 @@ public class VedioController extends BaseController {
 	 * 新增/编辑视频
 	 * 
 	 * @param type
-	 *            操作类型: 0-上传;1-编辑;2-删除
+	 *            操作类型: 0-上传;1-编辑
 	 * @param vedioId
 	 *            视频ID
 	 * @param vedioCategoryPId
@@ -221,7 +221,7 @@ public class VedioController extends BaseController {
 	 */
 	@RequestMapping("/vedio/deleteVedios")
 	@ResponseBody
-	public Object deleteVedios(Integer[] vedioIds, HttpServletRequest request) {
+	public JSONObject deleteVedios(Integer[] vedioIds, HttpServletRequest request) {
 		JSONObject result = new JSONObject();
 		SysUser sysUser = getSysUser(request);
 		if (sysUser == null) {// 未登录

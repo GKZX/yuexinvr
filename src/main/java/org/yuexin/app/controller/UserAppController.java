@@ -65,7 +65,7 @@ public class UserAppController extends BaseController {
 		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
 			return ErrorAppEnums.getResult(ErrorAppEnums.NAMEORPASW_ISNULL, null, null);
 		}
-		User loginUser = userAppService.getUserByPhoneAndPassword(username,password);
+		User loginUser = userAppService.getUserByPhoneAndPassword(username, password);
 		if (null == loginUser) {
 			return ErrorAppEnums.getResult(ErrorAppEnums.NAMEORPASW_ERROR, null, null);
 		}
@@ -188,12 +188,9 @@ public class UserAppController extends BaseController {
 		try {
 			LOG.info("查询首页banner");
 			List<BannerAppDTO> bannerAppDTOList = new ArrayList<BannerAppDTO>();
-			bannerAppDTOList.add(getBannerAppDTO(1, 2, "http://anneprivate1.oss-cn-hangzhou.aliyuncs.com/1481881974685GGB4BCYX.png",
-					"http://www.baidu.com", null));
-			bannerAppDTOList.add(getBannerAppDTO(2, 1, "http://anneprivate1.oss-cn-hangzhou.aliyuncs.com/1482114094505LR84XPH8.jpg", null,
-					1));
-			bannerAppDTOList.add(getBannerAppDTO(3, 2, "http://anneprivate1.oss-cn-hangzhou.aliyuncs.com/1482136105489RQTRN5FW.jpg",
-					"http://www.baidu.com", null));
+			bannerAppDTOList.add(getBannerAppDTO(1, 1, "http://123.57.7.159:8080/yuexinvr/img/banner1.jpg", null, 17));
+			bannerAppDTOList.add(getBannerAppDTO(2, 1, "http://123.57.7.159:8080/yuexinvr/img/banner2.jpg", null, 13));
+			bannerAppDTOList.add(getBannerAppDTO(3, 1, "http://123.57.7.159:8080/yuexinvr/img/banner3.jpg", null, 20));
 			JSONObject data = new JSONObject();
 			data.put("bannerList", bannerAppDTOList);
 			return ErrorAppEnums.getResult(ErrorAppEnums.SUCCESS, null, data);
@@ -203,9 +200,20 @@ public class UserAppController extends BaseController {
 		}
 	}
 
+	/**
+	 * 组装Banner对象
+	 * 
+	 * @param id
+	 * @param type
+	 *            类型：1-内部视频；2-链接
+	 * @param imgUrl
+	 * @param url
+	 * @param vedioId
+	 * @return
+	 */
 	private BannerAppDTO getBannerAppDTO(Integer id, Integer type, String imgUrl, String url, Integer vedioId) {
 		BannerAppDTO bannerAppDTO = new BannerAppDTO();
-		bannerAppDTO.setId(1);
+		bannerAppDTO.setId(id);
 		bannerAppDTO.setType(type);
 		bannerAppDTO.setImgUrl(imgUrl);
 		bannerAppDTO.setUrl(url);

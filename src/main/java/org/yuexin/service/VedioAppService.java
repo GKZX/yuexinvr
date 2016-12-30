@@ -49,8 +49,7 @@ public class VedioAppService {
 		if (!CollectionUtils.isEmpty(vedioAppDTOs)) {
 			Map<Integer, Object> vedioMap = new HashMap<Integer, Object>();
 			for (VedioAppDTO vedioAppDTO : vedioAppDTOs) {
-				// 没有子类
-				Integer key = vedioAppDTO.getVedioCategoryPId() == null ? 0 : vedioAppDTO.getVedioCategoryId();
+				Integer key = vedioAppDTO.getVedioCategoryId();// 查出来没有二级分类时默认为0
 
 				List<VedioAppDTO> vedioList = new ArrayList<VedioAppDTO>();
 				if (vedioMap.containsKey(key)) {

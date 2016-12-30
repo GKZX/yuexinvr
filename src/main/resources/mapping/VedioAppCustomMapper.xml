@@ -21,8 +21,8 @@
   <!-- 查询大类下所有视频 -->
   <select id="selectCategoryVedios" parameterType="java.util.Map" resultType="org.yuexin.model.dto.VedioAppDTO">
   	SELECT distinct v.id, v.vedio_name AS vedioName, v.vedio_img_url AS vedioImgUrl, v.vedio_url AS vedioUrl, v.vedio_notes AS vedioNotes, v.play_amount AS playAmount,v.add_time AS addTime,
-		vc1.id AS vedioCategoryPId, vc1.vedio_category_name AS vedioCategoryPName,
-		vc.id AS vedioCategoryId, vc.vedio_category_name AS vedioCategoryName
+		if(vc.p_id=0,vc.id,vc.p_id) as vedioCategoryPId, if(vc.p_id=0,vc.vedio_category_name,vc1.vedio_category_name) AS vedioCategoryPName,
+		if(vc.p_id=0,0,vc.id) AS vedioCategoryId, if(vc.p_id=0,null,vc.vedio_category_name) AS vedioCategoryName
   	FROM vedio v
 	JOIN vedio_category vc ON vc.id = v.vedio_category_id
 	LEFT JOIN vedio_category vc1 ON vc1.id = vc.p_id
@@ -34,25 +34,29 @@
   
   <!-- 查询大类下所有视频 -->
   <select id="selectVedios" parameterType="java.util.Map" resultType="org.yuexin.model.dto.VedioAppDTO">
-  	SELECT distinct id, vedio_name AS vedioName, vedio_img_url AS vedioImgUrl, vedio_url AS vedioUrl, vedio_notes AS vedioNotes, play_amount AS playAmount, add_time AS addTime
-  	FROM vedio
-	WHERE sys_flag = 1
+  	SELECT distinct v.id, v.vedio_name AS vedioName, v.vedio_img_url AS vedioImgUrl, v.vedio_url AS vedioUrl, v.vedio_notes AS vedioNotes, v.play_amount AS playAmount, v.add_time AS addTime,
+  		if(vc.p_id=0,vc.id,vc.p_id) as vedioCategoryPId, if(vc.p_id=0,vc.vedio_category_name,vc1.vedio_category_name) AS vedioCategoryPName,
+		if(vc.p_id=0,0,vc.id) AS vedioCategoryId, if(vc.p_id=0,null,vc.vedio_category_name) AS vedioCategoryName
+  	FROM vedio v
+  	JOIN vedio_category vc ON vc.id = v.vedio_category_id
+	LEFT JOIN vedio_category vc1 ON vc1.id = vc.p_id
+	WHERE v.sys_flag = 1
     <if test="vedioCategoryId != null">
-       AND vedio_category_id = #{vedioCategoryId,jdbcType=INTEGER}
+       AND v.vedio_category_id = #{vedioCategoryId,jdbcType=INTEGER}
     </if>
     <if test="sortType != null and sortType == 1 ">
-       ORDER BY add_time DESC
+       ORDER BY v.add_time DESC
     </if>
     <if test="sortType != null and sortType == 2 ">
-       ORDER BY play_amount DESC
+       ORDER BY v.play_amount DESC
     </if>
   </select>
   
   <!-- 查询单个视频详情 -->
   <select id="selectVedioById" parameterType="java.util.Map" resultType="org.yuexin.model.dto.VedioAppDTO">
   	SELECT distinct v.id, v.vedio_name AS vedioName, v.vedio_img_url AS vedioImgUrl, v.vedio_url AS vedioUrl, v.vedio_notes AS vedioNotes, v.play_amount AS playAmount, v.add_time AS addTime,
-  		vc1.id AS vedioCategoryPId, vc1.vedio_category_name AS vedioCategoryPName,
-		vc.id AS vedioCategoryId, vc.vedio_category_name AS vedioCategoryName
+  		if(vc.p_id=0,vc.id,vc.p_id) as vedioCategoryPId, if(vc.p_id=0,vc.vedio_category_name,vc1.vedio_category_name) AS vedioCategoryPName,
+		if(vc.p_id=0,0,vc.id) AS vedioCategoryId, if(vc.p_id=0,null,vc.vedio_category_name) AS vedioCategoryName
   	FROM vedio v
   	JOIN vedio_category vc ON vc.id = v.vedio_category_id
 	LEFT JOIN vedio_category vc1 ON vc1.id = vc.p_id

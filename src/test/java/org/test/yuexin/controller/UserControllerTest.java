@@ -11,11 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
-import org.yuexin.app.controller.UserAppController;
 import org.yuexin.controller.UserController;
 import org.yuexin.model.User;
-import org.yuexin.model.dto.BannerAppDTO;
-import org.yuexin.util.ErrorAppEnums;
+import org.yuexin.util.ErrorEnums;
+import org.yuexin.util.ErrorEnums;
 
 import base.BaseTransactionTestCase;
 
@@ -32,7 +31,7 @@ public class UserControllerTest extends BaseTransactionTestCase {
 	public void testGetUsers(HttpServletRequest request) {
 		JSONObject object = userController.getUsers(null, null, request);
 		assertNotNull(object);
-		assertEquals(object.get("code"), ErrorAppEnums.PARAM_ERROR.getCode());
+		assertEquals(object.get("code"), ErrorEnums.PARAM_ERROR.getCode());
 	}
 
 	/**
@@ -42,7 +41,7 @@ public class UserControllerTest extends BaseTransactionTestCase {
 	public void testGetUsers1(HttpServletRequest request) {
 		JSONObject object = userController.getUsers(1, 10, request);
 		assertNotNull(object);
-		assertEquals(object.get("code"), ErrorAppEnums.SUCCESS.getCode());
+		assertEquals(object.get("code"), ErrorEnums.SUCCESS.getCode());
 
 		assertNotNull(object.get("data"));// 返回的数据不为空
 		JSONObject data = (JSONObject) object.get("data");

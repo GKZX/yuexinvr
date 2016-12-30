@@ -94,7 +94,7 @@ public class VedioAppControllerTest extends BaseTransactionTestCase {
 		Object vedioCategoryObj = data.get("vedioCategory");// 分类
 		assertNotNull(vedioCategoryObj);
 		VedioCategory vedioCategory = (VedioCategory) vedioCategoryObj;
-		assertEquals(vedioCategory.getVedioCategoryName(), "极限");
+		assertSame(vedioCategory.getVedioCategoryName(), "极限");
 
 		Object typeObj = data.get("type");// 是否有子类
 		assertNotNull(typeObj);

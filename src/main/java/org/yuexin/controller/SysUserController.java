@@ -74,7 +74,7 @@ public class SysUserController extends BaseController {
 	 */
 	@RequestMapping("/login")
 	@ResponseBody
-	public JSONObject login(String callbackparam, String userName, String password, HttpServletRequest request, HttpServletResponse respose) {
+	public JSONObject login(String userName, String password, HttpServletRequest request, HttpServletResponse respose) {
 		JSONObject result = new JSONObject();
 		if (StringUtils.isBlank(userName) || StringUtils.isBlank(password)) {
 			result.put("errorCode", ErrorEnums.PARAM_ERROR.getCode());
