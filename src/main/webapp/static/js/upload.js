@@ -1,27 +1,26 @@
 var upload = new Vue ({
 	el: "#uploadManage",
 	data: {
-		fclass: [],
-		sclass: [],
-		isfee: false,
-		videoStr: "",
-		imgStr: "",
-		vedioInfo: "",
-		bigId: "",
-		disabled: true,
-		videoProgress: 0,
-		videoProgressShow: false,
-		info: {
-			type: 0,
-			vedioId: "",
-			vedioName: "",
-			vedioNotes: "",
-			vedioImgUrl: "img/album.png",
-			vedioUrl: "",
-			isFree: 0,
-			money: "",
-			vedioCategoryPId: "",
-			vedioCategoryId: ""
+		fclass: [],                         //下拉列表中所有的大分类元素
+		sclass: [],                         //下拉列表中大分类对应的小分类元素
+		isfee: false,                       //是否收费 默认不收费
+		videoStr: "",                       //利用随机字符串形式生成的新的视频名字
+		imgStr: "",                         //利用随机字符串形式生成的新的图片名字
+		bigId: "",                          //上传模式所属的视频大分类ID
+		disabled: true,                     //提交按钮是否可用  上传默认状态不可用
+		videoProgress: 0,                   //视频上传进度
+		videoProgressShow: false,           //是否显示视频上传进度条 默认不显示
+		info: {                             //上传视频要提交的参数
+			type: 0,                        //操作类型: 0-上传;1-编辑;
+			vedioId: "",                    //视频ID（编辑时必传）
+			vedioName: "",                  //视频名称
+			vedioNotes: "",                 //视频简介
+			vedioImgUrl: "img/album.png",   //视频封面地址
+			vedioUrl: "",                   //视频地址
+			isFree: 0,                      //是否免费  0 免费  1收费
+			money: "",                      //收取费用  收费时必填
+			vedioCategoryPId: "",           //视频大分类ID
+			vedioCategoryId: ""             //视频小分类ID
 		}
 	},
 	methods: {
@@ -33,19 +32,18 @@ var upload = new Vue ({
 		//点击提交
 		upload: function(){
 			var self = this;
-		    if (this.sclass.length == 0){
+		    if (this.sclass.length == 0) {//当大分类下没有子类时将下拉列表的子类置为空
 		    	this.info.vedioCategoryId = "";
 		    }
-		    if (check()){//检验合格
+		    if (check()) {//检验合格再进行提交
 		    	 var uurl = "/vedio/addOrEditVedio";
 			     var utype = "post";
 			     var upData = this.info;
-			     upData.money = 100*this.info.money;
+			     upData.money = 100*this.info.money;//单位的转换  提交到数据库单位为分
 			     $.ajaxs(uurl, utype, upData, function(data){
-			    	 console.log(data);
 			        if(data.errorCode == 10000){//成功
 			        	upData.money = "";
-			        	window.location.href = "video.html?id=" + self.info.vedioCategoryPId;
+			        	window.location.href = "video.html?id=" + self.info.vedioCategoryPId;//自动跳转到相对应分类的视频列表页
 			        } else if(data.errorCode == 2002){
 			        	top.location.href = "showLogin";
 			        }
@@ -66,18 +64,19 @@ $(function(){
 	$("#upVideoBtn").click(function(){
 		$(".upVideoFile").trigger("click");
 	})
-	//编辑页获得传过来的id
+	//编辑页获得传过来的要编辑的视频id
 	var id = getParam("id");
+	//从视频列表页获得操作类型
 	var type = getParam("type");
 	if(type == 1){//为编辑状态
 		EditData(id);	
-	}else{//为上传状态
-		classLoad(0);
-		classLoad(getParam("bigId"));	
+	}else{//为上传状态加载下拉列表
+		classLoad(0);//大类列表数据
+		classLoad(getParam("bigId"));	//对应的小类列表数据
 	}
 	upload.info.vedioId = id;
 	upload.info.type = type;
-	//进行检验
+	//进行视频数据非空和合法性检验
 	$(".form-control").blur(function(){
 		check();
 	});
@@ -87,34 +86,33 @@ $(function(){
 })
 
 //加载视频分类
-function classLoad(Id, sId){
-	console.log(typeof(sId) == "undefined");
+function classLoad(Id, sId){//父类ID  子类ID
 	var curl = "vedio/getVedioCateGory";
 	var ctype = "get";
 	var classData = {
 		"vedioCategoryPId": Id
 	};
 	$.ajaxs(curl, ctype, classData, function(data){
-        if(data.errorCode == 10000){//成功
+        if (data.errorCode == 10000) {//成功
         	if(Id == 0){//父分类元素的渲染
         		upload.fclass = data.vedioCategoryList;
-        		if(typeof(sId) == "undefined"){//上传
+        		if(typeof(sId) == "undefined"){//上传模式
         			upload.info.vedioCategoryPId = getParam("bigId");
         		}  		
-        	}else{
+        	}else{//根据传进来的父类ID来加载相应的子类ID
         		upload.sclass = data.vedioCategoryList;
-        		if(typeof(sId) == "undefined"){//上传
-        			if (upload.sclass.length > 0){
+        		if(typeof(sId) == "undefined"){//上传模式
+        			if (upload.sclass.length > 0){//有子类则默认选中其子类的第一个
             			upload.info.vedioCategoryId = upload.sclass[0].id;
-            		}else {
+            		}else {//没有子类则子类下拉列表置为空
             			upload.info.vedioCategoryId = "";
             		}
-        		}else {
-        			upload.info.vedioCategoryId = sId;
-        			upload.info.vedioCategoryPId = Id;	
+        		}else {//编辑模式
+        			upload.info.vedioCategoryId = sId;//子类ID
+        			upload.info.vedioCategoryPId = Id;//父类ID
         		}	
         	}
-        } else if (data.errorCode == 2002){
+        } else if (data.errorCode == 2002){//未登录状态
         	top.location.href = "showLogin";
         }
 	},function (){
@@ -142,11 +140,11 @@ function EditData(Id){
             info.vedioUrl = vedio.vedioUrl;
             classLoad(0, vedio.vedioCategoryId);//加载父类
             classLoad(vedio.vedioCategoryPId, vedio.vedioCategoryId);//加载子类
-            check();
-        } else if(data.errorCode == 2002){
+            check();//加载完数据检验
+        } else if(data.errorCode == 2002) {
         	top.location.href = "showLogin";
         }
-	},function (){
+	},function () {
 		alert("服务器错误");
 	})
 } 
@@ -156,22 +154,19 @@ function check(){
 	var vedio = upload.info;
 	var validate = "";
 	var reg = /^[0-9]*$/;
-	console.log(vedio.vedioName);
-	if(vedio.vedioName == ""||vedio.vedioNotes == ""||vedio.vedioUrl == ""||vedio.vedioImgUrl == ""||(vedio.isFree == 1&&vedio.money == "")){
-		console.log(0);
+	if(vedio.vedioName == ""||vedio.vedioNotes == ""||vedio.vedioUrl == ""||vedio.vedioImgUrl == ""||vedio.vedioCategoryPId == ""||(vedio.isFree == 1&&vedio.money == "")) {
 		validate = false;
 		upload.disabled = true;
-	}else{
-		console.log(1);
+	}else {
 		if(reg.test(vedio.money)){
-			if(vedio.isFree == 1&&vedio.money <= 0){//收费时费用小于等于0不合法
+			if(vedio.isFree == 1 && vedio.money <= 0) {//收费时费用小于等于0不合法
 				validate = false;
 				upload.disabled = true;
-			}else{
+			}else {
 				validate = true;
 				upload.disabled = false;
 			}
-		}else{//费用有包含其他字符不合法
+		}else {//费用有包含其他字符不合法
 			validate = false;
 			upload.disabled = true;
 		}

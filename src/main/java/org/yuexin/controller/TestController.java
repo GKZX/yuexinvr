@@ -46,5 +46,34 @@ public class TestController extends BaseController{
 		ModelAndView ModelAndView=new ModelAndView("/test/common_test");
 		return ModelAndView;
 	}
-	
+	/**
+	 * 登录测试页面
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/test/login_test")
+	public ModelAndView loginTest(){
+		ModelAndView ModelAndView=new ModelAndView("/test/login_test");
+		return ModelAndView;
+	}
+	/**
+	 * 视频测试页面
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/test/video_test")
+	public ModelAndView videoTest(){
+		ModelAndView ModelAndView=new ModelAndView("/test/video_test");
+		return ModelAndView;
+	}
+	/**
+	 * 上传页面
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/test/upload_test")
+	public ModelAndView uploadTest(){
+		ModelAndView ModelAndView=new ModelAndView("/test/upload_test");
+		return ModelAndView;
+	}
 }

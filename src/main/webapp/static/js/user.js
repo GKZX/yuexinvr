@@ -20,6 +20,7 @@ function userLoad(page , len){
          	userManager.userList = data.userList;
          	//当用户数量超过一页的数量时显示分页
          	userManager.userSize = data.userSize;
+         	var size = data.userSize;
         	if (userManager.userSize > len){
         		 $('.M-box2').pagination({
                      coping: true,
@@ -29,12 +30,12 @@ function userLoad(page , len){
                      showData: len,
                      current: page,
                      callback: function (api){
-						  //获取点击时的当前页码再重新加载当前页的数据
-                           var now = api.getCurrent();
-                           userLoad(now,len);
-                      }
+					     //获取点击时的当前页码再重新加载当前页的数据
+                         var now = api.getCurrent();
+                         userLoad(now,len);
+                     }
                  });
-        	}	
+        	}
         }
 	},function (){
 		alert("服务器错误");

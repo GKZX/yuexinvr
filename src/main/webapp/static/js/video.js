@@ -1,24 +1,24 @@
 var video=new Vue ({
 	el: "#videoManager",
 	data: {
-		fid: "",
-		id: "",
-		sortType: 2,
-		pageSize: 10,
-		searchCriteria: "",
-		vedioIds: "",
-		message: "",
-		sclass: [],
-		isEdit: false
+		fid: "",             //视频大类ID
+		id: "",              //视频小类ID
+		sortType: 2,         //排序方式   默认按最新上传排序
+		pageSize: 10,        //每页加载的视频数量
+		searchCriteria: "",  //搜索条件
+		vedioIds: "",        //要删除的视频ID '1,2,3'形式
+		message: "",         //视频列表数据  包括vedioList vedioSize
+		sclass: [],          //视频分类
+		isDel: false         //批量删除模式  默认为否
 	},
 	methods: {
 		//删除模式
-		editVideo:function() {
-		    this.isEdit = true;
+		delModel:function() {
+		    this.isDel= true;
 		},
 		//视频列表模式
 		backVideo:function() {
-			this.isEdit = false;
+			this.isDel = false;
 		},
 		//勾选视频
 		checkVideo:function(index){
@@ -59,7 +59,7 @@ var video=new Vue ({
 							i--;
 						}
 					}
-		        	video.isEdit = false;  	//删除成功退出编辑模式
+		        	video.isDel = false;  	//删除成功退出编辑模式
 		        } else if(data.errorCode == 2002){//未登录
 		        	top.location.href = "showLogin";
 		        }
@@ -95,9 +95,9 @@ var video=new Vue ({
 })
 
 $(function(){
-	var id = getParam("id");
-	video.fid = id;
-	video.id = id;
+	var id = getParam("id");//从侧边栏点击传过来的视频大类ID
+	video.fid = id;//视频大类ID
+	video.id = id;//视频小类ID默认选中全部视频
 	loadData( id, video.sortType, 1, video.pageSize);	
 	classLoad(id);
 })
@@ -108,14 +108,13 @@ function loadData( id, type, page, len, search){
 	var lurl = "/vedio/getVedios";
 	var ltype = "get";
 	var videoData= {
-		"vedioCategoryId": id,
-		"searchCriteria": search,
-		"indexPage": page,
-		"pageSize": len,
-		"sortType": type
+		"vedioCategoryId": id,    //分类ID
+		"searchCriteria": search, //搜索条件
+  		"indexPage": page,        //第几页
+		"pageSize": len,          //每页的视频数量
+		"sortType": type          //排序类型
 	};
 	$.ajaxs(lurl, ltype, videoData, function(data){
-		console.log(data);
         if(data.errorCode == 10000){//成功
         	//向message数据结构中给每一项添加勾选属性
         	for (var i=0;i<data.vedioList.length;i++){
