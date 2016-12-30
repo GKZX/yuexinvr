@@ -20,6 +20,7 @@ function userLoad(page , len){
          	userManager.userList = data.userList;
          	//当用户数量超过一页的数量时显示分页
          	userManager.userSize = data.userSize;
+         	var size = data.userSize;
         	if (userManager.userSize > len){
         		 $('.M-box2').pagination({
                      coping: true,
