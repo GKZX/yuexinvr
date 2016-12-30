@@ -1,17 +1,10 @@
 package org.yuexin.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-import org.yuexin.dao.SysUserMapper;
 import org.yuexin.dao.VedioCategoryMapper;
-import org.yuexin.dao.VedioMapper;
-import org.yuexin.model.SysUser;
-import org.yuexin.model.SysUserExample;
-import org.yuexin.model.Vedio;
 import org.yuexin.model.VedioCategory;
 import org.yuexin.model.VedioCategoryExample;
 
@@ -43,4 +36,5 @@ public class VedioCategoryService {
 		criteria.andSysFlagEqualTo((byte) 1);
 		return vedioCategoryMapper.selectByExample(example);
 	}
+	
 }

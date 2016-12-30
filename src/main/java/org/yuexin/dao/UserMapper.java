@@ -93,23 +93,6 @@ public interface UserMapper {
      * @mbggenerated Fri Dec 09 15:36:35 CST 2016
      */
     int updateByPrimaryKey(User record);
-
-    /**
-     * 根据用户名密码获取用户信息（app登录）
-     *
-     * @param user app帐号密码
-     * @return app用户信息
-     */
-    User getUser(User user);
-
-    /**
-     * 根据用户名获取用户信息
-     *
-     * @param userName 用户名
-     * @return app用户信息
-     */
-    User getUserByUserName(String userName);
-
     /**
      * 根据app用户名手机号帐号状态校验用户信息是否存在
      *

@@ -52,4 +52,17 @@ public class VedioCategoryAppService {
 		}
 		return vedioCategoryMapper.selectByPrimaryKey(id);
 	}
+	
+	/**
+	 * 统计有几个子类
+	 * @param vedioCategoryPId
+	 * @return
+	 */
+	public int countVedioCategoryByPId(Integer vedioCategoryPId){
+		VedioCategoryExample example = new VedioCategoryExample();
+		VedioCategoryExample.Criteria criteria = example.createCriteria();
+		criteria.andPIdEqualTo(vedioCategoryPId);
+		criteria.andSysFlagEqualTo((byte) 1);
+		return vedioCategoryMapper.countByExample(example);
+	}
 }
