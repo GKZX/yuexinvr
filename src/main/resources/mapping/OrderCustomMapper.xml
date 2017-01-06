@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.yuexin.dao.OrderCustomMapper">
+  <!-- 根据筛选条件分页查询付费视频订单 -->
+  <select id="selectOrders" parameterType="java.util.Map" resultType="org.yuexin.model.dto.OrderDTO">
+  	SELECT o.id, o.order_no AS orderNo, u.user_name AS userName, v.vedio_name AS vedioName, o.money, o.pay_status AS payStatus,o.add_time AS addTime FROM `order` o
+	JOIN user u ON o.user_id = u.id
+	JOIN vedio v ON o.vedio_id = v.id 
+	WHERE o.sys_flag =1
+	<if test="userName != null">
+       AND u.user_name = #{userName,jdbcType=VARCHAR}
+    </if>
+    <if test="vedioName != null">
+       AND v.vedio_name = #{vedioName,jdbcType=VARCHAR}
+    </if>
+    <if test="payStatus != null">
+       AND o.pay_status = #{payStatus,jdbcType=INTEGER}
+    </if>
+    <if test="startTime != null and endTime != null">
+       AND o.add_time BETWEEN #{startTime,jdbcType=VARCHAR} AND #{endTime,jdbcType=VARCHAR}
+    </if>
+    order by o.add_time
+    limit #{startIndex,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 根据筛选条件统计付费订单数 -->
+  <select id="countOrders" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	SELECT count(*) FROM `order` o
+	JOIN user u ON o.user_id = u.id
+	JOIN vedio v ON o.vedio_id = v.id 
+	WHERE o.sys_flag =1
+	<if test="userName != null">
+       AND u.user_name = #{userName,jdbcType=VARCHAR}
+    </if>
+    <if test="vedioName != null">
+       AND v.vedio_name = #{vedioName,jdbcType=VARCHAR}
+    </if>
+    <if test="payStatus != null">
+       AND o.pay_status = #{payStatus,jdbcType=INTEGER}
+    </if>
+    <if test="startTime != null and endTime != null">
+       AND o.add_time BETWEEN #{startTime,jdbcType=VARCHAR} AND #{endTime,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
+</mapper>
