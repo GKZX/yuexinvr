@@ -4,6 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>视频管理</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, user-scalable=no">
 		<link href="css/bootstrap.css" rel="stylesheet" />
 		<link href="css/iconfont.css" rel="stylesheet" />
 		<link href="css/pagination.css" rel="stylesheet"/>
@@ -19,8 +20,8 @@
 					  <div class='col-sm-6 col-sm-offset-3'>
 						  <form class="bs-example bs-example-form" role="form">
 					        <div class="input-group video-input-group">
-					            <input type="text" class="form-control video-search" placeholder="输入搜索的视频" v-model="searchCriteria">
-					            <span class="input-group-addon video-search pointer" v-on:click="search"><i class='iconfont icon-search'></i>搜索</span>
+					            <input type="text" id="videoSearch" class="form-control video-search" placeholder="输入搜索的视频" v-model="searchCriteria">
+					            <span class="input-group-addon video-search pointer" v-on:click="search" id='videoSearchBtn'><i class='iconfont icon-search'></i>搜索</span>
 					        </div>
 					      </form>
 				      </div>
@@ -60,25 +61,24 @@
 				<div class="list-box">
 					<div class="list-delete-box clearfix" v-show="isDel">
 						<div class="list-delete-tab list-box-tab">
-							<a href="###" v-on:click="delVideo">删除视频</span>
+							<a href="###" v-on:click="delVideo" id="delVideo">删除视频</span>
 						</div>
 						<div class="list-box-tab">
-							<a href="javascript:;" v-on:click="backVideo">退出</a>
+							<a href="javascript:;" v-on:click="backVideo" id="backVideo">退出</a>
 						</div>
 					</div>
 					<div class="clearfix list-choise-box" v-else>
 						<div class="list-box-tab">
-							<a href="###" v-on:click="delModel">批量删除</a>
+							<a href="###" v-on:click="delModel" id="delModel">批量删除</a>
 						</div>
 						<div class="list-box-tab">
-							<a href="upload.html?bigId={{id}}&type=0">上传模式</a>
+							<a href="upload.html?bigId={{id}}&type=0" id="uploadModel">上传模式</a>
 						</div>
 					</div>
 					
 					<div class="list-info clearfix">
 					    <template v-if="message.vedioSize > 0"> 
 							<div class="list-box-item" v-for="list in message.vedioList"  v-on:click="checkVideo($index)" v-bind:id="list.id">
-							 <a href="javascript:;">
 							 	<div class="check-box" v-show="isDel">
 							 		<i class="iconfont icon-gou" v-show="list.checked"></i>
 							 	</div>
@@ -111,7 +111,6 @@
 										</li>
 									</ul>
 								</div>
-							 </a>
 							</div>
 						</template>
 						<template v-else>
@@ -162,7 +161,7 @@
 							  请先选择要删除的视频！
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+							<button type="button" class="btn btn-default" data-dismiss="modal" id="noVideoBtn">关闭
 							</button>
 						</div>
 					</div><!-- /.modal-content -->

@@ -4,6 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>用户管理</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, user-scalable=no">
 		<link href="css/bootstrap.css" rel="stylesheet" />
 		<link href="css/pagination.css" rel="stylesheet"/>
 		<link href="css/common.css" rel="stylesheet" />

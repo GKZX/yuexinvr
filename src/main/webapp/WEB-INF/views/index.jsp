@@ -4,6 +4,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>vr-主界面</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, user-scalable=no">
 		<link href="css/bootstrap.css" rel="stylesheet" />
 		<link href="css/iconfont.css" rel="stylesheet" />
 		<link href="css/common.css" rel="stylesheet" />
@@ -46,7 +47,7 @@
 		     <nav class="navbar vr-navbar vr-left-navbar" role="navigation">
 			    <ul class="nav side-menu" id="side-menu">
 					<li>
-						<a class="side-menu-item drop-down-alink collapsed" data-toggle="collapse" href='#videoList'><i class="iconfont icon-shipin"></i>视频管理<b class="iconfont icon-jiantou pull-right list-icon"></b></a>
+						<a class="side-menu-item drop-down-alink collapsed" data-toggle="collapse" href='#videoList' id="test2"><i class="iconfont icon-shipin"></i>视频管理<b class="iconfont icon-jiantou pull-right list-icon"></b></a>
 						<ul class='drop-menu collapse' id='videoList'>
 							<li><a href="video.html?id={{item.id}}" target="pageMain" class="alink" v-for="item in lists">{{item.vedioCategoryName}}</a></li>
 						</ul>
@@ -68,7 +69,7 @@
 		    <!--左侧导航结束-->
 		    <!--页面内容部分开始-->
 		    <div class='page-main' id="pageMain">
-		    	<iframe name="pageMain" width="100%" height="100%" v-bind:src="baseUrl+indexId" frameborder="0" data-id="" seamless></iframe>
+		    	<iframe name="pageMain" width="100%" height="100%" v-bind:src="baseUrl+indexId" frameborder="0" data-id="" seamless id="pageMain"></iframe>
 		    </div>
 		    <!--页面内容部分结束-->
         </div>

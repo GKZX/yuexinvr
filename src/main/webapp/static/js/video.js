@@ -138,7 +138,7 @@ function loadData( id, type, page, len, search){
                    }
 	           });
 	       }
-        }else if(data.errorCode == 2002){
+        }else if(data.errorCode == 20002){
         	top.location.href = "showLogin";
         }
 	},function(){
@@ -157,7 +157,7 @@ function classLoad(Id){
         if(data.errorCode == 10000){//成功
         	var classList = data.vedioCategoryList;
         	video.sclass = classList;
-        } else if(data.errorCode == 2002){//未登录
+        } else if(data.errorCode == 20002){//未登录
         	top.location.href = "showLogin";
         }
 	},function (){

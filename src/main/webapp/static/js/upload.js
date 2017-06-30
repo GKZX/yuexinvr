@@ -112,8 +112,9 @@ function classLoad(Id, sId){//父类ID  子类ID
         			upload.info.vedioCategoryPId = Id;//父类ID
         		}	
         	}
-        } else if (data.errorCode == 2002){//未登录状态
+        } else if (data.errorCode == 20002){//未登录状态
         	top.location.href = "showLogin";
+        	console.log('未登录');
         }
 	},function (){
 		alert("服务器错误");
@@ -141,8 +142,9 @@ function EditData(Id){
             classLoad(0, vedio.vedioCategoryId);//加载父类
             classLoad(vedio.vedioCategoryPId, vedio.vedioCategoryId);//加载子类
             check();//加载完数据检验
-        } else if(data.errorCode == 2002) {
+        } else if(data.errorCode == 20002) {
         	top.location.href = "showLogin";
+        	
         }
 	},function () {
 		alert("服务器错误");
@@ -252,7 +254,6 @@ document.getElementById("upImgFile").addEventListener('change', function (event)
 				uploader.addFile(event.target.files[i], $(".endpoint").text(), $(".bucket").text(), newName);
 				upload.imgStr = newName;
 				var file = this.files[0];
-//				console.log(0);
 //				console.log(file);
 //				function imgShow(file){
 //					var reader=new FileReader();

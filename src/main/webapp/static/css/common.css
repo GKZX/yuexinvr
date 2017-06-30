@@ -51,11 +51,12 @@ html,body,.wrapper,.video-frame-wrapper,.frame-wrapper {
 	display:table-cell;
 }
 .page-box .active {
-	background: #53687f;
-	border: 1px solid #53687f;	
+	background: #e9b908;
+	border: 1px solid #e9b908;	
 }
 .page-box a:hover {
-	background: #53687f;
+	background: #fff;
+	color: #bdbdbd;
 }
 input[disabled] {
 	background: #999;

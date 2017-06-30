@@ -3,7 +3,8 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>vr视频上传</title>
+		<title>视频上传</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, user-scalable=no">
 		<link href="css/bootstrap.css" rel="stylesheet" />
 		<link href="css/common.css" rel="stylesheet" />
 		<link href="css/upload.css" rel="stylesheet" />	
@@ -11,14 +12,14 @@
 	<body>
 		<div class="frame-wrapper" id="uploadManage" v-cloak>
 			<div class="upload-content">
-				<form name="myForm" action="" method="post" enctype="multipart/form-data" class="form-horizontal" role="form" onsubmit="return false;">
+				<form name="myForm" id="uploadForm" action="" method="post" enctype="multipart/form-data" class="form-horizontal" role="form" onsubmit="return false;">
 				    <div class="form-group">
 				  	    <div class="col-xs-4">
 						    <div class="upload upload-cover-box">
 						    	<div class="upload-cover-preview"><img class="imgpreview-image" v-bind:src="info.vedioImgUrl"></div>
 							    <div class="upload-cover-btn upload-btn pointer" id="updataBtn">上传封面</div>
 							</div>
-							<input type="file" class="uploadFile" id="upImgFile" style="display:none;">
+							<input type="file" name="videoImg" class="uploadFile" id="upImgFile" style="display:none;">
 						</div>
 				        <label for="firstname" class="col-xs-8 upload-cover-info">图片不超过4M</label>
 				    </div>
@@ -29,7 +30,7 @@
 				        </div>
 				        <div class="col-xs-2">
 				            <a class="upload-btn upload-view-video pointer" v-bind:href="info.vedioUrl" target="_blank" v-show="info.type==1">查看视频</a>
-				        	<input type="file" id="upVideoFile" class="upVideoFile" style="display:none;">
+				        	<input type="file" name="videoAddress" id="upVideoFile" class="upVideoFile" style="display:none;">
 				        </div>
 				        <div class="col-xs-6">
 				            <div class="progress" v-show="videoProgressShow">
@@ -43,19 +44,19 @@
 				    <div class="form-group">
 				        <label for="lastname" class="col-xs-2 control-label">视频名称</label>
 				        <div class="col-xs-10">
-				            <input type="text" class="form-control" id="lastname" placeholder="请输入视频名称" required v-model="info.vedioName">
+				            <input type="text" name="videoName" class="form-control" id="lastname" placeholder="请输入视频名称" required v-model="info.vedioName">
 				        </div>
 				    </div>
 				    <div class="form-group">
 				        <label for="lastname" class="col-xs-2 control-label">视频简介</label>
 				        <div class="col-xs-10">
-				            <input type="text" class="form-control" id="lastname" placeholder="请输入视频简介" required v-model="info.vedioNotes">
+				            <input type="text" name="videoIntro" class="form-control" id="lastname" placeholder="请输入视频简介" required v-model="info.vedioNotes">
 				        </div>
 				    </div>
 				    <div class="form-group">
 				        <label for="lastname" class="col-xs-2 control-label">视频类型</label>
 				        <div class="col-xs-3">
-			                <select class="form-control upload-select" v-model="info.isFree">
+			                <select name="videoType" class="form-control upload-select" v-model="info.isFree">
 						      <option selected value="0">免费</option>
 						      <option value="1">收费</option>
 						    </select>
@@ -67,7 +68,7 @@
 				    <div class="form-group">
 				        <label for="lastname" class="col-xs-2 control-label">视频分类</label>
 				        <div class="col-xs-3">
-				            <select class="form-control upload-select" v-model="info.vedioCategoryPId" v-on:change="choise">
+				            <select name="videoClass" class="form-control upload-select" v-model="info.vedioCategoryPId" v-on:change="choise">
 						      <option v-for="c in fclass" :value="c.id">{{c.vedioCategoryName}}</option>
 						    </select>
 				        </div>
